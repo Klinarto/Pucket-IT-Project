@@ -1,23 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-// import App from './App';
-import Home from "./pages/home-bulma";
-import AboutMe from "./pages/about-me";
-import Academic from "./pages/academic";
-import Hobbies from "./pages/hobbies";
-import Contact from "./pages/contact";
+import App from "./App";
+import { BrowserRouter as Router } from "react-router-dom";
+
 import * as serviceWorker from "./serviceWorker";
 // import "./debug.css";
 
 ReactDOM.render(
-	<React.StrictMode>
-		<Home />
-		<AboutMe />
-		<Academic />
-		<Hobbies />
-		<Contact />
-	</React.StrictMode>,
+	<Router>
+		<App />
+	</Router>,
 	document.getElementById("root")
 );
 
