@@ -2,24 +2,16 @@ const express = require("express");
 const app = express();
 const port = 5000;
 
-const mongo = require("mongodb");
-
-var fs = require("fs");
-var uri = "";
-fs.readFile("mongo.txt", "utf8", (err, data) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  uri = data;
-});
-const client = new mongo(uri);
+const mongo = require("./mongo.js");
+var db = mongo.db;
 
 app.get("/api", (req, res) => {
   res.send("Hello World!");
 });
 
 app.get("/api/academic-experiences", (req, res) => {
+  collection = db.collection("academicExperiences");
+  collection.insertOne({ a: 1 });
   res.send("Academic Experiences");
 });
 
