@@ -2,6 +2,10 @@ const express = require("express");
 const app = express();
 const port = 5000;
 
+var contactMeController = require('./contact_me_controller.js');
+
+app.get("/contact-me", contactMeController.sendContactMe);
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
