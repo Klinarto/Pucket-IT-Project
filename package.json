@@ -19,6 +19,8 @@
   "homepage": "https://github.com/Klinarto/Pucket-IT-Project#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongodb": "^3.6.2"
+    "mongodb": "^3.6.2",
+    "nodemailer": "^6.4.11",
+    "nodemailer-sendgrid-transport": "^0.2.0"
   }
 }
