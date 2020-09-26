@@ -4,19 +4,21 @@
   "description": "COMP30022 ePortfolio",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Klinarto/Pucket-IT-Project.git"
   },
-  "author": "Edbert Tantra, Kevin Linarto, Nikolas Putra,Putra, Dimitri Sadikin",
+  "author": "Edbert Tantra, Kevin Linarto, Nikolas Putra, Dimitri Sadikin",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Klinarto/Pucket-IT-Project/issues"
   },
   "homepage": "https://github.com/Klinarto/Pucket-IT-Project#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongodb": "^3.6.2"
   }
 }
