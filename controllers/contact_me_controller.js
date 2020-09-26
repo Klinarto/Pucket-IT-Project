@@ -11,7 +11,7 @@ const mailer = nodemailer.createTransport(sendGridTransport(options));
 
 var sendContactMe = function(req, res){
     var email = {
-        to: ['nevige3649@maillei.net'],
+        to: ['dimi3laksamana@gmail.com'],
         from: 'pucket2020@gmail.com',
         subject: 'E-Portfolio Contact',
         html: '<b>Awesome sauce</b>'
