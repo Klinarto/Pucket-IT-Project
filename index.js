@@ -50,13 +50,6 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
-// An api endpoint that returns a short list of items
-app.get("/api/getList", (req, res) => {
-  var list = ["item1", "item2", "item3"];
-  res.json(list);
-  console.log("Sent list of items");
-});
-
 app.get("/api", (req, res) => {
   res.send("Hello World!");
 });
@@ -84,3 +77,6 @@ app.get("/api/hobbies", (req, res) => {
 app.get("/api/contact", (req, res) => {
   res.send("Contact");
 });
+
+const contact_me_routes = require("./routes/contact_me_routes");
+app.use("/home", contact_me_routes);
