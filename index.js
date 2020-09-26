@@ -7,6 +7,10 @@ const port = 5000;
 
 const MongoClient = require("mongodb").MongoClient;
 
+// Serve the static files from the React app
+const path = require("path");
+app.use(express.static(path.join(__dirname, "client/build")));
+
 //read json to get config properties, might change over to heroku environment variables
 fs.readFile("mongoProperties.json", "utf8", (err, data) => {
   if (err) {
@@ -41,6 +45,17 @@ fs.readFile("mongoProperties.json", "utf8", (err, data) => {
 /*
  * ROUTES START HERE
  */
+// Handles any requests that don't match the ones above
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
+
+// An api endpoint that returns a short list of items
+app.get("/api/getList", (req, res) => {
+  var list = ["item1", "item2", "item3"];
+  res.json(list);
+  console.log("Sent list of items");
+});
 
 app.get("/api", (req, res) => {
   res.send("Hello World!");
