@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Navbar from "../components/navbar";
-import Header from "../components/header";
+import Navbar from "../components/navbar.component";
+import Header from "../components/header.component";
 import { Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bulma/css/bulma.min.css";

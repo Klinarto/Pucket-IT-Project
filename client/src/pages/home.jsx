@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Header from "../components/header";
-import Navbar from "../components/navbar";
+import Navbar from "../components/navbar.component";
+import Header from "../components/header.component";
 import "bulma/css/bulma.min.css";
 import "./home.css";
 import "../utilities/helper.css";
