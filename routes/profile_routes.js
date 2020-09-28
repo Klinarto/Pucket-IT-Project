@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
 
 router.get("/academic-experiences", (req, res) => {
   collection = req.app.db.collection("academicExperience");
-  collection.find({}).toArray((err, docs) => {
+  collection.find({}, { sort: { dateStart: -1 } }).toArray((err, docs) => {
     if (err) {
       throw err;
     }

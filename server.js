@@ -5,6 +5,9 @@ const express = require("express");
 const app = express();
 const port = 5000;
 
+const cors = require("cors");
+app.use(cors());
+
 const MongoClient = require("mongodb").MongoClient;
 
 // Serve the static files from the React app
