@@ -1,14 +1,14 @@
 const assert = require("assert");
 const fs = require("fs");
-const cors = require("cors");
 
 const express = require("express");
 const app = express();
 const port = 5000;
 
-const MongoClient = require("mongodb").MongoClient;
-
+const cors = require("cors");
 app.use(cors());
+
+const MongoClient = require("mongodb").MongoClient;
 
 // Serve the static files from the React app
 const path = require("path");
@@ -53,33 +53,8 @@ app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
-app.get("/api", (req, res) => {
-	res.send("Hello World!");
-});
-
-app.get("/api/academic-experiences", (req, res) => {
-	collection = req.app.db.collection("academicExperience");
-	collection.find({}).toArray((err, docs) => {
-		if (err) {
-			throw err;
-		}
-		res.send(docs);
-	});
-});
-
-app.get("/api/hobbies", (req, res) => {
-	collection = req.app.db.collection("hobbies");
-	collection.find({}).toArray((err, data) => {
-		if (err) {
-			throw err;
-		}
-		res.send(data);
-	});
-});
-
-app.get("/api/contact", (req, res) => {
-	res.send("Contact");
-});
+const profile_routes = require("./routes/profile_routes");
+app.use("/api", profile_routes);
 
 const contact_me_routes = require("./routes/contact_me_routes");
 app.use("/home", contact_me_routes);
