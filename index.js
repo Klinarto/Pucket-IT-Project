@@ -4,8 +4,13 @@ const fs = require("fs");
 const express = require("express");
 const app = express();
 const port = 5000;
+const cors = require("cors")
+app.use(cors())
 
 const MongoClient = require("mongodb").MongoClient;
+
+// const passport = require('passport');
+// require("./config/passport")(passport);
 
 // Serve the static files from the React app
 const path = require("path");
@@ -41,6 +46,16 @@ fs.readFile("mongoProperties.json", "utf8", (err, data) => {
     });
   });
 });
+
+//handling express session for passport
+// app.use(session({
+//   secret: 'secret',
+//   resave: true,
+//   saveUninitialized: true
+// }));
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use(flash());
 
 /*
  * ROUTES START HERE

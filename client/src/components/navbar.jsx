@@ -32,6 +32,11 @@ class Navbar extends Component {
 								Contact
 							</p>
 						</Link>
+						<Link to="Login">
+							<p className="navbar-item has-text-black">
+								Log in
+							</p>
+						</Link>
 					</div>
 				</div>
 			</React.Fragment>

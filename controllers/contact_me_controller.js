@@ -13,12 +13,12 @@ const mailer = nodemailer.createTransport(sendGridTransport(options));
 
 var sendContactMe = function (req, res) {
   var email = {
-    to: ["lonekad729@debsmail.com"],
+    to: ["dimi3laksamana@gmail.com"],
     from: "pucket2020@gmail.com",
     subject: "E-Portfolio Contact",
     html: "<b>Awesome sauce</b>",
   };
-  mailer.sendMail(email, function (err, res) {
+  mailer.sendMail(email, (err, res) => {
     if (err) {
       console.log(err);
     }
