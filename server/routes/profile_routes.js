@@ -41,4 +41,14 @@ router.get("/hobbies", (req, res) => {
 	});
 });
 
+router.get("/title", (req, res) => {
+	collection = req.app.db.collection("websiteTitle");
+	collection.find({}).toArray((err, data) => {
+		if (err) {
+			throw err;
+		}
+		res.send(data);
+	});
+});
+
 module.exports = router;

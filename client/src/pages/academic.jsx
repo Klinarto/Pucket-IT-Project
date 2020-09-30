@@ -3,7 +3,6 @@ import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
 import Showcase from "../components/showcase.component";
 import "bulma/css/bulma.min.css";
-import "./academic.css";
 import axios from "axios";
 
 class Academic extends Component {
@@ -17,6 +16,7 @@ class Academic extends Component {
 		axios
 			.get("http://localhost:5000/api/academic-experiences")
 			.then((response) => {
+				console.log(response.data);
 				this.setState({ experiences: response.data });
 			})
 			.catch((error) => {
@@ -28,7 +28,7 @@ class Academic extends Component {
 		return (
 			<React.Fragment>
 				<Header />
-				<Navbar />
+				<Navbar current="academic-experience" />
 				<div>
 					{this.state.experiences.map((experience) => {
 						return (
@@ -37,6 +37,8 @@ class Academic extends Component {
 								description={experience.description}
 								image={experience.image}
 								alignment={experience.alignment}
+								startDate={new Date(experience.dateStart)}
+								endDate={new Date(experience.dateEnd)}
 								key={experience._id}
 							/>
 						);

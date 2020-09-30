@@ -3,7 +3,6 @@ import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
 import Showcase from "../components/showcase.component";
 import "bulma/css/bulma.min.css";
-import "./hobbies.css";
 import axios from "axios";
 
 class Academic extends Component {
@@ -28,7 +27,7 @@ class Academic extends Component {
 		return (
 			<React.Fragment>
 				<Header />
-				<Navbar />
+				<Navbar current="hobbies" />
 				<div>
 					{this.state.hobbies.map((hobby) => {
 						return (
@@ -37,6 +36,8 @@ class Academic extends Component {
 								description={hobby.description}
 								image={hobby.image}
 								alignment={hobby.alignment}
+								startDate={null}
+								endDate={null}
 								key={hobby._id}
 							/>
 						);
