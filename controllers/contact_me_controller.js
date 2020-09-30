@@ -1,4 +1,3 @@
-const express = require("express");
 var nodemailer = require("nodemailer");
 const sendGridTransport = require("nodemailer-sendgrid-transport");
 
@@ -9,14 +8,13 @@ var options = {
   },
 };
 
-const mailer = nodemailer.createTransport(sendGridTransport(options));
-
 var sendContactMe = function (req, res) {
+  const mailer = nodemailer.createTransport(sendGridTransport(options));
   var email = {
-    to: ["dimi3laksamana@gmail.com"],
+    to: ["milayo9708@qatw.net"],
     from: "pucket2020@gmail.com",
     subject: "E-Portfolio Contact",
-    html: "<b>Awesome sauce</b>",
+    text: "From: " + req.body.name + "\n" + "Email: " + req.body.email + "\n" + "Message: " + req.body.message
   };
   mailer.sendMail(email, (err, res) => {
     if (err) {
@@ -24,7 +22,7 @@ var sendContactMe = function (req, res) {
     }
     console.log(res);
   });
-  res.send("Message sent!");
+  res.send("Message Sent!");
 };
 
 module.exports.sendContactMe = sendContactMe;

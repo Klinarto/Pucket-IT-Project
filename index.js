@@ -1,16 +1,18 @@
 const assert = require("assert");
 const fs = require("fs");
-
+const flash = require("flash")();
 const express = require("express");
 const app = express();
 const port = 5000;
-const cors = require("cors")
-app.use(cors())
+const cors = require("cors");
+app.use(cors());
+const token = require("jsonwebtoken");
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const bcrypt = require('bcrypt');
 
 const MongoClient = require("mongodb").MongoClient;
-
-// const passport = require('passport');
-// require("./config/passport")(passport);
+app.use(express.json());
 
 // Serve the static files from the React app
 const path = require("path");
@@ -47,15 +49,24 @@ fs.readFile("mongoProperties.json", "utf8", (err, data) => {
   });
 });
 
+app.set('trust proxy', 1);
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true,
+}));
+
 //handling express session for passport
+app.use(passport.initialize());
+app.use(passport.session());
+require("./config/passport");
 // app.use(session({
 //   secret: 'secret',
 //   resave: true,
 //   saveUninitialized: true
 // }));
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use(flash());
+
+app.use(flash);
 
 /*
  * ROUTES START HERE
@@ -93,5 +104,17 @@ app.get("/api/contact", (req, res) => {
   res.send("Contact");
 });
 
+app.get("/fuck", (req, res) => {
+  collection = req.app.db.collection("GrizzAccount");
+  const query = {username: "Grizz", password: "123"};
+  const user = collection.findOne(query, function(err,result) {
+    if(err) console.log("OH SHIT SOMETHING WRONG");
+    res.send(result);
+  });
+});
+
 const contact_me_routes = require("./routes/contact_me_routes");
 app.use("/home", contact_me_routes);
+
+const login_routes = require("./routes/user_routes");
+app.use("/login", login_routes);

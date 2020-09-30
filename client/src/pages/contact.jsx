@@ -10,14 +10,12 @@ class Contact extends Component {
 
 		this.state = { name: "", email: "",message: ""};
 	}
-  sendMessage = () => {
-    const user={
-      name: this.state.name,
-      email: this.state.email,
-      message: this.state.message
-    }
+  sendMessage = (e) => {
+    e.preventDefault();
     axios.post("http://localhost:5000/home/contact_me",{
-        user
+        name: this.state.name,
+        email: this.state.email,
+        message: this.state.message
       })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
@@ -30,7 +28,7 @@ class Contact extends Component {
         <Navbar />
         <div className="section has-background-light">
           <h1>Contact me</h1>
-          <form onSubmit= {this.sendMessage}>
+          <form onSubmit={this.sendMessage}>
             <label>Name</label>
             <input
               type="text"
