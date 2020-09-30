@@ -58,6 +58,5 @@ app.get("/", (req, res) => {
 const profile_routes = require("./routes/profile_routes");
 app.use("/api", profile_routes);
 
-app.use("/admin", )
-
-const 
+const admin_routes = require("./routes/admin_routes");
+app.use("/admin", admin_routes);
