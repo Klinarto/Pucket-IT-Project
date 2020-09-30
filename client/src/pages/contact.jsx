@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Form, Input, Button } from "antd";
 import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
@@ -21,63 +21,72 @@ const validateMessages = {
 	},
 };
 
-class Contact extends Component {
-	render() {
-		return (
-			<React.Fragment>
-				<Header />
-				<Navbar current="contact" />
-				<section className="section">
-					<div className="container">
-						{" "}
-						<Form
-							{...layout}
-							name="Contact Message"
-							validateMessages={validateMessages}
-						>
-							<Form.Item
-								name={["user", "name"]}
-								label="Name"
-								rules={[
-									{
-										required: true,
-									},
-								]}
-							>
-								<Input />
-							</Form.Item>
-							<Form.Item
-								name={["user", "email"]}
-								label="Email"
-								rules={[
-									{
-										required: true,
-										type: "email",
-									},
-								]}
-							>
-								<Input />
-							</Form.Item>
+function Contact(params) {
+	const [form] = Form.useForm();
+	const onFinish = (values) => {
+		// Fill in
+	};
 
-							<Form.Item
-								name={["user", "introduction"]}
-								label="Message"
-							>
-								<Input.TextArea />
-							</Form.Item>
-							<Form.Item
-								wrapperCol={{ ...layout.wrapperCol, offset: 6 }}
-							>
-								<Button type="primary" htmlType="submit">
-									Send
-								</Button>
-							</Form.Item>
-						</Form>
-					</div>
-				</section>
-			</React.Fragment>
-		);
-	}
+	return (
+		<React.Fragment>
+			<Header />
+			<Navbar current="contact" />
+			<section className="section">
+				<div className="container">
+					{" "}
+					<Form
+						{...layout}
+						form={form}
+						name="Contact Message"
+						validateMessages={validateMessages}
+					>
+						<Form.Item
+							name="name"
+							label="Name"
+							rules={[
+								{
+									required: true,
+								},
+							]}
+						>
+							<Input />
+						</Form.Item>
+						<Form.Item
+							name="email"
+							label="Email"
+							rules={[
+								{
+									required: true,
+									type: "email",
+								},
+							]}
+						>
+							<Input />
+						</Form.Item>
+
+						<Form.Item
+							name="message"
+							label="Message"
+							rules={[
+								{
+									required: true,
+								},
+							]}
+						>
+							<Input.TextArea />
+						</Form.Item>
+						<Form.Item
+							wrapperCol={{ ...layout.wrapperCol, offset: 6 }}
+						>
+							<Button type="primary" htmlType="submit">
+								Send
+							</Button>
+						</Form.Item>
+					</Form>
+				</div>
+			</section>
+		</React.Fragment>
+	);
 }
 
 export default Contact;

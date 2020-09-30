@@ -20,7 +20,8 @@
 		"url": "https://github.com/Klinarto/Pucket-IT-Project/issues"
 	},
 	"homepage": "https://github.com/Klinarto/Pucket-IT-Project#readme",
-	"dependencies": {
+	"dependencies": {},
+	"devDependencies": {
 		"concurrently": "^5.3.0"
 	}
 }
