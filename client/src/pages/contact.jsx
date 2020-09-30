@@ -1,59 +1,78 @@
 import React, { Component } from "react";
+import { Form, Input, Button } from "antd";
 import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
+import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
 
+const layout = {
+	labelCol: {
+		span: 6,
+	},
+	wrapperCol: {
+		span: 12,
+	},
+};
+
+const validateMessages = {
+	required: "${label} is required!",
+	types: {
+		email: "${label} is not valid email!",
+	},
+};
+
 class Contact extends Component {
-	state = {};
 	render() {
 		return (
 			<React.Fragment>
 				<Header />
-				<Navbar />
-				<section className="section has-background-light">
-					<div className="card container">
-						<div className="field">
-							<label className="label">Name</label>
-							<div className="control">
-								<input
-									className="input"
-									type="text"
-									placeholder="John Doe"
-								/>
-							</div>
-						</div>
+				<Navbar current="contact" />
+				<section className="section">
+					<div className="container">
+						{" "}
+						<Form
+							{...layout}
+							name="Contact Message"
+							validateMessages={validateMessages}
+						>
+							<Form.Item
+								name={["user", "name"]}
+								label="Name"
+								rules={[
+									{
+										required: true,
+									},
+								]}
+							>
+								<Input />
+							</Form.Item>
+							<Form.Item
+								name={["user", "email"]}
+								label="Email"
+								rules={[
+									{
+										required: true,
+										type: "email",
+									},
+								]}
+							>
+								<Input />
+							</Form.Item>
 
-						<div className="field">
-							<label className="label">Email</label>
-							<div className="control">
-								<input
-									className="input"
-									type="email"
-									placeholder="e.g. JohnDoe@gmail.com"
-								/>
-							</div>
-						</div>
-
-						<div className="field">
-							<label className="label">Message</label>
-							<div className="control">
-								<textarea
-									className="textarea"
-									placeholder="Message Description"
-								></textarea>
-							</div>
-						</div>
-
-						<div className="field is-grouped">
-							<div className="control">
-								<button
-									className="button is-link"
-									name="send-message"
-								>
-									Submit
-								</button>
-							</div>
-						</div>
+							<Form.Item
+								name={["user", "introduction"]}
+								label="Message"
+							>
+								<Input.TextArea />
+							</Form.Item>
+							<Form.Item
+								wrapperCol={{ ...layout.wrapperCol, offset: 6 }}
+							>
+								<Button type="primary" htmlType="submit">
+									Send
+								</Button>
+							</Form.Item>
+						</Form>
 					</div>
 				</section>
 			</React.Fragment>

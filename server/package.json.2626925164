@@ -25,5 +25,8 @@
 		"mongoose": "^5.10.7",
 		"nodemailer": "^6.4.11",
 		"nodemailer-sendgrid-transport": "^0.2.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.4"
 	}
 }
