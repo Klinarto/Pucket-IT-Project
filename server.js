@@ -5,6 +5,8 @@ const express = require("express");
 const app = express();
 const port = 5000;
 
+app.use(express.json());
+
 const cors = require("cors");
 app.use(cors());
 
@@ -56,5 +58,6 @@ app.get("/", (req, res) => {
 const profile_routes = require("./routes/profile_routes");
 app.use("/api", profile_routes);
 
-const contact_me_routes = require("./routes/contact_me_routes");
-app.use("/home", contact_me_routes);
+app.use("/admin", )
+
+const 

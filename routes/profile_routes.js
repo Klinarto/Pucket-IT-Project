@@ -41,4 +41,17 @@ router.get("/hobbies", (req, res) => {
   });
 });
 
+router.get("/title", (req, res) => {
+  collection = req.app.db.collection("websiteTitle");
+  collection.find({}).toArray((err, data) => {
+    if (err) {
+      throw err;
+    }
+    res.send(data);
+  });
+});
+
+const contact_me_controller = require("../controllers/contact_me_controller.js");
+router.get("/contact-me", contact_me_controller.sendContactMe);
+
 module.exports = router;
