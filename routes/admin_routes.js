@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const upload_endpoint = require("../controllers/admin_controller.js");
 
+const path = require("path");
 const multer = require("multer");
 
 // var upload = multer({ dest: './public/data/uploads/' })
@@ -33,6 +33,8 @@ function checkImage(req, file, callback) {
   }
 }
 
-router.post("/upload", upload.none(), upload_endpoint.addNewEntry);
+const admin = require("../controllers/admin_controller.js");
+router.post("/upload", upload.single("image"), admin.addNewEntry);
+router.post("/edit", upload.single("image"), admin.editEntry);
 
 module.exports = router;
