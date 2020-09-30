@@ -29,6 +29,7 @@ function Contact(params) {
 		.then((res) => console.log(res))
 		.catch((error) => console.log(error));
 		console.log(values);
+		window.location = "/";
 	};
 
 	return (
