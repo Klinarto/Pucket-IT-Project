@@ -8,6 +8,8 @@ const port = 5000;
 const cors = require("cors");
 app.use(cors());
 
+app.use(express.json());
+
 const MongoClient = require("mongodb").MongoClient;
 
 // Serve the static files from the React app
@@ -55,6 +57,3 @@ app.get("/", (req, res) => {
 
 const profile_routes = require("./routes/profile_routes");
 app.use("/api", profile_routes);
-
-const contact_me_routes = require("./routes/contact_me_routes");
-app.use("/home", contact_me_routes);
