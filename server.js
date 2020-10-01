@@ -50,13 +50,13 @@ fs.readFile("mongoProperties.json", "utf8", (err, data) => {
 /*
  * ROUTES START HERE
  */
-// Handles any requests that don't match the ones above
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index.html"));
-});
-
 const profile_routes = require("./routes/profile_routes");
 app.use("/api", profile_routes);
 
 const admin_routes = require("./routes/admin_routes");
 app.use("/admin", admin_routes);
+
+// Handles any requests that don't match the ones above
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});

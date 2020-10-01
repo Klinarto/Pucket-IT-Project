@@ -1,60 +1,96 @@
-import React, { Component } from "react";
-import Header from "../components/header";
-import Navbar from "../components/navbar";
+import React from "react";
+import { Form, Input, Button } from "antd";
+import Navbar from "../components/navbar.component";
+import Header from "../components/header.component";
+import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
+import axios from "axios";
 
-class Contact extends Component {
-  state = {};
-  render() {
-    return (
-      <React.Fragment>
-        <Header />
-        <Navbar />
-        <section className="section has-background-light">
-          <div className="card container">
-            <div className="field">
-              <label className="label">Name</label>
-              <div className="control">
-                <input className="input" type="text" placeholder="Fake Faker" />
-              </div>
-            </div>
+const layout = {
+	labelCol: {
+		span: 6,
+	},
+	wrapperCol: {
+		span: 12,
+	},
+};
 
-            <div className="field">
-              <label className="label">Email</label>
-              <div className="control">
-                <input
-                  className="input is-danger"
-                  type="email"
-                  placeholder="e.g. FakeEmail@Fake.com"
-                />
-              </div>
-            </div>
+const validateMessages = {
+	required: "${label} is required!",
+	types: {
+		email: "${label} is not valid email!",
+	},
+};
 
-            <div className="field">
-              <label className="label">Message</label>
-              <div className="control">
-                <textarea
-                  className="textarea"
-                  placeholder="Fake Message"
-                ></textarea>
-              </div>
-            </div>
+function Contact(params) {
+	const [form] = Form.useForm();
+	const onFinish = (values) => {
+		axios.post("http://localhost:5000/api/contact-me", values)
+		.then((res) => console.log(res))
+		.catch((error) => console.log(error));
+		window.location = "/";
+	};
 
-            <div class="field is-grouped">
-              <div class="control">
-                <button class="button is-link" name="send-message">
-                  Submit
-                </button>
-              </div>
-              <div class="control">
-                <button class="button is-link is-light">Cancel</button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </React.Fragment>
-    );
-  }
+	return (
+		<React.Fragment>
+			<Header />
+			<Navbar current="contact" />
+			<section className="section">
+				<div className="container">
+					{" "}
+					<Form onFinish={onFinish}
+						{...layout}
+						form={form}
+						name="Contact Message"
+						validateMessages={validateMessages}
+					>
+						<Form.Item
+							name="name"
+							label="Name"
+							rules={[
+								{
+									required: true,
+								},
+							]}
+						>
+							<Input />
+						</Form.Item>
+						<Form.Item
+							name="email"
+							label="Email"
+							rules={[
+								{
+									required: true,
+									type: "email",
+								},
+							]}
+						>
+							<Input />
+						</Form.Item>
+
+						<Form.Item
+							name="message"
+							label="Message"
+							rules={[
+								{
+									required: true,
+								},
+							]}
+						>
+							<Input.TextArea />
+						</Form.Item>
+						<Form.Item
+							wrapperCol={{ ...layout.wrapperCol, offset: 6 }}
+						>
+							<Button type="primary" htmlType="submit">
+								Send
+							</Button>
+						</Form.Item>
+					</Form>
+				</div>
+			</section>
+		</React.Fragment>
+	);
 }
 
 export default Contact;
