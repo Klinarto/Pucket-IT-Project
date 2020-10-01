@@ -6,8 +6,8 @@ var addNewEntry = function (req, res) {
   var section = req.body.section;
   var title = req.body.title;
   var description = req.body.description;
-  var dateStart = req.body.dateStart;
-  var dateEnd = req.body.dateEnd;
+  var startDate = req.body.startDate;
+  var endDate = req.body.endDate;
   var alignment = req.body.alignment;
 
   const collection = req.app.db.collection(section);
@@ -24,8 +24,8 @@ var addNewEntry = function (req, res) {
     } else {
       collection.insertOne({
         title: title,
-        dateStart: new Date(dateStart),
-        dateEnd: new Date(dateEnd),
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
         description: description,
         image: "",
         alignment: alignment,
@@ -44,8 +44,8 @@ var addNewEntry = function (req, res) {
     } else {
       collection.insertOne({
         title: title,
-        dateStart: new Date(dateStart),
-        dateEnd: new Date(dateEnd),
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
         description: description,
         image: "something",
         alignment: alignment,
@@ -61,8 +61,8 @@ var editEntry = function (req, res) {
   var idString = req.body._id;
   var title = req.body.title;
   var description = req.body.description;
-  var dateStart = req.body.dateStart;
-  var dateEnd = req.body.dateEnd;
+  var startDate = req.body.startDate;
+  var endDate = req.body.endDate;
   var imageUrl = req.body.imageUrl;
   var alignment = req.body.alignment;
 
@@ -89,8 +89,8 @@ var editEntry = function (req, res) {
         {
           $set: {
             title: title,
-            dateStart: new Date(dateStart),
-            dateEnd: new Date(dateEnd),
+            startDate: new Date(startDate),
+            endDate: new Date(endDate),
             description: description,
             image: imageUrl,
             alignment: alignment,
@@ -118,8 +118,8 @@ var editEntry = function (req, res) {
         {
           $set: {
             title: title,
-            dateStart: new Date(dateStart),
-            dateEnd: new Date(dateEnd),
+            startDate: new Date(startDate),
+            endDate: new Date(endDate),
             description: description,
             image: "newPhoto",
             alignment: alignment,
