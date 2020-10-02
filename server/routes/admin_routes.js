@@ -4,6 +4,8 @@ const router = express.Router();
 const path = require("path");
 const multer = require("multer");
 
+const authentication = require('../middleware/auth');
+
 // var upload = multer({ dest: './public/data/uploads/' })
 // app.post('/stats', upload.single('uploaded_file'), function (req, res) {
 //    // req.file is the name of your file in the form above, here 'uploaded_file'

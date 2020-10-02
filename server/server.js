@@ -60,3 +60,6 @@ app.use("/api", profile_routes);
 
 const admin_routes = require("./routes/admin_routes");
 app.use("/admin", admin_routes);
+
+const user_routes = require("./routes/user_routes");
+app.use("/login", user_routes);

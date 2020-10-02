@@ -36,10 +36,10 @@ class Navbar extends Component {
 						<Link to="dashboard">Dashboard</Link>
 					</Menu.Item>
 					<Menu.Item
+						key="login"
 						style={{ float: "right", marginRight: "1.5em" }}
-						onClick={this.showLogin}
 					>
-						Login
+						<Link to="login">Login</Link>
 					</Menu.Item>
 				</Menu>
 			</Affix>
