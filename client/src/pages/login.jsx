@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Input, Button } from "antd";
 import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
 import axios from "axios";
+import user_context from "../context/user_context";
 
 const layout = {
 	labelCol: {
@@ -24,11 +25,11 @@ const validateMessages = {
 
 function Login(params) {
 	const [form] = Form.useForm();
+	const {userData, setUserData} = useContext(user_context);
 	const onFinish = (values) => {
-		axios.post("http://localhost:5000/login", values)
+		axios.post("http://localhost:5000/user/login", values)
 		.then((res) => console.log(res))
 		.catch((error) => console.log(error));
-		window.location = "/";
 	};
 
 	return (

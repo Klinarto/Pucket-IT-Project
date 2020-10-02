@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+//useContext
 import { Link } from "react-router-dom";
 import { Menu, Affix } from "antd";
 import "antd/dist/antd.css";
+//import user_context from "../context/user_context";
 
 class Navbar extends Component {
 	constructor(props) {
@@ -11,6 +13,7 @@ class Navbar extends Component {
 
 	render() {
 		const { current } = this.state;
+		//const {userData, setUserData} = useContext(user_context);
 		return (
 			<Affix>
 				<Menu selectedKeys={[current]} mode="horizontal">
@@ -29,9 +32,9 @@ class Navbar extends Component {
 					<Menu.Item key="contact">
 						<Link to="contact">Contact</Link>
 					</Menu.Item>
-					<Menu.Item key="add">
-						<Link to="add">Add</Link>
-					</Menu.Item>
+					{/* {userData.token ? (<Menu.Item key="add">
+							<Link to="add">Add</Link>
+						</Menu.Item>) : null} */}
 					<Menu.Item key="dashboard">
 						<Link to="dashboard">Dashboard</Link>
 					</Menu.Item>
