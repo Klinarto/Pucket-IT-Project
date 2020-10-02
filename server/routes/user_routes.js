@@ -6,11 +6,11 @@ const authentication = require('../middleware/auth');
 // router.use(bodyParser.json());
 
 
-router.post("/", user_controller.login);
+router.post("/login", user_controller.login);
 
 router.post("/register", user_controller.register);
 
-router.get("/test", authentication.auth, user_controller.test);
+router.get("/tokenIsValid", user_controller.tokenIsValid);
 
 // //logout
 // router.get('/logout',(req,res)=>{

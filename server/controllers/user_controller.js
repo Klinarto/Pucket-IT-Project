@@ -49,10 +49,30 @@ var login = function(req, res) {
     });
 }
 
-var test = async function(req, res) {
-    console.log(req.user);
+var tokenIsValid = async function(req, res) {
+    collection = req.app.db.collection("GrizzAccount");
+    try {
+        const token = req.header("x-auth-token");
+        if (!token) {
+            return res.json(false);
+        }
+
+        const verified = jwt.verify(token, "supersecret");
+        if (!verified) {
+            return res.json(false);
+        }
+
+        const user = await collection.find({_id: verified.id});
+        if (!user) {
+            return res.json(false);
+        }
+        return res.json(true);
+    }
+    catch (err) {
+        res.status(500).json({err: err.message});
+    }
 }
 
 module.exports.login = login;
 module.exports.register = register;
-module.exports.test = test;
+module.exports.tokenIsValid = tokenIsValid;

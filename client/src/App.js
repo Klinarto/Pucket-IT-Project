@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import Home from "./pages/home";
 import AboutMe from "./pages/about-me";
 import Academic from "./pages/academic";
@@ -9,14 +9,38 @@ import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 import { Switch, Route } from "react-router-dom";
 import UserContext from "./context/user_context";
+import Axios from 'axios';
 
 function App() {
 	const [userData, setUserData] = useState({
 		token: undefined,
-		user: undefined
 	});
 
-	
+	//when app starts
+	useEffect(() => {
+		const verifyLoggedIn = async () => {
+			let token = localStorage.getItem("auth-token");
+
+			//if token does not exist, create key auth-token of empty string
+			if (token === null) {
+				localStorage.setItem("auth-token", "");
+				token = "";
+			}
+
+			const tokenRes = await Axios.post(
+				"http://localhost:5000/user/tokenIsValid",
+				null,
+				{headers: {"x-auth-token": token}})
+			
+			if (tokenRes.data) {
+				setUserData({
+					token,
+				});
+			};
+		};
+
+		verifyLoggedIn();
+	}, []);
 
 	return (
 		<main>
