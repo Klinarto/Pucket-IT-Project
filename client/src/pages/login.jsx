@@ -28,8 +28,9 @@ function Login(params) {
 	const {userData, setUserData} = useContext(user_context);
 	const onFinish = (values) => {
 		axios.post("http://localhost:5000/user/login", values)
-		.then((res) => console.log(res))
+		.then((res) => setUserData({token: res.data.token}, localStorage.setItem("auth-token", res.data.token)))
 		.catch((error) => console.log(error));
+		window.location = "/";
 	};
 
 	return (

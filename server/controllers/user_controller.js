@@ -31,11 +31,11 @@ var login = function(req, res) {
         }
         else {
             if (bcrypt.compareSync(req.body.password, user.password)) {
-                let accessToken = jwt.sign({id: user._id}, "supersecret", {
+                let token = jwt.sign({id: user._id}, "supersecret", {
                     expiresIn: 1440
                 });
                 res.json({
-                    accessToken,
+                    token,
                     user: {
                         id: user._id,
                         username: user.username
@@ -50,8 +50,8 @@ var login = function(req, res) {
 }
 
 var tokenIsValid = async function(req, res) {
-    collection = req.app.db.collection("GrizzAccount");
     try {
+        collection = req.app.db.collection("GrizzAccount");
         const token = req.header("x-auth-token");
         if (!token) {
             return res.json(false);

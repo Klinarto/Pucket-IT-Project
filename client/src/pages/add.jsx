@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
 import { Form, Input, Button, Select, DatePicker, Upload, message } from "antd";
@@ -6,10 +6,12 @@ import { InboxOutlined } from "@ant-design/icons";
 import "bulma/css/bulma.min.css";
 import axios from "axios";
 import "antd/dist/antd.css";
+//import user_context from "../context/user_context";
 
 const { Option } = Select;
 const { Dragger } = Upload;
 const { RangePicker } = DatePicker;
+//const { userData , setUserData } = useContext(user_context);
 
 const layout = {
 	labelCol: {
