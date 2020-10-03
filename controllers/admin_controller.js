@@ -4,7 +4,9 @@ const FormData = require("form-data");
 const axios = require("axios");
 const fs = require("fs");
 
-var addNewEntry = function (req, res) {
+const imgur = require("./imgur_controller");
+
+var addNewEntry = async function (req, res) {
   var section = req.body.section;
   var title = req.body.title;
   var description = req.body.description;
@@ -35,20 +37,34 @@ var addNewEntry = function (req, res) {
     }
   } else {
     console.log("image uploaded");
-    var formData = new FormData();
-    formData.append("image", fs.createReadStream(req.file.path));
-    axios
-      .post("https://api.imgur.com/3/upload", formData, {
-        headers: {
-          Authorization: "Client-ID " + process.env.CLIENT_ID,
-          ...formData.getHeaders(),
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        var imageURL = response.data.data.link;
-        console.log(imageURL);
+    // var formData = new FormData();
+    // formData.append("image", fs.createReadStream(req.file.path));
+    // axios
+    //   .post("https://api.imgur.com/3/upload", formData, {
+    //     headers: {
+    //       Authorization: "Client-ID " + process.env.CLIENT_ID,
+    //       ...formData.getHeaders(),
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //     var imageURL = response.data.data.link;
+    //     console.log(imageURL);
 
+    //   })
+    //   .catch((err) => {
+    //     console.log("Some error occured");
+    //     console.error(err);
+    //     res.send("Some error occurred");
+    //     //res.send(err);
+    //   });
+
+    imgur.imgurUpload(req.app.db, req.file.path, (imageURL) => {
+      if (imageURL == null) {
+        console.log("Some error occurred imageURL null");
+        res.send("Some error occurred! imageURL null");
+      } else {
+        console.log("Image uploaded!");
         if (section == "hobbies") {
           collection.insertOne({
             title: title,
@@ -66,15 +82,9 @@ var addNewEntry = function (req, res) {
             alignment: alignment,
           });
         }
-
         res.send("Uploaded!");
-      })
-      .catch((err) => {
-        console.log("Some error occured");
-        console.error(err);
-        res.send("Some error occurred");
-        //res.send(err);
-      });
+      }
+    });
   }
 };
 
