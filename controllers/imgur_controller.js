@@ -4,21 +4,20 @@ const mongo = require("mongodb");
 const FormData = require("form-data");
 const axios = require("axios");
 
-var refreshAccess = function (db) {
+var refreshAccess = function (db, callback) {
   var id = new mongo.ObjectID(process.env.DB_TOKEN);
   var formData = new FormData();
   formData.append("refresh_token", process.env.REFRESH_TOKEN);
   formData.append("client_id", process.env.CLIENT_ID);
   formData.append("client_secret", process.env.CLIENT_SECRET);
   formData.append("grant_type", "refresh_token");
+
   axios
-    .post("https://api.imgur.com/oauth2/token", formData)
+    .post("https://api.imgur.com/oauth2/token", formData, {
+      headers: formData.getHeaders(),
+    })
     .then((response) => {
       var accessToken = response.data.access_token;
-      if (accessToken == null) {
-        console.log("accessToken: ", accessToken);
-        return null;
-      }
 
       db.collection("authToken").updateOne(
         { _id: id },
@@ -26,13 +25,24 @@ var refreshAccess = function (db) {
           $set: {
             token: accessToken,
           },
+        },
+        (err, result) => {
+          if (err) {
+            console.log(err);
+            console.log("DB not updated.");
+            callback(500);
+          } else {
+            callback(response.status);
+          }
         }
       );
-
-      return accessToken;
+      return;
     })
     .catch((err) => {
-      return err;
+      console.log("Imgur request failed.");
+      console.log(err);
+      callback(err.status);
+      return;
     });
 };
 
