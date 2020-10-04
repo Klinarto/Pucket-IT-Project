@@ -6,12 +6,11 @@ import { InboxOutlined } from "@ant-design/icons";
 import "bulma/css/bulma.min.css";
 import axios from "axios";
 import "antd/dist/antd.css";
-//import user_context from "../context/user_context";
+import user_context from "../context/user_context";
 
 const { Option } = Select;
 const { Dragger } = Upload;
 const { RangePicker } = DatePicker;
-//const { userData , setUserData } = useContext(user_context);
 
 const layout = {
 	labelCol: {
@@ -39,6 +38,7 @@ const props = {
 };
 
 function Add() {
+	const { userData , setUserData } = useContext(user_context);
 	const [form] = Form.useForm();
 	const [title, setTitle] = useState("");
 	const [section, setSection] = useState("");
@@ -72,7 +72,7 @@ function Add() {
 
 		axios
 			.post("http://localhost:5000/admin/upload", data, {
-				headers: { "Content-Type": "multipart/form-data" },
+				headers: { "Content-Type": "multipart/form-data", "x-auth-token": userData.token },
 			})
 			.then((res) => console.log(res));
 	};

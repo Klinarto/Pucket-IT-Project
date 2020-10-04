@@ -12,8 +12,4 @@ router.post("/register", user_controller.register);
 
 router.post("/tokenIsValid", user_controller.tokenIsValid);
 
-// //logout
-// router.get('/logout',(req,res)=>{
-//  })
-
 module.exports = router;
