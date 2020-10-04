@@ -29,8 +29,6 @@ function Contact(params) {
 
 	return (
 		<React.Fragment>
-			<Header />
-			<Navbar current="contact" />
 			<section className="section">
 				<div className="container">
 					{" "}

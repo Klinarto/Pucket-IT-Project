@@ -24,7 +24,7 @@ const layout = {
 	},
 };
 
-function EditModal(params) {
+function AddModal(params) {
 	const [form] = Form.useForm();
 	const alignments = ["Left", "Right"];
 	const section = params.section;
@@ -49,8 +49,8 @@ function EditModal(params) {
 	return (
 		<Modal
 			visible={params.visible}
-			title="Edit Showcase"
-			okText="Edit"
+			title="Add Showcase"
+			okText="Add"
 			cancelText="Cancel"
 			onCancel={params.onCancel}
 			destroyOnClose={true}
@@ -60,6 +60,7 @@ function EditModal(params) {
 		>
 			<Form
 				form={form}
+				preserve={false}
 				layout="vertical"
 				name="edit"
 				initialValues={params.showcase}
@@ -94,6 +95,7 @@ function EditModal(params) {
 						})}
 					</Select>
 				</Form.Item>
+
 				{section === "academicExperience" ? (
 					<Form.Item
 						name="dates"
@@ -124,4 +126,4 @@ function EditModal(params) {
 	);
 }
 
-export default EditModal;
+export default AddModal;

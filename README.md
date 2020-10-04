@@ -1,17 +1,8 @@
-# Pucket-IT-Project
+# Pucket-IT-Project :D
 
-## Client
+### COMP30022 (IT Project) ePortfolio Website
 
-Front end folder
-
-## Server
-
-Back end folder
-
-## Guide on Starting both the front and back end
-
-Run `npm install` to install all the dependencies
-
-Once that's done, there are two methods to start, you can open two terminals, **cd** to the client in one terminal and run `npm start`, and **cd** to the server and run `nodemon server`.
-
-The other method is to run `npm run dev` on the root directory
+### Guide for pushing into repo:
+* Since we are using Node.js, it is expected for you to install dependencies through npm
+* Keeping that in mind, please DO NOT push the node_modules folder, and just keep the package.json and package-lock.json
+* Reference to what the repo should look like: https://github.com/FusionAuth/fusionauth-example-react
