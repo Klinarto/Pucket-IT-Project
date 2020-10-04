@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
 import "antd/dist/antd.css";
@@ -23,13 +23,22 @@ const validateMessages = {
 	},
 };
 
+
 function Login(params) {
 	const [form] = Form.useForm();
 	const {userData, setUserData} = useContext(user_context);
 	const onFinish = (values) => {
 		axios.post("http://localhost:5000/user/login", values)
-		.then((res) => setUserData({token: res.data.token}, localStorage.setItem("auth-token", res.data.token), window.location = "/"))
-		.catch((error) => console.log(error));
+		.then((res) => {
+			setUserData({token: res.data.token});
+			localStorage.setItem("auth-token", res.data.token);
+			window.location = "/";
+			message.success("Login succesful");
+		})
+		.catch((error) => {
+			console.log(error)
+			message.error("Login failed");
+		});
 	};
 
 	return (

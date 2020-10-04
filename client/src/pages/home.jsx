@@ -9,7 +9,7 @@ import "../utilities/helper.css";
 class Home extends Component {
 	constructor(props) {
 		super();
-
+		
 		this.state = {
 			heroTitle: "",
 			heroDesc: "",

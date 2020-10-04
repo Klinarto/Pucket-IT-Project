@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Affix } from "antd";
+import { Menu, Affix, message } from "antd";
 import "antd/dist/antd.css";
 import user_context from "../context/user_context";
 
@@ -9,7 +9,8 @@ function Navbar(props) {
 	const [current, setCurrent] = useState(props.current);
 	const logout = () => {
         setUserData({token: undefined, user: undefined});
-        localStorage.setItem("auth-token", "");
+		localStorage.setItem("auth-token", "");
+		message.success("Logout Successful");
 	};
 	
 	return (
