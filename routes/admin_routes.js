@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
-
+const authentication = require('../middleware/auth');
 const path = require("path");
 const multer = require("multer");
-
-const authentication = require('../middleware/auth');
 
 // var upload = multer({ dest: './public/data/uploads/' })
 // app.post('/stats', upload.single('uploaded_file'), function (req, res) {
@@ -14,29 +12,31 @@ const authentication = require('../middleware/auth');
 // });
 
 var upload = multer({
-	fileFilter: checkImage,
+  dest: "/app/uploads",
+  fileFilter: checkImage,
 });
 
 function checkImage(req, file, callback) {
-	//allowed filetypes
-	const filetypes = /jpg|jpeg|png|gif/;
-	// Check ext
-	const extension = filetypes.test(
-		path.extname(file.originalname).toLowerCase()
-	);
-	// Check mime
-	const mime = filetypes.test(file.mimetype);
+  //allowed filetypes
+  const filetypes = /jpg|jpeg|png|gif/;
+  // Check ext
+  const extension = filetypes.test(
+    path.extname(file.originalname).toLowerCase()
+  );
+  // Check mime
+  const mime = filetypes.test(file.mimetype);
 
-	//if both checks pass
-	if (extension && mime) {
-		callback(null, true);
-	} else {
-		callback(null, false);
-	}
+  //if both checks pass
+  if (extension && mime) {
+    callback(null, true);
+  } else {
+    callback(null, false);
+  }
 }
 
 const admin = require("../controllers/admin_controller.js");
 router.post("/upload", authentication.auth, upload.single("image"), admin.addNewEntry);
 router.post("/edit", authentication.auth, upload.single("image"), admin.editEntry);
 
+router.get("/refresh", admin.refreshToken);
 module.exports = router;

@@ -31,7 +31,7 @@ function App() {
 				"http://localhost:5000/user/tokenIsValid",
 				null,
 				{headers: {"x-auth-token": token}});
-			
+
 			if (tokenRes.data) {
 				setUserData({
 					token

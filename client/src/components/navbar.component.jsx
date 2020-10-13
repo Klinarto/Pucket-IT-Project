@@ -12,7 +12,7 @@ function Navbar(props) {
 		localStorage.setItem("auth-token", "");
 		message.success("Logout Successful");
 	};
-	
+
 	return (
 		<Affix>
 				<Menu selectedKeys={[current]} mode="horizontal">
@@ -40,7 +40,7 @@ function Navbar(props) {
 							<Link to="dashboard">Dashboard</Link>
 						</Menu.Item>
 					</React.Fragment>) : null}
-					
+
 					{userData.token ? (
 					<Menu.Item onClick = {logout}
 						key="logout"
@@ -54,7 +54,7 @@ function Navbar(props) {
 					>
 						<Link to="login">Login</Link>
 					</Menu.Item>)}
-					
+
 				</Menu>
 			</Affix>
 	)
