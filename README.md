@@ -4,10 +4,6 @@
 
 Front end folder
 
-## Server
-
-Back end folder
-
 ## Guide on Starting both the front and back end
 
 Run `npm install` to install all the dependencies
