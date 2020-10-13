@@ -40,8 +40,6 @@ class Home extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Header />
-				<Navbar current="home" />
 				<section className="hero is-fullheight">
 					<div
 						id="home-hero"

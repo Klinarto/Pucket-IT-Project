@@ -22,8 +22,8 @@ var sendContactMe = function (req, res) {
     }
     console.log(res);
   });
-  res.send("Message sent!");
+
+  res.send("Message Sent!");
 };
 
 module.exports.sendContactMe = sendContactMe;
-

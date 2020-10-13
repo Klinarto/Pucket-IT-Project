@@ -36,6 +36,8 @@ const props = {
 	},
 };
 
+// Replaced with add_modal
+
 function Add() {
 	const [form] = Form.useForm();
 	const [title, setTitle] = useState("");
@@ -54,10 +56,11 @@ function Add() {
 		} else {
 			values.section = "academicExperience";
 		}
+		console.log(values);
 		values.dateStart = values.dates[0]._d.toISOString();
 		values.dateEnd = values.dates[1]._d.toISOString();
 		delete values.dates;
-		message.success("Showcase added successfully.", 2);
+
 		console.log(values);
 
 		let data = new FormData();
@@ -72,7 +75,14 @@ function Add() {
 			.post("http://localhost:5000/admin/upload", data, {
 				headers: { "Content-Type": "multipart/form-data" },
 			})
-			.then((res) => console.log(res));
+			.then((res) => {
+				console.log(res);
+				message.success("Showcase added successfully.", 2);
+			})
+			.catch((error) => {
+				console.log(error);
+				message.error("Showcase failed to added.", 2);
+			});
 	};
 
 	const onReset = () => {
@@ -81,8 +91,6 @@ function Add() {
 
 	return (
 		<React.Fragment>
-			<Header />
-			<Navbar current="add" />
 			<section className="section">
 				<div className="container">
 					<Form

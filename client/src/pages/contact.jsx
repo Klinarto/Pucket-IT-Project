@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Form, Input, Button } from "antd";
 import Navbar from "../components/navbar.component";
@@ -33,8 +34,6 @@ function Contact(params) {
 
 	return (
 		<React.Fragment>
-			<Header />
-			<Navbar current="contact" />
 			<section className="section">
 				<div className="container">
 					{" "}
