@@ -59,6 +59,20 @@ function Add() {
 		delete values.dates;
 		message.success("Showcase added successfully.", 2);
 		console.log(values);
+
+		let data = new FormData();
+
+		for (let key in values) {
+			data.append(key, values[key]);
+		}
+
+		console.log(data);
+
+		axios
+			.post("http://localhost:5000/admin/upload", data, {
+				headers: { "Content-Type": "multipart/form-data" },
+			})
+			.then((res) => console.log(res));
 	};
 
 	const onReset = () => {

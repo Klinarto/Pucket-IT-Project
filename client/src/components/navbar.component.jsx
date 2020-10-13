@@ -32,6 +32,9 @@ class Navbar extends Component {
 					<Menu.Item key="add">
 						<Link to="add">Add</Link>
 					</Menu.Item>
+					<Menu.Item key="dashboard">
+						<Link to="dashboard">Dashboard</Link>
+					</Menu.Item>
 					<Menu.Item
 						style={{ float: "right", marginRight: "1.5em" }}
 						onClick={this.showLogin}
