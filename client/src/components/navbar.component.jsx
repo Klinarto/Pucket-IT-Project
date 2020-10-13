@@ -51,12 +51,12 @@ function Navbar(props) {
 				<Menu.Item key="contact">
 					<Link to="contact">Contact</Link>
 				</Menu.Item>
-				{/* <Menu.Item key="add">
-						<Link to="add">Add</Link>
-					</Menu.Item>
-					<Menu.Item key="dashboard">
-						<Link to="dashboard">Dashboard</Link>
-					</Menu.Item> */}
+				<Menu.Item key="add">
+					<Link to="add">Add</Link>
+				</Menu.Item>
+				<Menu.Item key="dashboard">
+					<Link to="dashboard">Dashboard</Link>
+				</Menu.Item>
 				<Menu.Item style={{ float: "right", marginRight: "1.5em" }}>
 					Login
 				</Menu.Item>

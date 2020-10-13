@@ -17,7 +17,7 @@ const style = {
 	height: 40,
 	width: 40,
 	lineHeight: "40px",
-	borderRadius: "100%",
+	borderRadius: 4,
 	backgroundColor: "#1088e9",
 	color: "#fff",
 	textAlign: "center",
@@ -37,8 +37,8 @@ function App() {
 			<Route path="/add" component={Add} />
 			<Route path="/dashboard" component={Dashboard} />
 			<BackTop>
+				<div style={style}>UP</div>
 				{/* <div style={style}>( ͡° ͜ʖ ͡°)</div> */}
-				<div style={style}>( ͡° ͜ʖ ͡°)</div>
 			</BackTop>
 		</main>
 	);
