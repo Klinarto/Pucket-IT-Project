@@ -12,7 +12,7 @@ const multer = require("multer");
 // });
 
 var upload = multer({
-  dest: "/uploads",
+  dest: "/app/uploads",
   fileFilter: checkImage,
 });
 
