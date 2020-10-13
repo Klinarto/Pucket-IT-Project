@@ -76,6 +76,7 @@ function EditModal(params) {
 					<Input />
 				</Form.Item>
 				<Form.Item
+
 					name="alignment"
 					label="Alignment"
 					rules={[
@@ -94,6 +95,7 @@ function EditModal(params) {
 						})}
 					</Select>
 				</Form.Item>
+
 				{section === "academicExperience" ? (
 					<Form.Item
 						name="dates"

@@ -10,7 +10,6 @@ function Navbar(props) {
 		// console.log("click ", e);
 		setCurrent(e.key);
 	}
-
 	return (
 		<Affix>
 			<Menu

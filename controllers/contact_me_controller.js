@@ -22,6 +22,7 @@ var sendContactMe = function (req, res) {
     }
     console.log(res);
   });
+
   res.send("Message Sent!");
 };
 

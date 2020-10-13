@@ -6,6 +6,7 @@ import AboutMe from "./pages/about-me";
 import Contact from "./pages/contact";
 import Add from "./pages/add";
 import Dashboard from "./pages/dashboard";
+
 import Navbar from "./components/navbar.component";
 import Header from "./components/header.component";
 import Section from "./components/section.component";
@@ -24,9 +25,11 @@ const style = {
 	fontSize: 14,
 };
 
+
 function App() {
 	return (
 		<main>
+
 			<Header />
 			<Navbar />
 			<Route path="/" component={Home} exact />
