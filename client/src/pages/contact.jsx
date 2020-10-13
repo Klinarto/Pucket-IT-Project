@@ -28,7 +28,7 @@ function Contact(params) {
 		axios.post("http://localhost:5000/api/contact-me", values)
 		.then((res) => console.log(res))
 		.catch((error) => console.log(error));
-		console.log(values);
+		window.location = "/";
 	};
 
 	return (
