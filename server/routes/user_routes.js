@@ -10,6 +10,8 @@ router.post("/login", user_controller.login);
 
 router.post("/register", user_controller.register);
 
+router.post("/delete", user_controller.deleteUser);
+
 router.post("/tokenIsValid", user_controller.tokenIsValid);
 
 module.exports = router;

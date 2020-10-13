@@ -63,3 +63,5 @@ app.use("/admin", admin_routes);
 
 const user_routes = require("./routes/user_routes");
 app.use("/user", user_routes);
+
+module.exports = app;

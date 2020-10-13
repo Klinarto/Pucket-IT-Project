@@ -8,17 +8,17 @@ var register = function (req, res) {
     }
 
     collection = req.app.db.collection("GrizzAccount");
-    collection.findOne({username: req.body.username}, (data) => {
-        if (!data) {
+    collection.findOne({username: req.body.username}, (err, user) => {
+        if (!user) {
             bcrypt.hash(req.body.password, 10, (err, hash) => {
                 userData.password = hash;
                 collection.insertOne(userData)
-                .then(user => {res.send("sucess")})
+                .then(user => {res.send("success")})
                 .catch(err => {res.send("failed")})
             });
         }
         else {
-            res.json({error: "user already exist"});
+            res.status(400).json({error: "user already exist"});
         }
     });
 }
@@ -26,7 +26,7 @@ var register = function (req, res) {
 var login = function(req, res) {
     collection = req.app.db.collection("GrizzAccount");
     collection.findOne({username: req.body.username}, (err, user) => {
-        if (err) {
+        if (!user || err) {
             res.status(400).json({msg: "username not found in database"});
         }
         else {
@@ -44,6 +44,23 @@ var login = function(req, res) {
             }
             else {
                 res.status(400).json({msg: "password is incorrect"})
+            }
+        }
+    });
+}
+
+var deleteUser = function(req, res) {
+    collection = req.app.db.collection("GrizzAccount");
+    collection.deleteOne({username: req.body.username}, (err, user) => {
+        if (err) {
+            res.status(400).json({msg: "error deleting has occured"});
+        }
+        else {
+            if (user.result.ok == 1 && user.result.n == 1) {
+                res.send("delete successful");
+            }
+            else {
+                res.status(400).send("username not found in the database")
             }
         }
     });
@@ -76,3 +93,4 @@ var tokenIsValid = async function(req, res) {
 module.exports.login = login;
 module.exports.register = register;
 module.exports.tokenIsValid = tokenIsValid;
+module.exports.deleteUser = deleteUser;
