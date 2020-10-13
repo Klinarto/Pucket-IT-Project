@@ -126,40 +126,6 @@ var editEntry = function (req, res) {
   } else {
     console.log("New photo uploaded");
 
-    //delete previous image
-    // collection.findOne({ _id: id }).then((result) => {
-    //   if (result.image == null) {
-    //     console.log("none found");
-    //   } else {
-    //     var oldImage = result.image;
-    //     var imgurRegex = /(http(s*)):\/\/i.imgur.com\/([a-zA-Z0-9_\s]*)\./;
-    //     var match = imgurRegex.exec(oldImage);
-    //     var imageHash = match[3];
-    //     console.log(imageHash);
-
-    //     axios
-    //       .get("https://api.imgur.com/3/image/" + imageHash)
-    //       .then((response) => {
-    //         var deleteHash = response.data.data.deletehash;
-    //         axios
-    //           .delete("https://api.imgur.com/3/image/" + deleteHash)
-    //           .then((response) => {
-    //             if (response.status == 200) {
-    //               console.log("deleted!");
-    //             } else {
-    //               console.log("other status");
-    //             }
-    //           })
-    //           .catch((err) => {
-    //             console.log(err);
-    //           });
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //       });
-    //   }
-    // });
-
     //delete previous photo
     collection.findOne({ _id: id }).then((result) => {
       if (result.image == null) {
@@ -212,57 +178,6 @@ var editEntry = function (req, res) {
         res.send("Edited!");
       }
     });
-
-    // var formData = new FormData();
-    // formData.append("image", fs.createReadStream(req.file.path));
-    // axios
-    //   .post("https://api.imgur.com/3/upload", formData, {
-    //     headers: {
-    //       Authorization: "Client-ID " + process.env.CLIENT_ID,
-    //       ...formData.getHeaders(),
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //     var imageURL = response.data.data.link;
-    //     console.log(imageURL);
-
-    //     if (section == "hobbies") {
-    //       collection.updateOne(
-    //         { _id: id },
-    //         {
-    //           $set: {
-    //             title: title,
-    //             description: description,
-    //             image: imageURL,
-    //             alignment: alignment,
-    //           },
-    //         }
-    //       );
-    //     } else {
-    //       collection.updateOne(
-    //         { _id: id },
-    //         {
-    //           $set: {
-    //             title: title,
-    //             startDate: new Date(startDate),
-    //             endDate: new Date(endDate),
-    //             description: description,
-    //             image: imageURL,
-    //             alignment: alignment,
-    //           },
-    //         }
-    //       );
-    //     }
-
-    //     res.send("Edited!");
-    //   })
-    //   .catch((err) => {
-    //     console.log("Some error occured");
-    //     console.error(err);
-    //     res.send("Some error occurred");
-    //     //res.send(err);
-    //   });
   }
 };
 
