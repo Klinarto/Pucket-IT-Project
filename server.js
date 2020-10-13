@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 const assert = require("assert");
 const fs = require("fs");
@@ -31,24 +30,24 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 //create new MongoClient with options
 const client = new MongoClient(process.env.URI, {
-  useNewUrlParser: true,
-  poolSize: process.env.POOL_SIZE,
-  useUnifiedTopology: true,
+	useNewUrlParser: true,
+	poolSize: process.env.POOL_SIZE,
+	useUnifiedTopology: true,
 });
 
 //connect client (must be done before using client to access DB)
 client.connect((err) => {
-  if (err) {
-    console.error(err);
-  }
+	if (err) {
+		console.error(err);
+	}
 
-  //specify DB to access
-  app.db = client.db(process.env.DB_NAME);
+	//specify DB to access
+	app.db = client.db(process.env.DB_NAME);
 
-  //call expressJS to listen to port (now that DB is ready)
-  app.listen(process.env.PORT || port, () => {
-    console.log(`API site listening at http://localhost:${port}`);
-  });
+	//call expressJS to listen to port (now that DB is ready)
+	app.listen(process.env.PORT || port, () => {
+		console.log(`API site listening at http://localhost:${port}`);
+	});
 });
 
 /*
@@ -62,5 +61,5 @@ app.use("/admin", admin_routes);
 
 // Handles any requests that don't match the ones above
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+	res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });

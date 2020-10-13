@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "../components/navbar.component";
-import Header from "../components/header.component";
 import Showcase from "../components/showcase.component";
 import AddModal from "../components/add_modal.component";
 import { Button, message } from "antd";
@@ -11,6 +9,7 @@ import axios from "axios";
 function Section(params) {
 	const [showcases, setShowcases] = useState([]);
 	const [visible, setVisible] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		let mounted = true;
@@ -57,15 +56,16 @@ function Section(params) {
 			.post("http://localhost:5000/admin/upload", data, {
 				headers: { "Content-Type": "multipart/form-data" },
 			})
-			.then((res) => console.log(res))
+			.then((res) => {
+				setLoading(false);
+				setVisible(false);
+				message.success("Showcase added successfully.", 2);
+				console.log(res);
+			})
 			.catch((error) => {
 				message.error("Failed to send");
 				console.error(error);
 			});
-		setTimeout(() => {
-			setVisible(false);
-			message.success("Showcase added successfully.", 2);
-		}, 1500);
 	}
 
 	return (
@@ -93,6 +93,10 @@ function Section(params) {
 					</Button>
 					<AddModal
 						visible={visible}
+						loading={loading}
+						changeLoading={(value) => {
+							setLoading(value);
+						}}
 						onCreate={onAdd}
 						onCancel={() => {
 							setVisible(false);

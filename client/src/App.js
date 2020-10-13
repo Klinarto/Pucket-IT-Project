@@ -25,11 +25,9 @@ const style = {
 	fontSize: 14,
 };
 
-
 function App() {
 	return (
 		<main>
-
 			<Header />
 			<Navbar />
 			<Route path="/" component={Home} exact />
@@ -37,8 +35,8 @@ function App() {
 			<Route path="/academic-experiences" component={Section} />
 			<Route path="/hobbies" component={Section} />
 			<Route path="/contact" component={Contact} />
-			<Route path="/add" component={Add} />
-			<Route path="/dashboard" component={Dashboard} />
+			{/* <Route path="/add" component={Add} />
+			<Route path="/dashboard" component={Dashboard} /> */}
 			<BackTop>
 				<div style={style}>UP</div>
 				{/* <div style={style}>( ͡° ͜ʖ ͡°)</div> */}

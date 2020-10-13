@@ -1,49 +1,71 @@
 import React, { useState } from "react";
-import {
-	Button,
-	Modal,
-	Form,
-	Select,
-	Input,
-	DatePicker,
-	Upload,
-	message,
-} from "antd";
+import { Modal, Form, Select, Input, DatePicker, Upload } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 
 const { Option } = Select;
-const { Dragger } = Upload;
 const { RangePicker } = DatePicker;
 
-const layout = {
-	labelCol: {
-		span: 6,
-	},
-	wrapperCol: {
-		span: 12,
-	},
-};
+function getBase64(file) {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => resolve(reader.result);
+		reader.onerror = (error) => reject(error);
+	});
+}
 
 function EditModal(params) {
 	const [form] = Form.useForm();
 	const alignments = ["Left", "Right"];
 	const section = params.section;
-	const [loading, setLoading] = useState(false);
+	const [fileList, setFileList] = useState([]);
+	const [previewVisible, setPreviewVisible] = useState(false);
+	const [previewImage, setPreviewImage] = useState("");
+	const [previewTitle, setPreviewTitle] = useState("");
 
-	// console.log(props);
+	function handleUpload({ fileList }) {
+		console.log("File", fileList);
+		setFileList(fileList);
+		console.log("fileList", fileList);
+	}
+
+	function handleCancel() {
+		setPreviewVisible(false);
+	}
+
+	async function handlePreview(file) {
+		if (!file.url && !file.preview) {
+			file.preview = await getBase64(file.originFileObj);
+		}
+		setPreviewImage(file.url || file.preview);
+		setPreviewVisible(true);
+		setPreviewTitle(
+			file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+		);
+	}
+
+	const uploadButton = (
+		<div>
+			<PlusOutlined />
+			<div style={{ marginTop: 8 }}>
+				Click or Drag <br /> to upload
+			</div>
+		</div>
+	);
 
 	function onOk() {
 		form.validateFields()
 			.then((values) => {
-				setLoading(true);
+				if (fileList.length > 0) {
+					values.image = fileList[0].originFileObj;
+				}
+				params.changeLoading(true);
 				params.onCreate(values);
 			})
 			.catch((info) => {
 				console.log("Validate Failed:", info);
 			});
-		setTimeout(() => {
-			setLoading(false);
-		}, 1500);
 	}
 
 	return (
@@ -56,7 +78,7 @@ function EditModal(params) {
 			destroyOnClose={true}
 			centered
 			onOk={onOk}
-			confirmLoading={loading}
+			confirmLoading={params.loading}
 		>
 			<Form
 				form={form}
@@ -76,7 +98,6 @@ function EditModal(params) {
 					<Input />
 				</Form.Item>
 				<Form.Item
-
 					name="alignment"
 					label="Alignment"
 					rules={[
@@ -120,6 +141,29 @@ function EditModal(params) {
 					]}
 				>
 					<Input.TextArea />
+				</Form.Item>
+				<Form.Item name="image" label="Image" valuePropName="file">
+					<Upload
+						listType="picture-card"
+						fileList={fileList}
+						onPreview={handlePreview}
+						onChange={handleUpload}
+						beforeUpload={() => false}
+					>
+						{fileList.length >= 1 ? null : uploadButton}
+					</Upload>
+					<Modal
+						visible={previewVisible}
+						title={previewTitle}
+						footer={null}
+						onCancel={handleCancel}
+					>
+						<img
+							alt="example"
+							style={{ width: "100%" }}
+							src={previewImage}
+						/>
+					</Modal>
 				</Form.Item>
 			</Form>
 		</Modal>

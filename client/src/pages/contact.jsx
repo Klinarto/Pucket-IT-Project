@@ -1,8 +1,6 @@
 
 import React from "react";
 import { Form, Input, Button } from "antd";
-import Navbar from "../components/navbar.component";
-import Header from "../components/header.component";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
 import axios from "axios";

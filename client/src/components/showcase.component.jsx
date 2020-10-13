@@ -10,14 +10,15 @@ import "./showcase.css";
 // like an academic experience or hobby
 
 function Showcase(params) {
+	// console.log(params.showcase);
 	const [visible, setVisible] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const title = params.showcase.title;
 	const description = params.showcase.description;
 	const imageURL = params.showcase.image;
-	// let showcase = { title: title, description: description };
-	let hasDate = false;
 
+	let hasDate = false;
 	let parsedStartDate = null;
 	let parsedEndDate = null;
 
@@ -71,6 +72,7 @@ function Showcase(params) {
 		console.log("Received values of form: ", values);
 
 		values.section = params.section;
+		values.imageUrl = params.showcase.image;
 
 		if (values.hasOwnProperty("dates")) {
 			// console.log("Values has dates");
@@ -91,15 +93,16 @@ function Showcase(params) {
 			.post("http://localhost:5000/admin/edit", data, {
 				headers: { "Content-Type": "multipart/form-data" },
 			})
-			.then((res) => console.log(res))
+			.then((res) => {
+				setLoading(false);
+				setVisible(false);
+				message.success("Showcase edited successfully.", 2);
+				console.log(res);
+			})
 			.catch((error) => {
 				message.error("Failed to send");
 				console.error(error);
 			});
-		setTimeout(() => {
-			setVisible(false);
-			message.success("Showcase edited successfully.", 2);
-		}, 1500);
 	}
 
 	// console.log(params.showcase);
@@ -155,7 +158,11 @@ function Showcase(params) {
 				</section>
 				<EditModal
 					visible={visible}
+					loading={loading}
 					onCreate={onEdit}
+					changeLoading={(value) => {
+						setLoading(value);
+					}}
 					onCancel={() => {
 						setVisible(false);
 					}}
@@ -214,7 +221,11 @@ function Showcase(params) {
 				</section>
 				<EditModal
 					visible={visible}
+					loading={loading}
 					onCreate={onEdit}
+					changeLoading={(value) => {
+						setLoading(value);
+					}}
 					onCancel={() => {
 						setVisible(false);
 					}}
