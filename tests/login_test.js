@@ -2,7 +2,14 @@ var expect = require('chai').expect;
 const app = require('../server.js');
 const request = require('supertest');
 
+before(done => {
+    app.on("ready", () => {
+        done();
+    });
+});
+
 describe('login functionality', function () {
+
     it("try to register user", function (done) {
         request(app)
             .post('/user/register')

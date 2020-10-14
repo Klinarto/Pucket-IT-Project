@@ -47,6 +47,7 @@ client.connect((err) => {
   //call expressJS to listen to port (now that DB is ready)
   app.listen(process.env.PORT || port, () => {
     console.log(`API site listening at http://localhost:${port}`);
+    app.emit("ready");
   });
 });
 
