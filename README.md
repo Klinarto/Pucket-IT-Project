@@ -2,7 +2,7 @@
 
 ## Client
 
-Front end folder
+Client files are in the client folder
 
 ## Guide on Starting both the front and back end
 
