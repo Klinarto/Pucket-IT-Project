@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const authentication = require('../middleware/auth');
 const path = require("path");
 const multer = require("multer");
 
@@ -35,8 +35,8 @@ function checkImage(req, file, callback) {
 }
 
 const admin = require("../controllers/admin_controller.js");
-router.post("/upload", upload.single("image"), admin.addNewEntry);
-router.post("/edit", upload.single("image"), admin.editEntry);
+router.post("/upload", authentication.auth, upload.single("image"), admin.addNewEntry);
+router.post("/edit", authentication.auth, upload.single("image"), admin.editEntry);
 
 router.get("/refresh", admin.refreshToken);
 module.exports = router;

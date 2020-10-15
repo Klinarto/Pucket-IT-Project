@@ -1,18 +1,20 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Affix } from "antd";
+import { Menu, Affix, message } from "antd";
 import "antd/dist/antd.css";
+import user_context from "../context/user_context";
 
-class Navbar extends Component {
-	constructor(props) {
-		super();
-		this.state = { current: props.current };
-	}
+function Navbar(props) {
+	const {userData, setUserData} = useContext(user_context);
+	const [current, setCurrent] = useState(props.current);
+	const logout = () => {
+        setUserData({token: undefined, user: undefined});
+		localStorage.setItem("auth-token", "");
+		message.success("Logout Successful");
+	};
 
-	render() {
-		const { current } = this.state;
-		return (
-			<Affix>
+	return (
+		<Affix>
 				<Menu selectedKeys={[current]} mode="horizontal">
 					<Menu.Item key="home">
 						<Link to="/">Home</Link>
@@ -29,22 +31,33 @@ class Navbar extends Component {
 					<Menu.Item key="contact">
 						<Link to="contact">Contact</Link>
 					</Menu.Item>
-					<Menu.Item key="add">
-						<Link to="add">Add</Link>
-					</Menu.Item>
-					<Menu.Item key="dashboard">
-						<Link to="dashboard">Dashboard</Link>
-					</Menu.Item>
-					<Menu.Item
+					{userData.token ? (
+					<React.Fragment>
+						<Menu.Item key="add">
+							<Link to="add">Add</Link>
+						</Menu.Item>
+						<Menu.Item key="dashboard">
+							<Link to="dashboard">Dashboard</Link>
+						</Menu.Item>
+					</React.Fragment>) : null}
+
+					{userData.token ? (
+					<Menu.Item onClick = {logout}
+						key="logout"
 						style={{ float: "right", marginRight: "1.5em" }}
-						onClick={this.showLogin}
 					>
-						Login
+						<Link to="/">Logout</Link>
 					</Menu.Item>
+					) : (<Menu.Item
+						key="login"
+						style={{ float: "right", marginRight: "1.5em" }}
+					>
+						<Link to="login">Login</Link>
+					</Menu.Item>)}
+
 				</Menu>
 			</Affix>
-		);
-	}
+	)
 }
 
 export default Navbar;

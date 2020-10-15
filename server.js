@@ -47,6 +47,7 @@ client.connect((err) => {
   //call expressJS to listen to port (now that DB is ready)
   app.listen(process.env.PORT || port, () => {
     console.log(`API site listening at http://localhost:${port}`);
+    app.emit("ready");
   });
 });
 
@@ -59,7 +60,12 @@ app.use("/api", profile_routes);
 const admin_routes = require("./routes/admin_routes");
 app.use("/admin", admin_routes);
 
+const user_routes = require("./routes/user_routes");
+app.use("/user", user_routes);
+
 // Handles any requests that don't match the ones above
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
+
+module.exports = app;
