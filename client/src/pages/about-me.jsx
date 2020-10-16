@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Navbar from "../components/navbar.component";
-import Header from "../components/header.component";
 import CarouselImage from "../components/carousel_image.component";
 import { Carousel } from "antd";
 import axios from "axios";

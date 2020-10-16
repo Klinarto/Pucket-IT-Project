@@ -17,17 +17,34 @@ function getBase64(file) {
 
 function AddModal(params) {
 	const [form] = Form.useForm();
-	const alignments = ["Left", "Right"];
-	const section = params.section;
 	const [fileList, setFileList] = useState([]);
 	const [previewVisible, setPreviewVisible] = useState(false);
 	const [previewImage, setPreviewImage] = useState("");
 	const [previewTitle, setPreviewTitle] = useState("");
+	const alignments = ["Left", "Right"];
+	const section = params.section;
+
+	const validateMessages = {
+		required: "${label} is required",
+	};
+
+	const uploadButton = (
+		<div>
+			<PlusOutlined />
+			<div style={{ marginTop: 8 }}>
+				Click or Drag <br /> to upload
+			</div>
+		</div>
+	);
 
 	function handleUpload({ fileList }) {
-		console.log("File", fileList);
+		// console.log("File", fileList);
 		setFileList(fileList);
-		console.log("fileList", fileList);
+		if (form.getFieldValue("image").fileList.length == 0) {
+			form.setFieldsValue({ image: null });
+		}
+		// console.log("fileList", fileList);
+		// console.log("Image:", form.getFieldValue("image"));
 	}
 
 	function handleCancel() {
@@ -44,15 +61,6 @@ function AddModal(params) {
 			file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
 		);
 	}
-
-	const uploadButton = (
-		<div>
-			<PlusOutlined />
-			<div style={{ marginTop: 8 }}>
-				Click or Drag <br /> to upload
-			</div>
-		</div>
-	);
 
 	// console.log(props);
 
@@ -86,6 +94,7 @@ function AddModal(params) {
 				layout="vertical"
 				name="edit"
 				initialValues={params.showcase}
+				validateMessages={validateMessages}
 			>
 				<Form.Item
 					name="title"
@@ -143,16 +152,27 @@ function AddModal(params) {
 				>
 					<Input.TextArea />
 				</Form.Item>
-				<Form.Item name="image" label="Image" valuePropName="file">
-					<Upload
-						listType="picture-card"
-						fileList={fileList}
-						onPreview={handlePreview}
-						onChange={handleUpload}
-						beforeUpload={() => false}
+				<Form.Item
+					label="Image"
+					rules={[{ required: true, message: "Image is required" }]}
+					required
+				>
+					<Form.Item
+						name="image"
+						rules={[
+							{ required: true, message: "Image is required" },
+						]}
 					>
-						{fileList.length >= 1 ? null : uploadButton}
-					</Upload>
+						<Upload
+							listType="picture-card"
+							fileList={fileList}
+							onPreview={handlePreview}
+							onChange={handleUpload}
+							beforeUpload={() => false}
+						>
+							{fileList.length >= 1 ? null : uploadButton}
+						</Upload>
+					</Form.Item>
 					<Modal
 						visible={previewVisible}
 						title={previewTitle}

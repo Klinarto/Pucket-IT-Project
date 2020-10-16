@@ -4,8 +4,8 @@ import AboutMe from "./pages/about-me";
 // import Academic from "./pages/academic";
 // import Hobbies from "./pages/hobbies";
 import Contact from "./pages/contact";
-import Add from "./pages/add";
-import Dashboard from "./pages/dashboard";
+// import Add from "./pages/add";
+// import Dashboard from "./pages/dashboard";
 
 import Navbar from "./components/navbar.component";
 import Header from "./components/header.component";

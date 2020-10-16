@@ -29,7 +29,7 @@ function Section(params) {
 		return function cleanup() {
 			mounted = false;
 		};
-	}, [showcases]);
+	}, [showcases, params]);
 
 	function onAdd(values) {
 		console.log("Received values of form: ", values);

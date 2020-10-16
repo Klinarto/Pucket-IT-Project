@@ -17,17 +17,30 @@ function getBase64(file) {
 
 function EditModal(params) {
 	const [form] = Form.useForm();
-	const alignments = ["Left", "Right"];
-	const section = params.section;
 	const [fileList, setFileList] = useState([]);
 	const [previewVisible, setPreviewVisible] = useState(false);
 	const [previewImage, setPreviewImage] = useState("");
 	const [previewTitle, setPreviewTitle] = useState("");
+	const alignments = ["Left", "Right"];
+	const section = params.section;
+
+	const validateMessages = {
+		required: "${label} is required",
+	};
+
+	const uploadButton = (
+		<div>
+			<PlusOutlined />
+			<div style={{ marginTop: 8 }}>
+				Click or Drag <br /> to upload
+			</div>
+		</div>
+	);
 
 	function handleUpload({ fileList }) {
-		console.log("File", fileList);
+		// console.log("File", fileList);
 		setFileList(fileList);
-		console.log("fileList", fileList);
+		// console.log("fileList", fileList);
 	}
 
 	function handleCancel() {
@@ -44,15 +57,6 @@ function EditModal(params) {
 			file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
 		);
 	}
-
-	const uploadButton = (
-		<div>
-			<PlusOutlined />
-			<div style={{ marginTop: 8 }}>
-				Click or Drag <br /> to upload
-			</div>
-		</div>
-	);
 
 	function onOk() {
 		form.validateFields()
@@ -85,6 +89,7 @@ function EditModal(params) {
 				layout="vertical"
 				name="edit"
 				initialValues={params.showcase}
+				validateMessages={validateMessages}
 			>
 				<Form.Item
 					name="title"
@@ -142,16 +147,18 @@ function EditModal(params) {
 				>
 					<Input.TextArea />
 				</Form.Item>
-				<Form.Item name="image" label="Image" valuePropName="file">
-					<Upload
-						listType="picture-card"
-						fileList={fileList}
-						onPreview={handlePreview}
-						onChange={handleUpload}
-						beforeUpload={() => false}
-					>
-						{fileList.length >= 1 ? null : uploadButton}
-					</Upload>
+				<Form.Item label="Image">
+					<Form.Item name="image" valuePropName="file">
+						<Upload
+							listType="picture-card"
+							fileList={fileList}
+							onPreview={handlePreview}
+							onChange={handleUpload}
+							beforeUpload={() => false}
+						>
+							{fileList.length >= 1 ? null : uploadButton}
+						</Upload>
+					</Form.Item>
 					<Modal
 						visible={previewVisible}
 						title={previewTitle}

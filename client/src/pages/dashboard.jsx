@@ -1,11 +1,7 @@
 import { Table, Space } from "antd";
 import React, { useEffect, useState } from "react";
-import Header from "../components/header.component";
-import Navbar from "../components/navbar.component";
-import EditModal from "../components/edit_modal.component";
 import axios from "axios";
 import "antd/dist/antd.css";
-
 
 // Not in use
 const { Column } = Table;
@@ -20,7 +16,6 @@ function Dashboard(props) {
 			setShowcase((showcases) => [...showcases, showcase]);
 		});
 	}
-
 
 	function onCreate(values) {
 		console.log("Received values of form: ", values);
