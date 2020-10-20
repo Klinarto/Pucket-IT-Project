@@ -19,7 +19,7 @@ class Home extends Component {
 
 	componentDidMount() {
 		axios
-			.get("http://localhost:5000/api/")
+			.get("http://pucket.herokuapp.com/api/")
 			.then((response) => {
 				if (response.data.length > 1) {
 					this.setState({

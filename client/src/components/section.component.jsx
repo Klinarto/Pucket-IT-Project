@@ -12,12 +12,13 @@ function Section(params) {
 	const [showcases, setShowcases] = useState([]);
 	const [visible, setVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const baseURL = "http://pucket.herokuapp.com";
 
 	useEffect(() => {
 		let mounted = true;
 
 		axios
-			.get(`http://localhost:5000/api${params.match.path}`)
+			.get(baseURL + `/api${params.match.path}`)
 			.then((res) => {
 				if (mounted) {
 					// console.log(res.data);
@@ -55,7 +56,7 @@ function Section(params) {
 		// console.log(data);
 
 		axios
-			.post("http://localhost:5000/admin/upload", data, {
+			.post(baseURL + "/admin/upload", data, {
 				headers: { "Content-Type": "multipart/form-data", "x-auth-token": userData.token },
 			})
 			.then((res) => {

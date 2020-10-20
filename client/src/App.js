@@ -45,7 +45,7 @@ function App() {
 			}
 
 			const tokenRes = await Axios.post(
-				"http://localhost:5000/user/tokenIsValid",
+				"http://pucket.herokuapp.com/user/tokenIsValid",
 				null,
 				{headers: {"x-auth-token": token}});
 

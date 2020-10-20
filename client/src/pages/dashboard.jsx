@@ -9,6 +9,7 @@ function Dashboard(props) {
 	const [showcases, setShowcase] = useState([]);
 	const [selectedShowcase, setSelectedShowcase] = useState();
 	const [visible, setVisible] = useState(false);
+	const baseURL = "http://pucket.herokuapp.com";
 
 	function addToShowcases(data, section) {
 		data.forEach((showcase) => {
@@ -24,7 +25,7 @@ function Dashboard(props) {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/api/academic-experiences")
+			.get(baseURL + "/api/academic-experiences")
 			.then((response) => {
 				console.log(response.data);
 				addToShowcases(response.data, "Academic");
@@ -34,7 +35,7 @@ function Dashboard(props) {
 			});
 
 		axios
-			.get("http://localhost:5000/api/hobbies")
+			.get(baseURL + "/api/hobbies")
 			.then((response) => {
 				console.log(response.data);
 				addToShowcases(response.data, "Hobbies");

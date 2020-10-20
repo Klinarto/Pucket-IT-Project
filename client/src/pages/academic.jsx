@@ -19,7 +19,7 @@ class Academic extends Component {
 
 	componentDidMount() {
 		axios
-			.get("http://localhost:5000/api/academic-experiences")
+			.get("http://pucket.herokuapp.com/api/academic-experiences")
 			.then((response) => {
 				console.log(response.data);
 				this.setState({ experiences: response.data });

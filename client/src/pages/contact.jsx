@@ -25,7 +25,7 @@ const validateMessages = {
 function Contact(params) {
 	const [form] = Form.useForm();
 	const onFinish = (values) => {
-		axios.post("http://localhost:5000/api/contact-me", values)
+		axios.post("http://pucket.herokuapp.com/api/contact-me", values)
 		.then((res) => console.log(res))
 		.catch((error) => console.log(error));
 		window.location = "/";
