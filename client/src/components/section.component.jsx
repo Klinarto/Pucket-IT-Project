@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import user_context from "../context/user_context";
 import Showcase from "../components/showcase.component";
 import AddModal from "../components/add_modal.component";
 import { Button, message } from "antd";
@@ -7,6 +8,7 @@ import "bulma/css/bulma.min.css";
 import axios from "axios";
 
 function Section(params) {
+	const { userData, setUserData } = useContext(user_context);
 	const [showcases, setShowcases] = useState([]);
 	const [visible, setVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -54,7 +56,10 @@ function Section(params) {
 
 		axios
 			.post("http://localhost:5000/admin/upload", data, {
-				headers: { "Content-Type": "multipart/form-data" },
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"x-auth-token": userData.token,
+				},
 			})
 			.then((res) => {
 				setLoading(false);
@@ -82,30 +87,32 @@ function Section(params) {
 						/>
 					);
 				})}
-				<div className="container">
-					<Button
-						type="dashed"
-						size="large"
-						onClick={() => {
-							setVisible(true);
-						}}
-						block
-					>
-						<PlusOutlined /> Add Section
-					</Button>
-					<AddModal
-						visible={visible}
-						loading={loading}
-						changeLoading={(value) => {
-							setLoading(value);
-						}}
-						onCreate={onAdd}
-						onCancel={() => {
-							setVisible(false);
-						}}
-						section={params.location.state.section}
-					/>
-				</div>
+				{userData.token ? (
+					<div className="container">
+						<Button
+							type="dashed"
+							size="large"
+							onClick={() => {
+								setVisible(true);
+							}}
+							block
+						>
+							<PlusOutlined /> Add Section
+						</Button>
+						<AddModal
+							visible={visible}
+							loading={loading}
+							changeLoading={(value) => {
+								setLoading(value);
+							}}
+							onCreate={onAdd}
+							onCancel={() => {
+								setVisible(false);
+							}}
+							section={params.location.state.section}
+						/>
+					</div>
+				) : null}
 			</div>
 		</React.Fragment>
 	);

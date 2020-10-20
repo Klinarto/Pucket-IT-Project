@@ -181,6 +181,38 @@ var editEntry = function (req, res) {
   }
 };
 
+var deleteEntry = function (req, res) {
+  var section = req.body.section;
+  var idString = req.body._id;
+
+  var id = new mongo.ObjectID(idString);
+  const collection = req.app.db.collection(section);
+
+  //find current entry and get photo url to delete
+  collection.findOne({ _id: id }).then((result) => {
+    if (result.image == null) {
+      console.log("none found");
+    } else {
+      var oldImage = result.image;
+      var imgurRegex = /(http(s*)):\/\/i.imgur.com\/([a-zA-Z0-9_\s]*)\./;
+      var match = imgurRegex.exec(oldImage);
+      var imageHash = match[3];
+
+      imgur.imgurDelete(req.app.db, imageHash);
+
+      //delete MongoDB document here
+      collection.deleteOne({ _id: id }).then((deleteConfirm) => {
+        if(deleteConfirm == null) {
+          res.send("An error occured");
+        } else {
+          res.send("Entry deleted!");
+        }
+      });
+    }
+  });
+}
+
 module.exports.refreshToken = refreshToken;
 module.exports.addNewEntry = addNewEntry;
 module.exports.editEntry = editEntry;
+module.exports.deleteEntry = deleteEntry;

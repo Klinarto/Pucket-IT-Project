@@ -37,7 +37,7 @@ function checkImage(req, file, callback) {
 const admin = require("../controllers/admin_controller.js");
 router.post("/upload", authentication.auth, upload.single("image"), admin.addNewEntry);
 router.post("/edit", authentication.auth, upload.single("image"), admin.editEntry);
+router.delete("/delete", authentication.auth, upload.none(), admin.deleteEntry);
 
 router.get("/refresh", admin.refreshToken);
 module.exports = router;
-
