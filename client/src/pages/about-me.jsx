@@ -1,66 +1,61 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import CarouselImage from "../components/carousel_image.component";
 import { Carousel } from "antd";
 import axios from "axios";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
+import { useEffect } from "react";
 
-class AboutMe extends Component {
-	constructor(props) {
-		super();
+function AboutMe(params) {
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
+	const [carouselImages, setCarouselImages] = useState([]);
+	const [carousel, setCarousel] = useState(React.createRef());
 
-		this.state = { title: "", description: "", carouselImages: [] };
-	}
-
-	componentDidMount() {
+	useEffect(() => {
 		axios
 			.get("http://localhost:5000/api/about-me")
 			.then((response) => {
 				if (response.data.length > 0) {
-					this.setState({
-						title: response.data[0].title,
-						description: response.data[0].description,
-						carouselImages: response.data[0].carouselImages,
-					});
+					setTitle(response.data[0].title);
+					setDescription(response.data[0].description);
+					setCarouselImages(response.data[0].carouselImages);
 				}
 			})
 			.catch((error) => {
 				console.log(error);
 			});
-	}
+	}, []);
+	return (
+		<React.Fragment>
+			<section className="section mb-2">
+				<Carousel autoplay>
+					{carouselImages.map((image, index) => {
+						return (
+							<CarouselImage
+								className="carousel-image"
+								key={index}
+								url={image.url}
+								title={image.title}
+								caption={image.caption}
+							/>
+						);
+					})}
+				</Carousel>
+			</section>
 
-	render() {
-		return (
-			<React.Fragment>
-				<section className="section mb-2">
-					<Carousel autoplay>
-						{this.state.carouselImages.map((image, index) => {
-							return (
-								<CarouselImage
-									className="carousel-image"
-									key={index}
-									url={image.url}
-									title={image.title}
-									caption={image.caption}
-								/>
-							);
-						})}
-					</Carousel>
-				</section>
-
-				<section className="section has-background-light">
-					<div className="container">
-						<div className="card">
-							<div className="card-content">
-								<h1 className="title">{this.state.title}</h1>
-								<p>{this.state.description}</p>
-							</div>
+			<section className="section has-background-light">
+				<div className="container">
+					<div className="card">
+						<div className="card-content">
+							<h1 className="title">{title}</h1>
+							<p>{description}</p>
 						</div>
 					</div>
-				</section>
-			</React.Fragment>
-		);
-	}
+				</div>
+			</section>
+		</React.Fragment>
+	);
 }
 
 export default AboutMe;

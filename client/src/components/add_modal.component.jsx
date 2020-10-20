@@ -40,7 +40,7 @@ function AddModal(params) {
 	function handleUpload({ fileList }) {
 		// console.log("File", fileList);
 		setFileList(fileList);
-		if (form.getFieldValue("image").fileList.length == 0) {
+		if (form.getFieldValue("image").fileList.length === 0) {
 			form.setFieldsValue({ image: null });
 		}
 		// console.log("fileList", fileList);

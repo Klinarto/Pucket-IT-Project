@@ -63,6 +63,8 @@ function Section(params) {
 				console.log(res);
 			})
 			.catch((error) => {
+				setLoading(false);
+				setVisible(false);
 				message.error("Failed to send");
 				console.error(error);
 			});

@@ -14,10 +14,11 @@ import Navbar from "./components/navbar.component";
 import Header from "./components/header.component";
 import Section from "./components/section.component";
 import { BackTop } from "antd";
-import { Route } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
+import { animated, useTransition } from "react-spring";
 import "antd/dist/antd.css";
 
-const style = {
+const backToTop = {
 	height: 40,
 	width: 40,
 	lineHeight: "40px",

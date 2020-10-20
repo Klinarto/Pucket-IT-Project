@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Popover, Button, Space, message } from "antd";
+import { Popover, Button, Space, message, Modal } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import EditModal from "./edit_modal.component";
 import moment from "moment";
 import axios from "axios";
 import "bulma/css/bulma.min.css";
 import "./showcase.css";
+
+const { confirm } = Modal;
 
 // A show case is a section that "showcases" the user's desired stuff
 // like an academic experience or hobby
@@ -32,7 +35,14 @@ function Showcase(params) {
 				>
 					Edit
 				</Button>
-				<p>Placeholder Text</p>
+				<Button
+					onClick={() => {
+						showDeleteConfirm();
+					}}
+					danger
+				>
+					Delete
+				</Button>
 			</Space>
 		</div>
 	);
@@ -90,7 +100,7 @@ function Showcase(params) {
 		// console.log(data);
 
 		axios
-			.post("http://localhost:5000/admin/edit", data, {
+			.post("http://localhost:5000/admin/edits", data, {
 				headers: { "Content-Type": "multipart/form-data" },
 			})
 			.then((res) => {
@@ -100,9 +110,40 @@ function Showcase(params) {
 				console.log(res);
 			})
 			.catch((error) => {
+				setLoading(false);
+				setVisible(false);
 				message.error("Failed to send");
 				console.error(error);
 			});
+	}
+
+	function showDeleteConfirm() {
+		confirm({
+			title: "Are you sure you want to delete this showcase?",
+			icon: <ExclamationCircleOutlined />,
+			content: "Please don't delete me （（●´∧｀●））",
+			okText: "Yes",
+			okType: "danger",
+			cancelText: "No",
+			onOk() {
+				deleteShowcase();
+			},
+			onCancel() {
+				console.log("<(_ _*)> You have my gratitude.");
+			},
+		});
+	}
+
+	function deleteShowcase() {
+		let data = new FormData();
+
+		data.append("section", params.section);
+		data.append("_id", params.showcase._id);
+
+		axios.delete("http://localhost:5000/admin/delete", {
+			headers: { "Content-Type": "multipart/form-data" },
+			data: data,
+		});
 	}
 
 	// console.log(params.showcase);
