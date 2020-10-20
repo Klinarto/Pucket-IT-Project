@@ -12,7 +12,7 @@ function Section(params) {
 	const [showcases, setShowcases] = useState([]);
 	const [visible, setVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
-	const baseURL = "http://pucket.herokuapp.com";
+	const baseURL = "https://pucket.herokuapp.com";
 
 	useEffect(() => {
 		let mounted = true;

@@ -9,7 +9,7 @@ function Dashboard(props) {
 	const [showcases, setShowcase] = useState([]);
 	const [selectedShowcase, setSelectedShowcase] = useState();
 	const [visible, setVisible] = useState(false);
-	const baseURL = "http://pucket.herokuapp.com";
+	const baseURL = "https://pucket.herokuapp.com";
 
 	function addToShowcases(data, section) {
 		data.forEach((showcase) => {

@@ -14,7 +14,7 @@ class AboutMe extends Component {
 
 	componentDidMount() {
 		axios
-			.get("http://pucket.herokuapp.com/api/about-me")
+			.get("https://pucket.herokuapp.com/api/about-me")
 			.then((response) => {
 				if (response.data.length > 0) {
 					this.setState({

@@ -92,7 +92,7 @@ function Showcase(params) {
 		// console.log(data);
 
 		axios
-			.post("http://pucket.herokuapp.com/admin/edit", data, {
+			.post("https://pucket.herokuapp.com/admin/edit", data, {
 				headers: { "Content-Type": "multipart/form-data", "x-auth-token": userData.token },
 			})
 			.then((res) => {

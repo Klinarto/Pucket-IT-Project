@@ -11,7 +11,7 @@ class Header extends Component {
 
 	componentDidMount() {
 		axios
-			.get("http://pucket.herokuapp.com/api/title")
+			.get("https://pucket.herokuapp.com/api/title")
 			.then((response) => {
 				if (response.data.length > 0) {
 					this.setState({

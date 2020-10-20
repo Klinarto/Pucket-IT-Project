@@ -16,7 +16,7 @@ class Academic extends Component {
 
 	componentDidMount() {
 		axios
-			.get("http://pucket.herokuapp.com/api/hobbies")
+			.get("https://pucket.herokuapp.com/api/hobbies")
 			.then((res) => {
 				this.setState({ hobbies: res.data });
 			})
