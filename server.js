@@ -1,4 +1,4 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== 'production') {require('dotenv').config()}
 const assert = require("assert");
 const fs = require("fs");
 
@@ -37,17 +37,18 @@ const client = new MongoClient(process.env.URI, {
 
 //connect client (must be done before using client to access DB)
 client.connect((err) => {
-	if (err) {
-		console.error(err);
-	}
+  if (err) {
+    console.error(err);
+  }
 
-	//specify DB to access
-	app.db = client.db(process.env.DB_NAME);
+  //specify DB to access
+  app.db = client.db(process.env.DB_NAME);
 
-	//call expressJS to listen to port (now that DB is ready)
-	app.listen(process.env.PORT || port, () => {
-		console.log(`API site listening at http://localhost:${port}`);
-	});
+  //call expressJS to listen to port (now that DB is ready)
+  app.listen(process.env.PORT || port, () => {
+    console.log(`API site listening at http://localhost:${port}`);
+    app.emit("ready");
+  });
 });
 
 /*
@@ -59,7 +60,12 @@ app.use("/api", profile_routes);
 const admin_routes = require("./routes/admin_routes");
 app.use("/admin", admin_routes);
 
+const user_routes = require("./routes/user_routes");
+app.use("/user", user_routes);
+
 // Handles any requests that don't match the ones above
 app.get("/*", (req, res) => {
-	res.sendFile(path.join(__dirname + "/client/build/index.html"));
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
+
+module.exports = app;

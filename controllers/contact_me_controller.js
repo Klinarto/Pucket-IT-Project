@@ -1,29 +1,26 @@
-var nodemailer = require("nodemailer");
-const sendGridTransport = require("nodemailer-sendgrid-transport");
+if (process.env.NODE_ENV !== 'production') {require('dotenv').config()}
+const sgMail = require('@sendgrid/mail')
 
-var options = {
-  auth: {
-    api_key:
-      "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",
-  },
-};
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 var sendContactMe = function (req, res) {
-  const mailer = nodemailer.createTransport(sendGridTransport(options));
   var email = {
-    to: ["dimi3laksamana@gmail.com"],
+    to: [process.env.EMAIL_TO],
     from: "pucket2020@gmail.com",
     subject: "E-Portfolio Contact",
     text: "From: " + req.body.name + "\n" + "Email: " + req.body.email + "\n" + "Message: " + req.body.message
   };
-  mailer.sendMail(email, (err, res) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(res);
-  });
 
-  res.send("Message Sent!");
+  sgMail
+    .send(email)
+    .then(() => {
+      console.log("Email sent");
+      res.send("Email sent");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send("Email failed");
+    })
 };
 
 module.exports.sendContactMe = sendContactMe;

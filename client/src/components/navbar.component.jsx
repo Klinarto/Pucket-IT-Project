@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Affix } from "antd";
+import { Menu, Affix, message } from "antd";
 import "antd/dist/antd.css";
+import user_context from "../context/user_context";
 
 function Navbar(props) {
+
+  const {userData, setUserData} = useContext(user_context);
 	const [current, setCurrent] = useState("home");
+  const logout = () => {
+    setUserData({token: undefined, user: undefined});
+		localStorage.setItem("auth-token", "");
+		message.success("Logout Successful");
+	};
 
 	function handleClick(e) {
 		// console.log("click ", e);
@@ -50,6 +58,14 @@ function Navbar(props) {
 				<Menu.Item key="contact">
 					<Link to="contact">Contact</Link>
 				</Menu.Item>
+        {userData.token ? (
+					<Menu.Item onClick = {logout}
+						key="logout"
+						style={{ float: "right", marginRight: "1.5em" }}
+					>
+						<Link to="/">Logout</Link>
+					</Menu.Item>
+					) : null}
 				{/* <Menu.Item key="add">
 					<Link to="add">Add</Link>
 				</Menu.Item>

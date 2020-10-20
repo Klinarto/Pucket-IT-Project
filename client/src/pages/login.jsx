@@ -1,10 +1,11 @@
-import React from "react";
-import { Form, Input, Button } from "antd";
+import React, { useContext } from "react";
+import { Form, Input, Button, message } from "antd";
 import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
 import axios from "axios";
+import user_context from "../context/user_context";
 
 const layout = {
 	labelCol: {
@@ -22,68 +23,64 @@ const validateMessages = {
 	},
 };
 
-function Contact(params) {
+
+function Login(params) {
 	const [form] = Form.useForm();
+	const {userData, setUserData} = useContext(user_context);
 	const onFinish = (values) => {
-		axios.post("http://localhost:5000/api/contact-me", values)
-		.then((res) => console.log(res))
-		.catch((error) => console.log(error));
-		window.location = "/";
+		axios.post("http://localhost:5000/user/login", values)
+		.then((res) => {
+			setUserData({token: res.data.token});
+			localStorage.setItem("auth-token", res.data.token);
+			window.location = "/";
+			message.success("Login succesful");
+		})
+		.catch((error) => {
+			console.log(error)
+			message.error("Login failed");
+		});
 	};
 
 	return (
 		<React.Fragment>
 			<Header />
-			<Navbar current="contact" />
+			<Navbar current="login" />
 			<section className="section">
 				<div className="container">
 					{" "}
 					<Form onFinish={onFinish}
 						{...layout}
 						form={form}
-						name="Contact Message"
+						name="Login Message"
 						validateMessages={validateMessages}
 					>
 						<Form.Item
-							name="name"
-							label="Name"
+							name="username"
+							label="Username"
 							rules={[
 								{
-									required: true,
+                                    required: true,
 								},
 							]}
 						>
 							<Input />
 						</Form.Item>
 						<Form.Item
-							name="email"
-							label="Email"
-							rules={[
-								{
-									required: true,
-									type: "email",
-								},
-							]}
-						>
-							<Input />
-						</Form.Item>
-
-						<Form.Item
-							name="message"
-							label="Message"
+							name="password"
+							label="Password"
 							rules={[
 								{
 									required: true,
 								},
 							]}
 						>
-							<Input.TextArea />
+							<Input.Password />
 						</Form.Item>
 						<Form.Item
 							wrapperCol={{ ...layout.wrapperCol, offset: 6 }}
 						>
 							<Button type="primary" htmlType="submit">
-								Send
+								Submit
 							</Button>
 						</Form.Item>
 					</Form>
@@ -93,4 +90,4 @@ function Contact(params) {
 	);
 }
 
-export default Contact;
+export default Login;
