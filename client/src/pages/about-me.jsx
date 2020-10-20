@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Navbar from "../components/navbar.component";
-import Header from "../components/header.component";
 import CarouselImage from "../components/carousel_image.component";
 import { Carousel } from "antd";
 import axios from "axios";
@@ -34,8 +32,6 @@ class AboutMe extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Header />
-				<Navbar current="about-me" />
 				<section className="section mb-2">
 					<Carousel autoplay>
 						{this.state.carouselImages.map((image, index) => {

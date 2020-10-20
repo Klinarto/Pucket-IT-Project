@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
 import Showcase from "../components/showcase.component";
+import AddModal from "../components/add_modal.component";
+import { Button } from "antd";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import "bulma/css/bulma.min.css";
 import axios from "axios";
+
+// Replaced with showcase
 
 class Academic extends Component {
 	constructor(props) {
@@ -27,12 +32,11 @@ class Academic extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Header />
-				<Navbar current="academic-experience" />
 				<div>
 					{this.state.experiences.map((experience) => {
 						return (
 							<Showcase
+								id={experience._id}
 								title={experience.title}
 								description={experience.description}
 								image={experience.image}
@@ -43,6 +47,24 @@ class Academic extends Component {
 							/>
 						);
 					})}
+					<div className="container">
+						<Button
+							type="dashed"
+							size="large"
+							onClick={() => {}}
+							block
+						>
+							<PlusOutlined /> Add field
+						</Button>
+						{/* <AddModal
+							visible={visible}
+							onCreate={onCreate}
+							onCancel={() => {
+								setVisible(false);
+							}}
+							showcase={showcase}
+						/> */}
+					</div>
 				</div>
 			</React.Fragment>
 		);
