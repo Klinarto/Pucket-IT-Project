@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
 		if (err) {
 			throw err;
 		}
-		res.send(docs);
+		res.status(200).send(docs);
 	});
 });
 
@@ -18,7 +18,7 @@ router.get("/about-me", (req, res) => {
 		if (err) {
 			throw err;
 		}
-		res.send(docs);
+		res.status(200).send(docs);
 	});
 });
 
@@ -28,7 +28,7 @@ router.get("/academic-experiences", (req, res) => {
 		if (err) {
 			throw err;
 		}
-		res.send(docs);
+		res.status(200).send(docs);
 	});
 });
 
@@ -38,7 +38,7 @@ router.get("/hobbies", (req, res) => {
 		if (err) {
 			throw err;
 		}
-		res.send(data);
+		res.status(200).send(data);
 	});
 });
 
@@ -48,7 +48,7 @@ router.get("/title", (req, res) => {
 		if (err) {
 			throw err;
 		}
-		res.send(data);
+		res.status(200).send(data);
 	});
 });
 
