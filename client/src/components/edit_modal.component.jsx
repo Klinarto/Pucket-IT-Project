@@ -6,6 +6,7 @@ import "antd/dist/antd.css";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
+// Convert image to Base64. Used for the image preview
 function getBase64(file) {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader();
@@ -18,16 +19,20 @@ function getBase64(file) {
 function EditModal(params) {
 	const [form] = Form.useForm();
 	const [fileList, setFileList] = useState([]);
+
+	// Used for preview images
 	const [previewVisible, setPreviewVisible] = useState(false);
 	const [previewImage, setPreviewImage] = useState("");
 	const [previewTitle, setPreviewTitle] = useState("");
 	const alignments = ["Left", "Right"];
 	const section = params.section;
 
+	// Used for the validation messages of the form
 	const validateMessages = {
 		required: "${label} is required",
 	};
 
+	// Upload button HTML body
 	const uploadButton = (
 		<div>
 			<PlusOutlined />
@@ -37,16 +42,19 @@ function EditModal(params) {
 		</div>
 	);
 
+	// Handle upload of image file
 	function handleUpload({ fileList }) {
 		// console.log("File", fileList);
 		setFileList(fileList);
 		// console.log("fileList", fileList);
 	}
 
+	// Handle edit modal's cancel
 	function handleCancel() {
 		setPreviewVisible(false);
 	}
 
+	// Handle the image preview
 	async function handlePreview(file) {
 		if (!file.url && !file.preview) {
 			file.preview = await getBase64(file.originFileObj);
@@ -58,6 +66,7 @@ function EditModal(params) {
 		);
 	}
 
+	// On ok, send values which contains the values of the currently edited showcase,and either the current image or the new image to the current showcase component which would handle the request to the server
 	function onOk() {
 		form.validateFields()
 			.then((values) => {
@@ -159,6 +168,7 @@ function EditModal(params) {
 							{fileList.length >= 1 ? null : uploadButton}
 						</Upload>
 					</Form.Item>
+					{/* Modal to preview the image */}
 					<Modal
 						visible={previewVisible}
 						title={previewTitle}

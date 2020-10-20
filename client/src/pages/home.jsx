@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useSpring, animated } from "react-spring";
 import "bulma/css/bulma.min.css";
 import "./home.css";
 import "../utilities/helper.css";
@@ -11,13 +10,6 @@ function Home(params) {
 	const [heroBG, setHeroBG] = useState("");
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-
-	const fade = useSpring({
-		opacity: 1,
-		from: {
-			opacity: 0,
-		},
-	});
 
 	useEffect(() => {
 		axios
@@ -44,14 +36,14 @@ function Home(params) {
 					className="hero-body"
 					style={{ backgroundImage: `url(${heroBG})` }}
 				>
-					<animated.div id="motto" className="container" style={fade}>
+					<div id="motto" className="container" style={fade}>
 						<h1 className="title is-1 has-text-white has-text-right">
 							{heroTitle}
 						</h1>
 						<p className="subtitle has-text-white has-text-right">
 							{heroDesc}
 						</p>
-					</animated.div>
+					</div>
 				</div>
 			</section>
 
