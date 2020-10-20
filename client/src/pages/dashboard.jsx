@@ -1,11 +1,9 @@
 import { Table, Space } from "antd";
 import React, { useEffect, useState } from "react";
-import Header from "../components/header.component";
-import Navbar from "../components/navbar.component";
-import EditModal from "../components/edit_modal.component";
 import axios from "axios";
 import "antd/dist/antd.css";
 
+// Not in use
 const { Column } = Table;
 function Dashboard(props) {
 	const [showcases, setShowcase] = useState([]);
@@ -19,10 +17,10 @@ function Dashboard(props) {
 		});
 	}
 
-	const onCreate = (values) => {
+	function onCreate(values) {
 		console.log("Received values of form: ", values);
 		setVisible(false);
-	};
+	}
 
 	useEffect(() => {
 		axios
@@ -48,8 +46,6 @@ function Dashboard(props) {
 
 	return (
 		<React.Fragment>
-			<Header />
-			<Navbar current="dashboard" />
 			<section className="section">
 				<div className="container">
 					<Table dataSource={showcases}>
@@ -84,14 +80,6 @@ function Dashboard(props) {
 							)}
 						/>
 					</Table>
-					<EditModal
-						visible={visible}
-						onCreate={onCreate}
-						onCancel={() => {
-							setVisible(false);
-						}}
-						showcase={selectedShowcase}
-					/>
 				</div>
 			</section>
 		</React.Fragment>

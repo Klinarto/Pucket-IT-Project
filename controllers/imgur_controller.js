@@ -1,4 +1,4 @@
-require("dotenv").config();
+if (process.env.NODE_ENV !== 'production') {require('dotenv').config()}
 const fs = require("fs");
 const mongo = require("mongodb");
 const FormData = require("form-data");
