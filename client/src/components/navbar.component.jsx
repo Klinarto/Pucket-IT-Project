@@ -58,7 +58,7 @@ function Navbar(props) {
 				<Menu.Item key="contact">
 					<Link to="contact">Contact</Link>
 				</Menu.Item>
-        {userData.token ? (
+        		{userData.token ? (
 					<Menu.Item onClick = {logout}
 						key="logout"
 						style={{ float: "right", marginRight: "1.5em" }}
@@ -72,9 +72,6 @@ function Navbar(props) {
 				<Menu.Item key="dashboard">
 					<Link to="dashboard">Dashboard</Link>
 				</Menu.Item> */}
-				<Menu.Item style={{ float: "right", marginRight: "1.5em" }}>
-					Login
-				</Menu.Item>
 			</Menu>
 		</Affix>
 	);

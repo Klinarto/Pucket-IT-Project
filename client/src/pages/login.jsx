@@ -43,8 +43,6 @@ function Login(params) {
 
 	return (
 		<React.Fragment>
-			<Header />
-			<Navbar current="login" />
 			<section className="section">
 				<div className="container">
 					{" "}
