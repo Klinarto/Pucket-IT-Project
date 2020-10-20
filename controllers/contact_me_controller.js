@@ -1,10 +1,11 @@
+if (process.env.NODE_ENV !== 'production') {require('dotenv').config()}
 const sgMail = require('@sendgrid/mail')
 
-sgMail.setApiKey("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")
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 var sendContactMe = function (req, res) {
   var email = {
-    to: ["celivi8932@zik2zik.com"],
+    to: [process.env.EMAIL_TO],
     from: "pucket2020@gmail.com",
     subject: "E-Portfolio Contact",
     text: "From: " + req.body.name + "\n" + "Email: " + req.body.email + "\n" + "Message: " + req.body.message
@@ -14,9 +15,11 @@ var sendContactMe = function (req, res) {
     .send(email)
     .then(() => {
       console.log("Email sent");
+      res.send("Email sent");
     })
     .catch((err) => {
       console.log(err);
+      res.send("Email failed");
     })
 };
 

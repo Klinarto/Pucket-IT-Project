@@ -1,14 +1,15 @@
+if (process.env.NODE_ENV !== 'production') {require('dotenv').config()}
 const { assert } = require('chai');
 var expect = require('chai').expect;
 const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey("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")
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 describe('contact client test', function () {
 
     it("send email", function (done) {
     
         const testEmail = {
-            to: ["celivi8932@zik2zik.com"],
+            to: [process.env.EMAIL_TO],
             from: "pucket2020@gmail.com",
             subject: "Testing Code!",
             text: "Testing Message",

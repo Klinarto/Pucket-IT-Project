@@ -1,3 +1,4 @@
+if (process.env.NODE_ENV !== 'production') {require('dotenv').config()}
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -31,7 +32,7 @@ var login = function(req, res) {
         }
         else {
             if (bcrypt.compareSync(req.body.password, user.password)) {
-                let token = jwt.sign({id: user._id}, "supersecret", {
+                let token = jwt.sign({id: user._id}, process.env.SECRET_KEY, {
                     expiresIn: 1440
                 });
                 res.json({
@@ -74,7 +75,7 @@ var tokenIsValid = async function(req, res) {
             return res.json(false);
         }
 
-        const verified = jwt.verify(token, "supersecret");
+        const verified = jwt.verify(token, process.env.SECRET_KEY);
         if (!verified) {
             return res.json(false);
         }
