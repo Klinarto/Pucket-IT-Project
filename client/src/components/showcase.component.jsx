@@ -15,7 +15,7 @@ const { confirm } = Modal;
 
 function Showcase(params) {
 	// console.log(params.showcase);
-	const { userData , setUserData } = useContext(user_context);
+	const { userData, setUserData } = useContext(user_context);
 	const [visible, setVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
 
@@ -103,7 +103,10 @@ function Showcase(params) {
 
 		axios
 			.post("http://localhost:5000/admin/edit", data, {
-				headers: { "Content-Type": "multipart/form-data", "x-auth-token": userData.token },
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"x-auth-token": userData.token,
+				},
 			})
 			.then((res) => {
 				setLoading(false);
@@ -142,10 +145,21 @@ function Showcase(params) {
 		data.append("section", params.section);
 		data.append("_id", params.showcase._id);
 
-		axios.delete("http://localhost:5000/admin/delete", {
-			headers: { "Content-Type": "multipart/form-data" },
-			data: data,
-		});
+		axios
+			.post("http://localhost:5000/admin/delete", data, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"x-auth-token": userData.token,
+				},
+			})
+			.then((res) => {
+				message.success("Showcase deleted successfully.", 2);
+				console.log(res);
+			})
+			.catch((error) => {
+				message.error("Failed to delete");
+				console.error(error);
+			});
 	}
 
 	// console.log(params.showcase);
@@ -158,11 +172,37 @@ function Showcase(params) {
 					<div className="container">
 						<div className="columns is-vcentered">
 							<div className="column">
-								{userData.token ? <Popover
-									placement="right"
-									content={popoverContent}
-									title="Edit"
-								>
+								{userData.token ? (
+									<Popover
+										placement="right"
+										content={popoverContent}
+										title="Edit"
+									>
+										<div className="content">
+											<h1 className="title has-text-left">
+												{title}
+											</h1>
+											{hasDate ? (
+												<React.Fragment>
+													<h5 className="has-text-left">
+														Start :{" "}
+														{parsedStartDate}
+													</h5>
+													<h5 className="has-text-left">
+														End : {parsedEndDate}
+													</h5>
+													<p className="has-text-justified">
+														{description}
+													</p>
+												</React.Fragment>
+											) : (
+												<p className="has-text-justified">
+													{description}
+												</p>
+											)}
+										</div>
+									</Popover>
+								) : (
 									<div className="content">
 										<h1 className="title has-text-left">
 											{title}
@@ -185,28 +225,7 @@ function Showcase(params) {
 											</p>
 										)}
 									</div>
-								</Popover> : <div className="content">
-										<h1 className="title has-text-left">
-											{title}
-										</h1>
-										{hasDate ? (
-											<React.Fragment>
-												<h5 className="has-text-left">
-													Start : {parsedStartDate}
-												</h5>
-												<h5 className="has-text-left">
-													End : {parsedEndDate}
-												</h5>
-												<p className="has-text-justified">
-													{description}
-												</p>
-											</React.Fragment>
-										) : (
-											<p className="has-text-justified">
-												{description}
-											</p>
-										)}
-									</div>}
+								)}
 							</div>
 							<div className="column">
 								<figure>
@@ -220,19 +239,21 @@ function Showcase(params) {
 						</div>
 					</div>
 				</section>
-				{userData.token ? <EditModal
-					visible={visible}
-					loading={loading}
-					onCreate={onEdit}
-					changeLoading={(value) => {
-						setLoading(value);
-					}}
-					onCancel={() => {
-						setVisible(false);
-					}}
-					showcase={params.showcase}
-					section={params.section}
-				/> : null}
+				{userData.token ? (
+					<EditModal
+						visible={visible}
+						loading={loading}
+						onCreate={onEdit}
+						changeLoading={(value) => {
+							setLoading(value);
+						}}
+						onCancel={() => {
+							setVisible(false);
+						}}
+						showcase={params.showcase}
+						section={params.section}
+					/>
+				) : null}
 			</React.Fragment>
 		);
 	} else {
@@ -251,11 +272,37 @@ function Showcase(params) {
 								</figure>
 							</div>
 							<div className="column">
-								{userData.token ? <Popover
-									placement="left"
-									content={popoverContent}
-									title="Edit"
-								>
+								{userData.token ? (
+									<Popover
+										placement="left"
+										content={popoverContent}
+										title="Edit"
+									>
+										<div className="content">
+											<h1 className="title has-text-right">
+												{title}
+											</h1>
+											{hasDate ? (
+												<React.Fragment>
+													<h5 className="has-text-right">
+														Start :{" "}
+														{parsedStartDate}
+													</h5>
+													<h5 className="has-text-right">
+														End : {parsedEndDate}
+													</h5>
+													<p className="has-text-justified">
+														{description}
+													</p>
+												</React.Fragment>
+											) : (
+												<p className="has-text-justified">
+													{description}
+												</p>
+											)}
+										</div>
+									</Popover>
+								) : (
 									<div className="content">
 										<h1 className="title has-text-right">
 											{title}
@@ -278,45 +325,26 @@ function Showcase(params) {
 											</p>
 										)}
 									</div>
-								</Popover> : <div className="content">
-										<h1 className="title has-text-right">
-											{title}
-										</h1>
-										{hasDate ? (
-											<React.Fragment>
-												<h5 className="has-text-right">
-													Start : {parsedStartDate}
-												</h5>
-												<h5 className="has-text-right">
-													End : {parsedEndDate}
-												</h5>
-												<p className="has-text-justified">
-													{description}
-												</p>
-											</React.Fragment>
-										) : (
-											<p className="has-text-justified">
-												{description}
-											</p>
-										)}
-									</div>}
+								)}
 							</div>
 						</div>
 					</div>
 				</section>
-				{userData.token ? <EditModal
-					visible={visible}
-					loading={loading}
-					onCreate={onEdit}
-					changeLoading={(value) => {
-						setLoading(value);
-					}}
-					onCancel={() => {
-						setVisible(false);
-					}}
-					showcase={params.showcase}
-					section={params.section}
-				/>: null}
+				{userData.token ? (
+					<EditModal
+						visible={visible}
+						loading={loading}
+						onCreate={onEdit}
+						changeLoading={(value) => {
+							setLoading(value);
+						}}
+						onCancel={() => {
+							setVisible(false);
+						}}
+						showcase={params.showcase}
+						section={params.section}
+					/>
+				) : null}
 			</React.Fragment>
 		);
 	}
