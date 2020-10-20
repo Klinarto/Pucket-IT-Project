@@ -40,3 +40,4 @@ router.post("/edit", authentication.auth, upload.single("image"), admin.editEntr
 
 router.get("/refresh", admin.refreshToken);
 module.exports = router;
+

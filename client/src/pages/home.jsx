@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Navbar from "../components/navbar.component";
-import Header from "../components/header.component";
 import axios from "axios";
 import "bulma/css/bulma.min.css";
 import "./home.css";
@@ -40,8 +38,6 @@ class Home extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Header />
-				<Navbar current="home" />
 				<section className="hero is-fullheight">
 					<div
 						id="home-hero"

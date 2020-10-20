@@ -15,7 +15,7 @@ function getBase64(file) {
 	});
 }
 
-function EditModal(params) {
+function AddModal(params) {
 	const [form] = Form.useForm();
 	const [fileList, setFileList] = useState([]);
 	const [previewVisible, setPreviewVisible] = useState(false);
@@ -40,7 +40,11 @@ function EditModal(params) {
 	function handleUpload({ fileList }) {
 		// console.log("File", fileList);
 		setFileList(fileList);
+		if (form.getFieldValue("image").fileList.length == 0) {
+			form.setFieldsValue({ image: null });
+		}
 		// console.log("fileList", fileList);
+		// console.log("Image:", form.getFieldValue("image"));
 	}
 
 	function handleCancel() {
@@ -58,13 +62,13 @@ function EditModal(params) {
 		);
 	}
 
+	// console.log(props);
+
 	function onOk() {
 		form.validateFields()
 			.then((values) => {
-				if (fileList.length > 0) {
-					values.image = fileList[0].originFileObj;
-				}
 				params.changeLoading(true);
+				values.image = fileList[0].originFileObj;
 				params.onCreate(values);
 			})
 			.catch((info) => {
@@ -75,8 +79,8 @@ function EditModal(params) {
 	return (
 		<Modal
 			visible={params.visible}
-			title="Edit Showcase"
-			okText="Edit"
+			title="Add Showcase"
+			okText="Add"
 			cancelText="Cancel"
 			onCancel={params.onCancel}
 			destroyOnClose={true}
@@ -86,6 +90,7 @@ function EditModal(params) {
 		>
 			<Form
 				form={form}
+				preserve={false}
 				layout="vertical"
 				name="edit"
 				initialValues={params.showcase}
@@ -147,8 +152,17 @@ function EditModal(params) {
 				>
 					<Input.TextArea />
 				</Form.Item>
-				<Form.Item label="Image">
-					<Form.Item name="image" valuePropName="file">
+				<Form.Item
+					label="Image"
+					rules={[{ required: true, message: "Image is required" }]}
+					required
+				>
+					<Form.Item
+						name="image"
+						rules={[
+							{ required: true, message: "Image is required" },
+						]}
+					>
 						<Upload
 							listType="picture-card"
 							fileList={fileList}
@@ -177,4 +191,4 @@ function EditModal(params) {
 	);
 }
 
-export default EditModal;
+export default AddModal;

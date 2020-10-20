@@ -5,6 +5,8 @@ import Showcase from "../components/showcase.component";
 import "bulma/css/bulma.min.css";
 import axios from "axios";
 
+// Replaced with showcase
+
 class Academic extends Component {
 	constructor(props) {
 		super();
@@ -15,8 +17,8 @@ class Academic extends Component {
 	componentDidMount() {
 		axios
 			.get("http://localhost:5000/api/hobbies")
-			.then((response) => {
-				this.setState({ hobbies: response.data });
+			.then((res) => {
+				this.setState({ hobbies: res.data });
 			})
 			.catch((error) => {
 				console.log(error);
@@ -26,8 +28,6 @@ class Academic extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Header />
-				<Navbar current="hobbies" />
 				<div>
 					{this.state.hobbies.map((hobby) => {
 						return (

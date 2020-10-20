@@ -15,3 +15,4 @@ router.post("/delete", user_controller.deleteUser);
 router.post("/tokenIsValid", user_controller.tokenIsValid);
 
 module.exports = router;
+

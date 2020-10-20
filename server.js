@@ -30,9 +30,9 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 //create new MongoClient with options
 const client = new MongoClient(process.env.URI, {
-  useNewUrlParser: true,
-  poolSize: process.env.POOL_SIZE,
-  useUnifiedTopology: true,
+	useNewUrlParser: true,
+	poolSize: process.env.POOL_SIZE,
+	useUnifiedTopology: true,
 });
 
 //connect client (must be done before using client to access DB)
