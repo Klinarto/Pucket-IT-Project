@@ -1,0 +1,17 @@
+@font-face {
+	font-family: 'Baskerville9';
+	src: local('Baskerville'), url("../fonts/BASKE9.ttf") format('ttf');
+}
+
+@font-face {
+	font-family: 'BaskervilleBold';
+	src: local('Baskerville'), url("../fonts/BaskervilleBT.ttf") format('ttf');
+}
+
+.fontTitle {
+	font-family: 'BaskervilleBold';
+}
+
+.fontText {
+    font-family: 'Baskerville9';
+}

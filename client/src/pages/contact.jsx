@@ -23,6 +23,9 @@ const validateMessages = {
 	},
 };
 
+const marginBottom = {marginBottom: "2em"};
+const contactBackground = {background: "#fafafa", minHeight: "100vh"};
+
 function Contact(params) {
 	const [isVerified, setIsVerified] = useState(false);
 	const [captcha, setCaptcha] = useState("");
@@ -50,13 +53,15 @@ function Contact(params) {
 			<section className="section">
 				<div className="container">
 					{" "}
-					<Form onFinish={onFinish}
+					<Form
+						onFinish={onFinish}
 						{...layout}
 						form={form}
 						name="Contact Message"
 						validateMessages={validateMessages}
 					>
 						<Form.Item
+							style = {marginBottom}
 							name="name"
 							label="Name"
 							rules={[
@@ -68,6 +73,7 @@ function Contact(params) {
 							<Input />
 						</Form.Item>
 						<Form.Item
+							style = {marginBottom}
 							name="email"
 							label="Email"
 							rules={[
@@ -81,6 +87,7 @@ function Contact(params) {
 						</Form.Item>
 
 						<Form.Item
+							style = {marginBottom}
 							name="message"
 							label="Message"
 							rules={[

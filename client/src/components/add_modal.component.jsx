@@ -6,6 +6,7 @@ import "antd/dist/antd.css";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
+// Convert image to Base64. Used for the image preview
 function getBase64(file) {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader();
@@ -18,16 +19,20 @@ function getBase64(file) {
 function AddModal(params) {
 	const [form] = Form.useForm();
 	const [fileList, setFileList] = useState([]);
+
+	// Used for preview images
 	const [previewVisible, setPreviewVisible] = useState(false);
 	const [previewImage, setPreviewImage] = useState("");
 	const [previewTitle, setPreviewTitle] = useState("");
 	const alignments = ["Left", "Right"];
 	const section = params.section;
 
+	// Used for the validation messages of the form
 	const validateMessages = {
 		required: "${label} is required",
 	};
 
+	// Upload button HTML body
 	const uploadButton = (
 		<div>
 			<PlusOutlined />
@@ -37,20 +42,26 @@ function AddModal(params) {
 		</div>
 	);
 
+	// Handle upload of image file
 	function handleUpload({ fileList }) {
 		// console.log("File", fileList);
 		setFileList(fileList);
-		if (form.getFieldValue("image").fileList.length == 0) {
+
+		// Used to enforce that an image is required to add a showcase
+		if (form.getFieldValue("image").fileList.length === 0) {
+			// Set the value of the image field to null
 			form.setFieldsValue({ image: null });
 		}
 		// console.log("fileList", fileList);
 		// console.log("Image:", form.getFieldValue("image"));
 	}
 
+	// Handle edit modal's cancel
 	function handleCancel() {
 		setPreviewVisible(false);
 	}
 
+	// Handle the image preview
 	async function handlePreview(file) {
 		if (!file.url && !file.preview) {
 			file.preview = await getBase64(file.originFileObj);
@@ -62,8 +73,7 @@ function AddModal(params) {
 		);
 	}
 
-	// console.log(props);
-
+	// On ok, send values which contains the values of the new showcase and the new image to the current section component which would handle the request to the server
 	function onOk() {
 		form.validateFields()
 			.then((values) => {
@@ -126,7 +136,7 @@ function AddModal(params) {
 						})}
 					</Select>
 				</Form.Item>
-
+				{/* Render the dates if the current section is the academic experience page */}
 				{section === "academicExperience" ? (
 					<Form.Item
 						name="dates"

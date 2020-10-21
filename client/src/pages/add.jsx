@@ -36,10 +36,11 @@ function getBase64(file) {
 		reader.onerror = (error) => reject(error);
 	});
 }
-// Replaced with add_modal
+
+// Replaced with add_modal and mainly used for debug
 
 function Add() {
-	const { userData , setUserData } = useContext(user_context);
+	const { userData, setUserData } = useContext(user_context);
 	const [form] = Form.useForm();
 	const [sections, setSections] = useState([
 		"Academic Experience",
@@ -82,7 +83,10 @@ function Add() {
 
 		axios
 			.post("http://localhost:5000/admin/upload", data, {
-				headers: { "Content-Type": "multipart/form-data", "x-auth-token": userData.token },
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"x-auth-token": userData.token,
+				},
 			})
 			.then((res) => {
 				console.log(res);
