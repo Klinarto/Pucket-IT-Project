@@ -36,7 +36,7 @@ function Home(params) {
 					className="hero-body"
 					style={{ backgroundImage: `url(${heroBG})` }}
 				>
-					<div id="motto" className="container" style={fade}>
+					<div id="motto" className="container">
 						<h1 className="title is-1 has-text-white has-text-right">
 							{heroTitle}
 						</h1>
