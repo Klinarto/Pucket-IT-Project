@@ -27,12 +27,12 @@ class Header extends Component {
 
 	render() {
 		return (
-			<div className="header">
+			<div className="header background-header-color font">
 				<div className="container center">
-					<h2 className="subtitle is-0">{this.state.title}</h2>
+					<h2 className="title is-4 white-text">{this.state.title}</h2>
 				</div>
 				<div className="container center">
-					<h2 className="subtitle">{this.state.caption}</h2>
+					<h2 className="subtitle white-text">{this.state.caption}</h2>
 				</div>
 			</div>
 		);

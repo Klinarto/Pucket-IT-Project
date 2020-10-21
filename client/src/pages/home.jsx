@@ -3,6 +3,7 @@ import axios from "axios";
 import "bulma/css/bulma.min.css";
 import "./home.css";
 import "../utilities/helper.css";
+import Fade from 'react-reveal/Fade';
 
 class Home extends Component {
 	constructor(props) {
@@ -44,25 +45,29 @@ class Home extends Component {
 						className="hero-body"
 						style={{ backgroundImage: `url(${this.state.heroBG})` }}
 					>
-						<div id="motto" className="container">
-							<h1 className="title is-1 has-text-white has-text-right">
-								{this.state.heroTitle}
-							</h1>
-							<p className="subtitle has-text-white has-text-right">
-								{this.state.heroDesc}
-							</p>
-						</div>
+						<Fade right>
+							<div id="motto" className="container">
+								<h1 className="title is-1 has-text-white has-text-right">
+									{this.state.heroTitle}
+								</h1>
+								<p className="subtitle has-text-white has-text-right">
+									{this.state.heroDesc}
+								</p>
+							</div>
+						</Fade>
 					</div>
 				</section>
 
 				<section className="section has-background-light">
 					<div className="container">
-						<div className="card">
-							<div className="card-content">
-								<h1 className="title">{this.state.title}</h1>
-								<p>{this.state.description}</p>
+						<Fade big duration={2000}>
+							<div className="card">
+								<div className="card-content">
+									<h1 className="title">{this.state.title}</h1>
+									<p>{this.state.description}</p>
+								</div>
 							</div>
-						</div>
+						</Fade>
 					</div>
 				</section>
 			</React.Fragment>

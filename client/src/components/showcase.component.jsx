@@ -19,6 +19,7 @@ function Showcase(params) {
 	const title = params.showcase.title;
 	const description = params.showcase.description;
 	const imageURL = params.showcase.image;
+	const placeholder = "../images/placeholder-image.jpg";
 
 	let hasDate = false;
 	let parsedStartDate = null;
@@ -175,6 +176,7 @@ function Showcase(params) {
 										className="image-showcase"
 										src={imageURL}
 										alt={title + " Image"}
+										onError="this.src = '../images/placeholder-image.jpg';"
 									/>
 								</figure>
 							</div>
@@ -208,6 +210,7 @@ function Showcase(params) {
 										className="image-showcase"
 										src={imageURL}
 										alt={title + " Image"}
+										onError="this.src = '../images/placeholder-image.jpg';"
 									/>
 								</figure>
 							</div>

@@ -2,10 +2,14 @@ import React, { useState, useEffect, useContext } from "react";
 import user_context from "../context/user_context";
 import Showcase from "../components/showcase.component";
 import AddModal from "../components/add_modal.component";
-import { Button, message } from "antd";
+import { Button, message, Affix } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import "bulma/css/bulma.min.css";
+import Fade from 'react-reveal/Fade';
+import "./section.css"
 import axios from "axios";
+
+const sectionButton = {background: "#fafafa", borderColor: "#001529"}
 
 function Section(params) {
 	const { userData , setUserData } = useContext(user_context);
@@ -74,27 +78,33 @@ function Section(params) {
 
 	return (
 		<React.Fragment>
-			<div>
+			<div className="grey">
 				{showcases.map((showcase) => {
-					return (
-						<Showcase
+					return(
+						<Fade bottom delay={500}>
+							<Showcase
 							showcase={showcase}
 							key={showcase._id}
 							section={params.location.state.section}
-						/>
+							/>
+						</Fade>
 					);
 				})}
-				{userData.token ? <div className="container">
-					<Button
-						type="dashed"
-						size="large"
-						onClick={() => {
-							setVisible(true);
-						}}
-						block
-					>
-						<PlusOutlined /> Add Section
-					</Button>
+				{userData.token ? <div className="container" id="add-section-padding">
+					<Affix offsetBottom={10}>
+						<Button
+							style={sectionButton}
+							shape="round"
+							type="dashed"
+							size="large"
+							onClick={() => {
+								setVisible(true);
+							}}
+							block
+						>
+							<PlusOutlined/> Add Section
+						</Button>
+					</Affix>
 					<AddModal
 						visible={visible}
 						loading={loading}

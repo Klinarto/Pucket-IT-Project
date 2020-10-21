@@ -4,6 +4,7 @@ import { Carousel } from "antd";
 import axios from "axios";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
+import Fade from 'react-reveal/Fade';
 
 class AboutMe extends Component {
 	constructor(props) {
@@ -49,14 +50,16 @@ class AboutMe extends Component {
 				</section>
 
 				<section className="section has-background-light">
-					<div className="container">
-						<div className="card">
-							<div className="card-content">
-								<h1 className="title">{this.state.title}</h1>
-								<p>{this.state.description}</p>
+					<Fade big delay={1000}>
+						<div className="container">
+							<div className="card">
+								<div className="card-content">
+									<h1 className="title">{this.state.title}</h1>
+									<p>{this.state.description}</p>
+								</div>
 							</div>
 						</div>
-					</div>
+					</Fade>
 				</section>
 			</React.Fragment>
 		);
