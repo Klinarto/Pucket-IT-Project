@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const contact_me_controller = require('../controllers/contact_me_controller.js');
+const recaptcha = require('../middleware/recaptcha.js');
 
 router.get("/", (req, res) => {
 	collection = req.app.db.collection("homepage");
@@ -52,5 +53,5 @@ router.get("/title", (req, res) => {
 	});
 });
 
-router.post("/contact-me", contact_me_controller.sendContactMe);
+router.post("/contact-me", recaptcha.recaptcha, contact_me_controller.sendContactMe);
 module.exports = router;

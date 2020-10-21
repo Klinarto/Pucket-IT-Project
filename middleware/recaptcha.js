@@ -11,10 +11,14 @@ var recaptchaVerify = function (req, res, next) {
             response: userResponse
         }
     }).then((response) => {
-        if (response.data.success == "true") {
+        console.log(response)
+        console.log(response.data.success)
+        if (response.data.success == true) {
             res.status(200).send("Recaptcha Valid!");
+            console.log("succes bert")
             next();
         } else {
+            console.log("fail")
             res.status(401).send("Recaptcha Failed");
         }
     });

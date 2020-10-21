@@ -5,7 +5,7 @@ import Header from "../components/header.component";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
 import axios from "axios";
-import Recaptcha from "react-recaptcha";
+import Recaptcha from "react-google-recaptcha";
 
 const layout = {
 	labelCol: {
@@ -25,14 +25,17 @@ const validateMessages = {
 
 function Contact(params) {
 	const [isVerified, setIsVerified] = useState(false);
+	const [captcha, setCaptcha] = useState("");
 	const [form] = Form.useForm();
-
-	function recaptchaLoaded(){
-		console.log('captcha succesfully loaded');
+	
+	function onChangeRecaptcha(value) {
+		setCaptcha(value);
+		setIsVerified(true);
 	}
 
 	const onFinish = (values) => {
 		if(isVerified) {
+			values.recaptcha = captcha;
 			axios.post("http://localhost:5000/api/contact-me", values)
 			.then((res) => console.log(res))
 			.catch((error) => console.log(error));
@@ -41,12 +44,6 @@ function Contact(params) {
 			message.error('Please verify that you are a human!');
 		}
 	};
-
-	function verifyCallback(res) {
-		if (res){
-			setIsVerified(true);
-		}
-	}
 
 	return (
 		<React.Fragment>
@@ -99,10 +96,8 @@ function Contact(params) {
 							wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
 							
 							<Recaptcha
-								render={"explicit"}
 								sitekey="6LevhNkZAAAAABvtk2j7bEhd-tJrxpPWH_rphULH"
-								onloadCallback={recaptchaLoaded}
-								verifyCallback={verifyCallback}
+								onChange={onChangeRecaptcha}
 							/>
 						</Form.Item>
 						
@@ -113,8 +108,6 @@ function Contact(params) {
 								Send
 							</Button>
 						</Form.Item>
-
-						
 
 					</Form>
 				</div>
