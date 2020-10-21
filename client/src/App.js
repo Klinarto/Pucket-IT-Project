@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Home from "./pages/home";
 import AboutMe from "./pages/about-me";
-// import Academic from "./pages/academic";
-// import Hobbies from "./pages/hobbies";
 import Contact from "./pages/contact";
-
 // import Add from "./pages/add";
 // import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
@@ -15,7 +12,6 @@ import Header from "./components/header.component";
 import Section from "./components/section.component";
 import { BackTop } from "antd";
 import { Route, Switch, useLocation } from "react-router-dom";
-import { animated, useTransition } from "react-spring";
 import "antd/dist/antd.css";
 
 const backToTop = {
@@ -34,12 +30,19 @@ function App() {
 		token: undefined,
 	});
 
-	//when app starts
+	// Get the current location's pathname, i.e. the current page
+	let location = useLocation().pathname.substring(1);
+	if (location === "") {
+		location = "home";
+	}
+	// console.log("Path:", location);
+
+	// When app starts
 	useEffect(() => {
 		const verifyLoggedIn = async () => {
 			let token = localStorage.getItem("auth-token");
 
-			//if token does not exist, create key auth-token of empty string
+			// If token does not exist, create key auth-token of empty string
 			if (token === null) {
 				localStorage.setItem("auth-token", "");
 				token = "";
@@ -65,7 +68,7 @@ function App() {
 		<main>
 			<UserContext.Provider value={{ userData, setUserData }}>
 				<Header />
-				<Navbar />
+				<Navbar current={location} />
 				<Route path="/" component={Home} exact />
 				<Route path="/about-me" component={AboutMe} />
 				<Route path="/academic-experiences" component={Section} />

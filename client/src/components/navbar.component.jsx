@@ -4,9 +4,9 @@ import { Menu, Affix, message } from "antd";
 import "antd/dist/antd.css";
 import user_context from "../context/user_context";
 
-function Navbar(props) {
+function Navbar(params) {
 	const { userData, setUserData } = useContext(user_context);
-	const [current, setCurrent] = useState("home");
+	const [current, setCurrent] = useState(params.current);
 
 	const logout = () => {
 		setUserData({ token: undefined, user: undefined });
