@@ -3,6 +3,7 @@ import CarouselImage from "../components/carousel_image.component";
 import { Carousel } from "antd";
 import axios from "axios";
 import "antd/dist/antd.css";
+import "./font.css"
 import "bulma/css/bulma.min.css";
 import Fade from 'react-reveal/Fade';
 
@@ -54,8 +55,8 @@ class AboutMe extends Component {
 						<div className="container">
 							<div className="card">
 								<div className="card-content">
-									<h1 className="title">{this.state.title}</h1>
-									<p>{this.state.description}</p>
+									<h1 className="title font">{this.state.title}</h1>
+									<p className="font">{this.state.description}</p>
 								</div>
 							</div>
 						</div>

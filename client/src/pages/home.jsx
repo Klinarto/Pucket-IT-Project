@@ -3,6 +3,7 @@ import axios from "axios";
 import "bulma/css/bulma.min.css";
 import "./home.css";
 import "../utilities/helper.css";
+import "./font.css";
 import Fade from 'react-reveal/Fade';
 
 class Home extends Component {
@@ -47,10 +48,10 @@ class Home extends Component {
 					>
 						<Fade right>
 							<div id="motto" className="container">
-								<h1 className="title is-1 has-text-white has-text-right">
+								<h1 className="title is-1 has-text-white has-text-right font">
 									{this.state.heroTitle}
 								</h1>
-								<p className="subtitle has-text-white has-text-right">
+								<p className="subtitle has-text-white has-text-right font">
 									{this.state.heroDesc}
 								</p>
 							</div>
@@ -63,8 +64,8 @@ class Home extends Component {
 						<Fade big duration={2000}>
 							<div className="card">
 								<div className="card-content">
-									<h1 className="title">{this.state.title}</h1>
-									<p>{this.state.description}</p>
+									<h1 className="title font">{this.state.title}</h1>
+									<p className="font">{this.state.description}</p>
 								</div>
 							</div>
 						</Fade>

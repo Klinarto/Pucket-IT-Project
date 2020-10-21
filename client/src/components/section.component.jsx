@@ -78,7 +78,7 @@ function Section(params) {
 
 	return (
 		<React.Fragment>
-			<div className="grey">
+			<div className="white">
 				{showcases.map((showcase) => {
 					return(
 						<Fade bottom delay={500}>
