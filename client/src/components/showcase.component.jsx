@@ -1,18 +1,21 @@
 import React, { useState, useContext } from "react";
+import { Popover, Button, Space, message, Modal } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import user_context from "../context/user_context";
-import { Popover, Button, Space, message } from "antd";
 import EditModal from "./edit_modal.component";
 import moment from "moment";
 import axios from "axios";
 import "bulma/css/bulma.min.css";
 import "./showcase.css";
 
-// A show case is a section that "showcases" the user's desired stuff
-// like an academic experience or hobby
+const { confirm } = Modal;
+
+// A showcase is a component that "showcases" a user's specific desired content of a specific section
 
 function Showcase(params) {
-	// console.log(params.showcase);
-	const { userData , setUserData } = useContext(user_context);
+	const { userData, setUserData } = useContext(user_context);
+
+	// Used for the edit modal
 	const [visible, setVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
 
@@ -25,6 +28,7 @@ function Showcase(params) {
 	let parsedStartDate = null;
 	let parsedEndDate = null;
 
+	// Popover HTML body
 	const popoverContent = (
 		<div>
 			<Space direction="vertical">
@@ -35,7 +39,14 @@ function Showcase(params) {
 				>
 					Edit
 				</Button>
-				<p>Placeholder Text</p>
+				<Button
+					onClick={() => {
+						showDeleteConfirm();
+					}}
+					danger
+				>
+					Delete
+				</Button>
 			</Space>
 		</div>
 	);
@@ -90,11 +101,12 @@ function Showcase(params) {
 			data.append(key, values[key]);
 		}
 
-		// console.log(data);
-
 		axios
 			.post("http://localhost:5000/admin/edit", data, {
-				headers: { "Content-Type": "multipart/form-data", "x-auth-token": userData.token },
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"x-auth-token": userData.token,
+				},
 			})
 			.then((res) => {
 				setLoading(false);
@@ -110,25 +122,95 @@ function Showcase(params) {
 			});
 	}
 
-	// console.log(params.showcase);
+	// Function to show the delete confirmation modal
+	function showDeleteConfirm() {
+		confirm({
+			title: "Are you sure you want to delete this showcase?",
+			icon: <ExclamationCircleOutlined />,
+			content: "Please don't delete me （（●´∧｀●））",
+			okText: "Yes",
+			okType: "danger",
+			cancelText: "No",
+			onOk() {
+				deleteShowcase();
+			},
+			onCancel() {
+				console.log("<(_ _*)> You have my gratitude.");
+			},
+		});
+	}
 
+	// Send a post request to the server to delete the current showcase
+	function deleteShowcase() {
+		let data = new FormData();
+
+		data.append("section", params.section);
+		data.append("_id", params.showcase._id);
+
+		axios
+			.post("http://localhost:5000/admin/delete", data, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"x-auth-token": userData.token,
+				},
+			})
+			.then((res) => {
+				message.success("Showcase deleted successfully.", 2);
+				console.log(res);
+			})
+			.catch((error) => {
+				message.error("Failed to delete");
+				console.error(error);
+			});
+	}
+
+	// Render the showcase to be either left or right aligned based on the
+	// alignment of the showcase from the database
 	if (params.showcase.alignment.toLowerCase() === "left") {
-		// showcase.alignment = "Left";
 		return (
 			<React.Fragment>
 				<section className="section">
 					<div className="container">
 						<div className="columns is-vcentered">
 							<div className="column">
-								{userData.token ? <Popover
-									placement="right"
-									content={popoverContent}
-									title="Edit"
-								>
+								{/* Render the popover when the user is logged in */}
+								{userData.token ? (
+									<Popover
+										placement="right"
+										content={popoverContent}
+										title="Edit"
+									>
+										<div className="content">
+											<h1 className="title has-text-left">
+												{title}
+											</h1>
+											{/* If the showcase has date data, render the date, else don't render anything */}
+											{hasDate ? (
+												<React.Fragment>
+													<h5 className="has-text-left">
+														Start :{" "}
+														{parsedStartDate}
+													</h5>
+													<h5 className="has-text-left">
+														End : {parsedEndDate}
+													</h5>
+													<p className="has-text-justified">
+														{description}
+													</p>
+												</React.Fragment>
+											) : (
+												<p className="has-text-justified">
+													{description}
+												</p>
+											)}
+										</div>
+									</Popover>
+								) : (
 									<div className="content">
 										<h1 className="title has-text-left">
 											{title}
 										</h1>
+										{/* If the showcase has date data, render the date, else don't render anything */}
 										{hasDate ? (
 											<React.Fragment>
 												<h5 className="has-text-left">
@@ -147,28 +229,7 @@ function Showcase(params) {
 											</p>
 										)}
 									</div>
-								</Popover> : <div className="content">
-										<h1 className="title has-text-left">
-											{title}
-										</h1>
-										{hasDate ? (
-											<React.Fragment>
-												<h5 className="has-text-left">
-													Start : {parsedStartDate}
-												</h5>
-												<h5 className="has-text-left">
-													End : {parsedEndDate}
-												</h5>
-												<p className="has-text-justified">
-													{description}
-												</p>
-											</React.Fragment>
-										) : (
-											<p className="has-text-justified">
-												{description}
-											</p>
-										)}
-									</div>}
+								)}
 							</div>
 							<div className="column">
 								<figure>
@@ -183,19 +244,22 @@ function Showcase(params) {
 						</div>
 					</div>
 				</section>
-				{userData.token ? <EditModal
-					visible={visible}
-					loading={loading}
-					onCreate={onEdit}
-					changeLoading={(value) => {
-						setLoading(value);
-					}}
-					onCancel={() => {
-						setVisible(false);
-					}}
-					showcase={params.showcase}
-					section={params.section}
-				/> : null}
+				{/* Render the edit modal if the user is logged on and visible is true */}
+				{userData.token ? (
+					<EditModal
+						visible={visible}
+						loading={loading}
+						onCreate={onEdit}
+						changeLoading={(value) => {
+							setLoading(value);
+						}}
+						onCancel={() => {
+							setVisible(false);
+						}}
+						showcase={params.showcase}
+						section={params.section}
+					/>
+				) : null}
 			</React.Fragment>
 		);
 	} else {
@@ -215,15 +279,44 @@ function Showcase(params) {
 								</figure>
 							</div>
 							<div className="column">
-								{userData.token ? <Popover
-									placement="left"
-									content={popoverContent}
-									title="Edit"
-								>
+								{/* Render the popover when the user is logged in */}
+								{userData.token ? (
+									<Popover
+										placement="left"
+										content={popoverContent}
+										title="Edit"
+									>
+										<div className="content">
+											<h1 className="title has-text-right">
+												{title}
+											</h1>
+											{/* If the showcase has date data, render the date, else don't render anything */}
+											{hasDate ? (
+												<React.Fragment>
+													<h5 className="has-text-right">
+														Start :{" "}
+														{parsedStartDate}
+													</h5>
+													<h5 className="has-text-right">
+														End : {parsedEndDate}
+													</h5>
+													<p className="has-text-justified">
+														{description}
+													</p>
+												</React.Fragment>
+											) : (
+												<p className="has-text-justified">
+													{description}
+												</p>
+											)}
+										</div>
+									</Popover>
+								) : (
 									<div className="content">
 										<h1 className="title has-text-right">
 											{title}
 										</h1>
+										{/* If the showcase has date data, render the date, else don't render anything */}
 										{hasDate ? (
 											<React.Fragment>
 												<h5 className="has-text-right">
@@ -242,45 +335,27 @@ function Showcase(params) {
 											</p>
 										)}
 									</div>
-								</Popover> : <div className="content">
-										<h1 className="title has-text-right">
-											{title}
-										</h1>
-										{hasDate ? (
-											<React.Fragment>
-												<h5 className="has-text-right">
-													Start : {parsedStartDate}
-												</h5>
-												<h5 className="has-text-right">
-													End : {parsedEndDate}
-												</h5>
-												<p className="has-text-justified">
-													{description}
-												</p>
-											</React.Fragment>
-										) : (
-											<p className="has-text-justified">
-												{description}
-											</p>
-										)}
-									</div>}
+								)}
 							</div>
 						</div>
 					</div>
 				</section>
-				{userData.token ? <EditModal
-					visible={visible}
-					loading={loading}
-					onCreate={onEdit}
-					changeLoading={(value) => {
-						setLoading(value);
-					}}
-					onCancel={() => {
-						setVisible(false);
-					}}
-					showcase={params.showcase}
-					section={params.section}
-				/>: null}
+				{/* Render the edit modal if the user is logged on and visible is true */}
+				{userData.token ? (
+					<EditModal
+						visible={visible}
+						loading={loading}
+						onCreate={onEdit}
+						changeLoading={(value) => {
+							setLoading(value);
+						}}
+						onCancel={() => {
+							setVisible(false);
+						}}
+						showcase={params.showcase}
+						section={params.section}
+					/>
+				) : null}
 			</React.Fragment>
 		);
 	}

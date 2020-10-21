@@ -7,20 +7,22 @@ import "./header.css";
 
 const buttonStyle = {padding: "0px 2em", fontSize: "1.2em"}
 
-function Navbar(props) {
+function Navbar(params) {
+	const { userData, setUserData } = useContext(user_context);
+	const [current, setCurrent] = useState(params.current);
 
-  const {userData, setUserData} = useContext(user_context);
-	const [current, setCurrent] = useState("home");
-  const logout = () => {
-    setUserData({token: undefined, user: undefined});
+	const logout = () => {
+		setUserData({ token: undefined, user: undefined });
 		localStorage.setItem("auth-token", "");
 		message.success("Logout Successful");
 	};
 
+	// Set the current clicked tab in the navbar
+	// to the current selected tab
 	function handleClick(e) {
-		// console.log("click ", e);
 		setCurrent(e.key);
 	}
+
 	return (
 		<Affix>
 			<Menu style={{display:'flex', justifyContent: 'center'}}
@@ -37,6 +39,7 @@ function Navbar(props) {
 				</Menu.Item>
 				<Menu.Item key="academic-experiences">
 					<Link style={buttonStyle} className="font"
+						// Used for back end routing
 						to={{
 							pathname: "academic-experiences",
 							state: {
@@ -48,7 +51,9 @@ function Navbar(props) {
 					</Link>
 				</Menu.Item>
 				<Menu.Item key="hobbies">
+
 					<Link style={buttonStyle} className="font"
+						// Used for back end routing
 						to={{
 							pathname: "hobbies",
 							state: {
@@ -62,14 +67,16 @@ function Navbar(props) {
 				<Menu.Item key="contact">
 					<Link to="contact" style={buttonStyle} className="font">Contact</Link>
 				</Menu.Item>
-        		{userData.token ? (
-					<Menu.Item onClick = {logout}
+				{/* Render the logout button if the user is logged in */}
+				{userData.token ? (
+					<Menu.Item
+						onClick={logout}
 						key="logout"
 						style={{ float: "right", marginRight: "1.5em" }}
 					>
 						<Link to="/" style={buttonStyle} className="font">Logout</Link>
 					</Menu.Item>
-					) : null}
+				) : null}
 				{/* <Menu.Item key="add">
 					<Link to="add">Add</Link>
 				</Menu.Item>

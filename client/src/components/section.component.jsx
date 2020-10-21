@@ -11,9 +11,15 @@ import axios from "axios";
 
 const sectionButton = {background: "#fafafa", borderColor: "#001529"}
 
+
+// A section is a component that "showcases" all the user's specific content of a specific category such as academic experiences or hobbies
+
+
 function Section(params) {
-	const { userData , setUserData } = useContext(user_context);
+	const { userData, setUserData } = useContext(user_context);
 	const [showcases, setShowcases] = useState([]);
+
+	// Used for the add modal
 	const [visible, setVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
 
@@ -37,11 +43,15 @@ function Section(params) {
 		};
 	}, [showcases, params]);
 
+	// Function that will be passed to the add modal and return
+	// the values from the add modal form which will then be sent
+	// to the server to add to the database
 	function onAdd(values) {
 		console.log("Received values of form: ", values);
 
 		values.section = params.location.state.section;
 
+		// If the values received has dates, parse the date to ISO format
 		if (values.hasOwnProperty("dates")) {
 			// console.log("Values has dates");
 			values.startDate = values.dates[0]._d.toISOString();
@@ -50,17 +60,18 @@ function Section(params) {
 			// console.log("Updated values:", values);
 		}
 
+		// Convert the JSON data to Form Data
 		let data = new FormData();
-
 		for (let key in values) {
 			data.append(key, values[key]);
 		}
 
-		// console.log(data);
-
 		axios
 			.post("http://localhost:5000/admin/upload", data, {
-				headers: { "Content-Type": "multipart/form-data", "x-auth-token": userData.token },
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"x-auth-token": userData.token,
+				},
 			})
 			.then((res) => {
 				setLoading(false);
@@ -79,6 +90,7 @@ function Section(params) {
 	return (
 		<React.Fragment>
 			<div className="white">
+				{/* Render all the showcases */}
 				{showcases.map((showcase) => {
 					return(
 						<Fade bottom delay={500}>
@@ -90,6 +102,8 @@ function Section(params) {
 						</Fade>
 					);
 				})}
+
+        {/* Render the add button if the user is logged in */}
 				{userData.token ? <div className="container" id="add-section-padding">
 					<Affix offsetBottom={10}>
 						<Button

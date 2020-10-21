@@ -1,7 +1,5 @@
 import React from "react";
 import { Form, Input, Button } from "antd";
-import Navbar from "../components/navbar.component";
-import Header from "../components/header.component";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
 import axios from "axios";
@@ -28,9 +26,10 @@ const contactBackground = {background: "#fafafa", minHeight: "100vh"};
 function Contact(params) {
 	const [form] = Form.useForm();
 	const onFinish = (values) => {
-		axios.post("http://localhost:5000/api/contact-me", values)
-		.then((res) => console.log(res))
-		.catch((error) => console.log(error));
+		axios
+			.post("http://localhost:5000/api/contact-me", values)
+			.then((res) => console.log(res))
+			.catch((error) => console.log(error));
 		window.location = "/";
 	};
 
@@ -39,7 +38,8 @@ function Contact(params) {
 			<section className="section" style={contactBackground}>
 				<div className="container">
 					{" "}
-					<Form onFinish={onFinish}
+					<Form
+						onFinish={onFinish}
 						{...layout}
 						form={form}
 						name="Contact Message"
