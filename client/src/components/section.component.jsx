@@ -9,7 +9,11 @@ import Fade from 'react-reveal/Fade';
 import "./section.css"
 import axios from "axios";
 
-const sectionButton = {background: "#fafafa", borderColor: "#001529"}
+const sectionButton = {
+	borderColor: "#001529",
+	backgroundColor: "rgba(238,238,238, 0.7)",
+	boxShadow: "0px 8px 20px 0px rgba(0, 0, 0, 0.5)"
+}
 
 
 // A section is a component that "showcases" all the user's specific content of a specific category such as academic experiences or hobbies
@@ -93,7 +97,7 @@ function Section(params) {
 				{/* Render all the showcases */}
 				{showcases.map((showcase) => {
 					return(
-						<Fade bottom delay={500}>
+						<Fade key={showcase._id} bottom delay={500}>
 							<Showcase
 							showcase={showcase}
 							key={showcase._id}
@@ -109,7 +113,6 @@ function Section(params) {
 						<Button
 							style={sectionButton}
 							shape="round"
-							type="dashed"
 							size="large"
 							onClick={() => {
 								setVisible(true);
