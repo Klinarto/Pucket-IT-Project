@@ -237,7 +237,6 @@ function Showcase(params) {
 										className="image-showcase"
 										src={imageURL}
 										alt={title + " Image"}
-										onError="this.src = '../images/placeholder-image.jpg';"
 									/>
 								</figure>
 							</div>
@@ -274,7 +273,6 @@ function Showcase(params) {
 										className="image-showcase"
 										src={imageURL}
 										alt={title + " Image"}
-										onError="this.src = '../images/placeholder-image.jpg';"
 									/>
 								</figure>
 							</div>
