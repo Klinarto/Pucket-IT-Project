@@ -18,7 +18,7 @@ function getBase64(file) {
 
 function AddModal(params) {
 	const [form] = Form.useForm();
-	const [fileList, setFileList] = useState([]);
+	// const [fileList, setFileList] = useState(params.fileList);
 
 	// Used for preview images
 	const [previewVisible, setPreviewVisible] = useState(false);
@@ -45,7 +45,7 @@ function AddModal(params) {
 	// Handle upload of image file
 	function handleUpload({ fileList }) {
 		// console.log("File", fileList);
-		setFileList(fileList);
+		params.setFileList(fileList);
 
 		// Used to enforce that an image is required to add a showcase
 		if (form.getFieldValue("image").fileList.length === 0) {
@@ -78,7 +78,7 @@ function AddModal(params) {
 		form.validateFields()
 			.then((values) => {
 				params.changeLoading(true);
-				values.image = fileList[0].originFileObj;
+				values.image = params.fileList[0].originFileObj;
 				params.onCreate(values);
 			})
 			.catch((info) => {
@@ -175,12 +175,12 @@ function AddModal(params) {
 					>
 						<Upload
 							listType="picture-card"
-							fileList={fileList}
+							fileList={params.fileList}
 							onPreview={handlePreview}
 							onChange={handleUpload}
 							beforeUpload={() => false}
 						>
-							{fileList.length >= 1 ? null : uploadButton}
+							{params.fileList.length >= 1 ? null : uploadButton}
 						</Upload>
 					</Form.Item>
 					<Modal

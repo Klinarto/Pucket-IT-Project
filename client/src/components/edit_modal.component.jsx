@@ -18,7 +18,6 @@ function getBase64(file) {
 
 function EditModal(params) {
 	const [form] = Form.useForm();
-	const [fileList, setFileList] = useState([]);
 
 	// Used for preview images
 	const [previewVisible, setPreviewVisible] = useState(false);
@@ -45,7 +44,7 @@ function EditModal(params) {
 	// Handle upload of image file
 	function handleUpload({ fileList }) {
 		// console.log("File", fileList);
-		setFileList(fileList);
+		params.setFileList(fileList);
 		// console.log("fileList", fileList);
 	}
 
@@ -70,8 +69,8 @@ function EditModal(params) {
 	function onOk() {
 		form.validateFields()
 			.then((values) => {
-				if (fileList.length > 0) {
-					values.image = fileList[0].originFileObj;
+				if (params.fileList.length > 0) {
+					values.image = params.fileList[0].originFileObj;
 				}
 				params.changeLoading(true);
 				params.onCreate(values);
@@ -160,12 +159,12 @@ function EditModal(params) {
 					<Form.Item name="image" valuePropName="file">
 						<Upload
 							listType="picture-card"
-							fileList={fileList}
+							fileList={params.fileList}
 							onPreview={handlePreview}
 							onChange={handleUpload}
 							beforeUpload={() => false}
 						>
-							{fileList.length >= 1 ? null : uploadButton}
+							{params.fileList.length >= 1 ? null : uploadButton}
 						</Upload>
 					</Form.Item>
 					{/* Modal to preview the image */}

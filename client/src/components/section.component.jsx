@@ -12,6 +12,7 @@ import axios from "axios";
 function Section(params) {
 	const { userData, setUserData } = useContext(user_context);
 	const [showcases, setShowcases] = useState([]);
+	const [fileList, setFileList] = useState([]);
 
 	// Used for the add modal
 	const [visible, setVisible] = useState(false);
@@ -70,6 +71,7 @@ function Section(params) {
 			.then((res) => {
 				setLoading(false);
 				setVisible(false);
+				setFileList([]);
 				message.success("Showcase added successfully.", 2);
 				console.log(res);
 			})
@@ -113,11 +115,15 @@ function Section(params) {
 							changeLoading={(value) => {
 								setLoading(value);
 							}}
+							setFileList={(files) => {
+								setFileList(files);
+							}}
 							onCreate={onAdd}
 							onCancel={() => {
 								setVisible(false);
 							}}
 							section={params.location.state.section}
+							fileList={fileList}
 						/>
 					</div>
 				) : null}
