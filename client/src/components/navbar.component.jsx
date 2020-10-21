@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Menu, Affix, message } from "antd";
 import "antd/dist/antd.css";
 import user_context from "../context/user_context";
+import "./header.css";
+
+const buttonStyle = {padding: "0px 2em", fontSize: "1.2em"}
 
 function Navbar(params) {
 	const { userData, setUserData } = useContext(user_context);
@@ -22,19 +25,20 @@ function Navbar(params) {
 
 	return (
 		<Affix>
-			<Menu
+			<Menu style={{display:'flex', justifyContent: 'center'}}
+				theme = "dark"
 				onClick={handleClick}
 				selectedKeys={[current]}
 				mode="horizontal"
 			>
-				<Menu.Item key="home">
-					<Link to="/">Home</Link>
+				<Menu.Item key="home" >
+					<Link to="/" style={buttonStyle} className="font">Home</Link>
 				</Menu.Item>
 				<Menu.Item key="about-me">
-					<Link to="about-me">About Me</Link>
+					<Link to="about-me" style={buttonStyle} className="font">About Me</Link>
 				</Menu.Item>
 				<Menu.Item key="academic-experiences">
-					<Link
+					<Link style={buttonStyle} className="font"
 						// Used for back end routing
 						to={{
 							pathname: "academic-experiences",
@@ -47,7 +51,8 @@ function Navbar(params) {
 					</Link>
 				</Menu.Item>
 				<Menu.Item key="hobbies">
-					<Link
+
+					<Link style={buttonStyle} className="font"
 						// Used for back end routing
 						to={{
 							pathname: "hobbies",
@@ -60,7 +65,7 @@ function Navbar(params) {
 					</Link>
 				</Menu.Item>
 				<Menu.Item key="contact">
-					<Link to="contact">Contact</Link>
+					<Link to="contact" style={buttonStyle} className="font">Contact</Link>
 				</Menu.Item>
 				{/* Render the logout button if the user is logged in */}
 				{userData.token ? (
@@ -69,7 +74,7 @@ function Navbar(params) {
 						key="logout"
 						style={{ float: "right", marginRight: "1.5em" }}
 					>
-						<Link to="/">Logout</Link>
+						<Link to="/" style={buttonStyle} className="font">Logout</Link>
 					</Menu.Item>
 				) : null}
 				{/* <Menu.Item key="add">

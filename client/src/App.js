@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Home from "./pages/home";
 import AboutMe from "./pages/about-me";
 import Contact from "./pages/contact";
+import { CaretUpOutlined } from "@ant-design/icons";
+
 // import Add from "./pages/add";
 // import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
@@ -15,15 +17,15 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import "antd/dist/antd.css";
 
 const backToTop = {
-	height: 40,
-	width: 40,
-	lineHeight: "40px",
+	width: "35px",
+  	height: "35px", 
+	lineHeight: "30px",
 	borderRadius: 4,
 	backgroundColor: "#1088e9",
 	color: "#fff",
 	textAlign: "center",
-	fontSize: 14,
-};
+	fontSize: "33px"
+}
 
 function App() {
 	const [userData, setUserData] = useState({
@@ -77,11 +79,11 @@ function App() {
 				<Route path="/login" component={Login} />
 				{/* <Route path="/add" component={Add} />
         <Route path="/dashboard" component={Dashboard} /> */}
-				<BackTop>
-					<div style={backToTop}>UP</div>
-					{/* <div style={style}>( ͡° ͜ʖ ͡°)</div> */}
-				</BackTop>
-			</UserContext.Provider>
+        <BackTop>
+			<CaretUpOutlined style={backToTop}/>
+          {/* <div style={style}>( ͡° ͜ʖ ͡°)</div> */}
+        </BackTop>
+      </UserContext.Provider>
 		</main>
 	);
 }

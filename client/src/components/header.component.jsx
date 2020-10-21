@@ -21,12 +21,12 @@ function Header(params) {
 	}, []);
 
 	return (
-		<div className="header">
+		<div className="header background-header-color font">
 			<div className="container center">
-				<h2 className="subtitle is-0">{title}</h2>
+				<h2 className="title is-4 white-text">{title}</h2>
 			</div>
 			<div className="container center">
-				<h2 className="subtitle">{caption}</h2>
+				<h2 className="subtitle white-text">{caption}</h2>
 			</div>
 		</div>
 	);

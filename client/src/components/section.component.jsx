@@ -2,12 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import user_context from "../context/user_context";
 import Showcase from "../components/showcase.component";
 import AddModal from "../components/add_modal.component";
-import { Button, message } from "antd";
+import { Button, message, Affix } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import "bulma/css/bulma.min.css";
+import Fade from 'react-reveal/Fade';
+import "./section.css"
 import axios from "axios";
 
+const sectionButton = {background: "#fafafa", borderColor: "#001529"}
+
+
 // A section is a component that "showcases" all the user's specific content of a specific category such as academic experiences or hobbies
+
 
 function Section(params) {
 	const { userData, setUserData } = useContext(user_context);
@@ -83,21 +89,26 @@ function Section(params) {
 
 	return (
 		<React.Fragment>
-			<div>
+			<div className="white">
 				{/* Render all the showcases */}
 				{showcases.map((showcase) => {
-					return (
-						<Showcase
+					return(
+						<Fade bottom delay={500}>
+							<Showcase
 							showcase={showcase}
 							key={showcase._id}
 							section={params.location.state.section}
-						/>
+							/>
+						</Fade>
 					);
 				})}
-				{/* Render the add button if the user is logged in */}
-				{userData.token ? (
-					<div className="container">
+
+        {/* Render the add button if the user is logged in */}
+				{userData.token ? <div className="container" id="add-section-padding">
+					<Affix offsetBottom={10}>
 						<Button
+							style={sectionButton}
+							shape="round"
 							type="dashed"
 							size="large"
 							onClick={() => {
@@ -105,22 +116,22 @@ function Section(params) {
 							}}
 							block
 						>
-							<PlusOutlined /> Add Section
+							<PlusOutlined/> Add Section
 						</Button>
-						<AddModal
-							visible={visible}
-							loading={loading}
-							changeLoading={(value) => {
-								setLoading(value);
-							}}
-							onCreate={onAdd}
-							onCancel={() => {
-								setVisible(false);
-							}}
-							section={params.location.state.section}
-						/>
-					</div>
-				) : null}
+					</Affix>
+					<AddModal
+						visible={visible}
+						loading={loading}
+						changeLoading={(value) => {
+							setLoading(value);
+						}}
+						onCreate={onAdd}
+						onCancel={() => {
+							setVisible(false);
+						}}
+						section={params.location.state.section}
+					/>
+				</div> : null}
 			</div>
 		</React.Fragment>
 	);

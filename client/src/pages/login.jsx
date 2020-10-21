@@ -23,6 +23,8 @@ const validateMessages = {
 	},
 };
 
+const marginBottom = {marginBottom: "2em"};
+const contactBackground = {background: "#fafafa", minHeight: "100vh"};
 
 function Login(params) {
 	const [form] = Form.useForm();
@@ -43,7 +45,7 @@ function Login(params) {
 
 	return (
 		<React.Fragment>
-			<section className="section">
+			<section className="section" style={contactBackground}>
 				<div className="container">
 					{" "}
 					<Form onFinish={onFinish}
@@ -53,6 +55,7 @@ function Login(params) {
 						validateMessages={validateMessages}
 					>
 						<Form.Item
+							style = {marginBottom}
 							name="username"
 							label="Username"
 							rules={[
@@ -64,6 +67,7 @@ function Login(params) {
 							<Input />
 						</Form.Item>
 						<Form.Item
+							style = {marginBottom}
 							name="password"
 							label="Password"
 							rules={[

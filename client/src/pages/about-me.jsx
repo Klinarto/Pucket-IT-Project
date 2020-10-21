@@ -3,7 +3,9 @@ import CarouselImage from "../components/carousel_image.component";
 import { Carousel } from "antd";
 import axios from "axios";
 import "antd/dist/antd.css";
+import "./font.css"
 import "bulma/css/bulma.min.css";
+import Fade from 'react-reveal/Fade';
 import { useEffect } from "react";
 
 function AboutMe(params) {
@@ -43,19 +45,20 @@ function AboutMe(params) {
 					})}
 				</Carousel>
 			</section>
-
-			<section className="section has-background-light">
-				<div className="container">
-					<div className="card">
-						<div className="card-content">
-							<h1 className="title">{title}</h1>
-							<p>{description}</p>
+				<section className="section has-background-light">
+					<Fade big delay={1000}>
+						<div className="container">
+							<div className="card">
+								<div className="card-content">
+									<h1 className="title font">{title}</h1>
+									<p className="font">{description}</p>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			</section>
-		</React.Fragment>
-	);
+					</Fade>
+				</section>
+			</React.Fragment>
+		);
 }
 
 export default AboutMe;

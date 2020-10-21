@@ -3,6 +3,8 @@ import axios from "axios";
 import "bulma/css/bulma.min.css";
 import "./home.css";
 import "../utilities/helper.css";
+import "./font.css";
+import Fade from 'react-reveal/Fade';
 
 function Home(params) {
 	const [heroTitle, setHeroTitle] = useState("");
@@ -36,25 +38,28 @@ function Home(params) {
 					className="hero-body"
 					style={{ backgroundImage: `url(${heroBG})` }}
 				>
-					<div id="motto" className="container">
-						<h1 className="title is-1 has-text-white has-text-right">
-							{heroTitle}
-						</h1>
-						<p className="subtitle has-text-white has-text-right">
-							{heroDesc}
-						</p>
-					</div>
+					<Fade right>
+							<div id="motto" className="container">
+								<h1 className="title is-1 has-text-white has-text-right font">
+									{heroTitle}
+								</h1>
+								<p className="subtitle has-text-white has-text-right font">
+									{heroDesc}
+								</p>
+							</div>
+          </Fade>
 				</div>
 			</section>
-
 			<section className="section has-background-light">
 				<div className="container">
-					<div className="card">
-						<div className="card-content">
-							<h1 className="title">{title}</h1>
-							<p>{description}</p>
-						</div>
-					</div>
+					<Fade big duration={2000}>
+							<div className="card">
+								<div className="card-content">
+									<h1 className="title font">{title}</h1>
+									<p className="font">{description}</p>
+								</div>
+							</div>
+						</Fade>
 				</div>
 			</section>
 		</React.Fragment>

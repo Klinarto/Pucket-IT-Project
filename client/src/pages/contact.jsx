@@ -20,6 +20,9 @@ const validateMessages = {
 	},
 };
 
+const marginBottom = {marginBottom: "2em"};
+const contactBackground = {background: "#fafafa", minHeight: "100vh"};
+
 function Contact(params) {
 	const [form] = Form.useForm();
 	const onFinish = (values) => {
@@ -32,7 +35,7 @@ function Contact(params) {
 
 	return (
 		<React.Fragment>
-			<section className="section">
+			<section className="section" style={contactBackground}>
 				<div className="container">
 					{" "}
 					<Form
@@ -43,6 +46,7 @@ function Contact(params) {
 						validateMessages={validateMessages}
 					>
 						<Form.Item
+							style = {marginBottom}
 							name="name"
 							label="Name"
 							rules={[
@@ -54,6 +58,7 @@ function Contact(params) {
 							<Input />
 						</Form.Item>
 						<Form.Item
+							style = {marginBottom}
 							name="email"
 							label="Email"
 							rules={[
@@ -67,6 +72,7 @@ function Contact(params) {
 						</Form.Item>
 
 						<Form.Item
+							style = {marginBottom}
 							name="message"
 							label="Message"
 							rules={[
