@@ -5,3 +5,20 @@
 .container {
 	padding-bottom: 5px;
 }
+
+.background-header-color {
+	background:#001529;
+}
+
+@font-face {
+	font-family: 'Baskerville';
+	src: local('Baskerville'), url("../fonts/BASKE9.ttf") format('ttf');
+}
+
+.font {
+	font-family: 'Baskerville';
+}
+
+.white-text {
+	color: lightgrey;
+}
