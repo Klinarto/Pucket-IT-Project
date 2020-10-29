@@ -24,6 +24,17 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+      env:
+        URI: ${{ secrets.URI }}
+        POOL_SIZE: ${{ secrets.POOL_SIZE }}
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_TOKEN: ${{ secrets.DB_TOKEN }} 
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+        SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+        EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
     - run: npm start
     - run: npm heroku-postbuild
     - run: npm test
