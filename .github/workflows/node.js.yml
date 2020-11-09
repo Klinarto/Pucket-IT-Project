@@ -35,8 +35,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
-        sudo mkdir -p /app/uploads
         npm install
-        npm start
-        npm heroku-postbuild
         npm test 
