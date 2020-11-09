@@ -2,11 +2,9 @@ const app = require('../server.js');
 const request = require('supertest');
 const chaiJsonPattern = require('chai-json-pattern').default;
 const chai = require('chai');
-const asserttype = require('chai-asserttype');
 const { ObjectId } = require('mongodb');
 var expect = chai.expect;
 chai.use(chaiJsonPattern);
-chai.use(asserttype);
 
 describe('test getting information from database', function () {
     const motto = `
@@ -57,6 +55,7 @@ describe('test getting information from database', function () {
             });
     });
 
+
     it("Get /academic-experiences", function (done) {
         request(app)
             .get('/api/academic-experiences')
@@ -68,7 +67,7 @@ describe('test getting information from database', function () {
                 for (i=0; i<res.body.length; i++) {
                     expect(ObjectId.isValid(res.body[i]["_id"])).to.be.true;
                     expect(res.body[i]["title"]).to.be.a('string');
-                    expect(res.body[i]["startDate"]).to.be.date();
+                    expect(Date.parse(res.body[i]["startDate"])).not.to.be.NaN;
                     expect(res.body[i]["description"]).to.be.a('string');
                     expect(res.body[i]["image"]).to.be.a('string');
                     expect(res.body[i]["alignment"]).to.be.oneOf(["Left", "Right"]);
