@@ -34,7 +34,7 @@ const client = new MongoClient(process.env.URI, {
 	poolSize: process.env.POOL_SIZE,
 	useUnifiedTopology: true,
 });
-
+console.log(process.env.URI);
 //connect client (must be done before using client to access DB)
 client.connect((err) => {
   if (err) {
