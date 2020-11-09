@@ -35,7 +35,7 @@ jobs:
         SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
         EMAIL_TO: ${{ secrets.EMAIL_TO }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
-    - run: sudo mkdir /app
+    - run: sudo mkdir /app/uploads
     - run: npm install
     - run: npm start
     - run: npm heroku-postbuild
