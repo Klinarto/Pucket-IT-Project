@@ -31,11 +31,7 @@ function AboutMe(params) {
 			});
 	}, []);
 
-	// from https://react-slick.neostack.com/docs/example/custom-arrows
-	// <button style ={height= "100%"}>
-	// 			<LeftOutlined/>
-	// 		</button>
-	const SampleNextArrow = props => {
+	const NextArrow = props => {
 		const { className, style, onClick } = props
 		return (
 		<div
@@ -48,7 +44,7 @@ function AboutMe(params) {
 		)
 	}
 	
-	const SamplePrevArrow = props => {
+	const PrevArrow = props => {
 		const { className, style, onClick } = props
 		return (
 		<div
@@ -62,27 +58,16 @@ function AboutMe(params) {
 	}
 	
 	const settings = {
-		nextArrow: <SampleNextArrow />,
-		prevArrow: <SamplePrevArrow />
+		nextArrow: <NextArrow />,
+		prevArrow: <PrevArrow />
 	}
 
 	const zIndex = {zIndex: "1"};
-	// const RightArrow = () => {
-	// 	return (
-	// 		<Button icon={<RightOutlined />} size="middle"/>
-	// 	)
-	// }
 	
-	// const LeftArrow = () => {
-	// 	return (
-	// 		<Button icon={<LeftOutlined/>} size="middle"/>
-	// 	)
-	// prevArrow={LeftArrow()} nextArrow={RightArrow()}}
-	//<Button icon={<LeftOutlined/>} size="middle" onClick={setCarousel.nextArrow}/>
 	return (
 		<React.Fragment>
 			<section className="section mb-2">
-				<Carousel  arrows={true} {...settings} >
+				<Carousel autoplay arrows={true} {...settings} >
 					{carouselImages.map((image, index) => {
 						return (
 							<CarouselImage
