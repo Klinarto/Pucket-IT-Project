@@ -4,7 +4,7 @@ import "./carousel_image.css";
 function CarouselImage(params) {
 	return (
 		<div className="carousel-image">
-			<figure>
+			<figure className="center-image">
 				<img src={params.url} alt={params.title} />
 			</figure>
 			<h3>{params.title}</h3>
