@@ -7,6 +7,8 @@ import "./font.css"
 import "bulma/css/bulma.min.css";
 import Fade from 'react-reveal/Fade';
 import { useEffect } from "react";
+import { Button } from 'antd';
+import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 
 function AboutMe(params) {
 	const [title, setTitle] = useState("");
@@ -28,10 +30,59 @@ function AboutMe(params) {
 				console.log(error);
 			});
 	}, []);
+
+	// from https://react-slick.neostack.com/docs/example/custom-arrows
+	// <button style ={height= "100%"}>
+	// 			<LeftOutlined/>
+	// 		</button>
+	const SampleNextArrow = props => {
+		const { className, style, onClick } = props
+		return (
+		<div
+			className={className}
+			style={{ ...style, padding: "0 5.5%"}}
+			onClick={onClick}
+		>
+			<Button icon={<RightOutlined/>} size="large" style={zIndex}/>
+		</div>
+		)
+	}
+	
+	const SamplePrevArrow = props => {
+		const { className, style, onClick } = props
+		return (
+		<div
+			className={className}
+			style={{ ...style, padding: "0 3%"}}
+			onClick={onClick}
+		>
+			<Button icon={<LeftOutlined/>} size="large" style={zIndex}/>
+		</div>
+		)
+	}
+	
+	const settings = {
+		nextArrow: <SampleNextArrow />,
+		prevArrow: <SamplePrevArrow />
+	}
+
+	const zIndex = {zIndex: "1"};
+	// const RightArrow = () => {
+	// 	return (
+	// 		<Button icon={<RightOutlined />} size="middle"/>
+	// 	)
+	// }
+	
+	// const LeftArrow = () => {
+	// 	return (
+	// 		<Button icon={<LeftOutlined/>} size="middle"/>
+	// 	)
+	// prevArrow={LeftArrow()} nextArrow={RightArrow()}}
+	//<Button icon={<LeftOutlined/>} size="middle" onClick={setCarousel.nextArrow}/>
 	return (
 		<React.Fragment>
 			<section className="section mb-2">
-				<Carousel autoplay>
+				<Carousel  arrows={true} {...settings} >
 					{carouselImages.map((image, index) => {
 						return (
 							<CarouselImage
