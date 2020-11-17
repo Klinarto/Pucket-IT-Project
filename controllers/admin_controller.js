@@ -45,6 +45,7 @@ var addNewEntry = async function (req, res) {
         alignment: alignment,
       });
     }
+    res.status(200).send("Uploaded!");
   } else {
     console.log("image uploaded");
 
