@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const contact_me_controller = require('../controllers/contact_me_controller.js');
+const recaptcha = require('../middleware/recaptcha.js');
 
 router.get("/", (req, res) => {
 	collection = req.app.db.collection("homepage");
@@ -8,7 +9,7 @@ router.get("/", (req, res) => {
 		if (err) {
 			throw err;
 		}
-		res.send(docs);
+		res.status(200).send(docs);
 	});
 });
 
@@ -18,7 +19,7 @@ router.get("/about-me", (req, res) => {
 		if (err) {
 			throw err;
 		}
-		res.send(docs);
+		res.status(200).send(docs);
 	});
 });
 
@@ -28,7 +29,7 @@ router.get("/academic-experiences", (req, res) => {
 		if (err) {
 			throw err;
 		}
-		res.send(docs);
+		res.status(200).send(docs);
 	});
 });
 
@@ -38,7 +39,7 @@ router.get("/hobbies", (req, res) => {
 		if (err) {
 			throw err;
 		}
-		res.send(data);
+		res.status(200).send(data);
 	});
 });
 
@@ -48,9 +49,9 @@ router.get("/title", (req, res) => {
 		if (err) {
 			throw err;
 		}
-		res.send(data);
+		res.status(200).send(data);
 	});
 });
 
-router.post("/contact-me", contact_me_controller.sendContactMe);
+router.post("/contact-me", recaptcha.recaptcha, contact_me_controller.sendContactMe);
 module.exports = router;

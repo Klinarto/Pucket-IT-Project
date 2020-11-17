@@ -1,10 +1,11 @@
-import React from "react";
-import { Form, Input, Button } from "antd";
+import React, { useState } from "react";
+import { Form, Input, Button, message } from "antd";
 import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
 import axios from "axios";
+import Recaptcha from "react-google-recaptcha";
 
 const layout = {
 	labelCol: {
@@ -22,29 +23,45 @@ const validateMessages = {
 	},
 };
 
+const marginBottom = {marginBottom: "2em"};
+const contactBackground = {background: "#fafafa", minHeight: "100vh"};
+
 function Contact(params) {
+	const [isVerified, setIsVerified] = useState(false);
+	const [captcha, setCaptcha] = useState("");
 	const [form] = Form.useForm();
+	
+	function onChangeRecaptcha(value) {
+		setCaptcha(value);
+		setIsVerified(true);
+	}
+
 	const onFinish = (values) => {
-		axios.post("https://pucket.herokuapp.com/api/contact-me", values)
-		.then((res) => console.log(res))
-		.catch((error) => console.log(error));
-		window.location = "/";
+		if(isVerified) {
+			values.recaptcha = captcha;
+			axios.post("https://pucket.herokuapp.com/api/contact-me", values)
+			.then((res) => console.log(res))
+			.catch((error) => console.log(error));
+			window.location = "/";
+		} else {
+			message.error('Please verify that you are a human!');
+		}
 	};
 
 	return (
 		<React.Fragment>
-			<Header />
-			<Navbar current="contact" />
 			<section className="section">
 				<div className="container">
 					{" "}
-					<Form onFinish={onFinish}
+					<Form
+						onFinish={onFinish}
 						{...layout}
 						form={form}
 						name="Contact Message"
 						validateMessages={validateMessages}
 					>
 						<Form.Item
+							style = {marginBottom}
 							name="name"
 							label="Name"
 							rules={[
@@ -56,6 +73,7 @@ function Contact(params) {
 							<Input />
 						</Form.Item>
 						<Form.Item
+							style = {marginBottom}
 							name="email"
 							label="Email"
 							rules={[
@@ -69,6 +87,7 @@ function Contact(params) {
 						</Form.Item>
 
 						<Form.Item
+							style = {marginBottom}
 							name="message"
 							label="Message"
 							rules={[
@@ -79,6 +98,16 @@ function Contact(params) {
 						>
 							<Input.TextArea />
 						</Form.Item>
+
+						<Form.Item 
+							wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+							
+							<Recaptcha
+								sitekey="6LevhNkZAAAAABvtk2j7bEhd-tJrxpPWH_rphULH"
+								onChange={onChangeRecaptcha}
+							/>
+						</Form.Item>
+						
 						<Form.Item
 							wrapperCol={{ ...layout.wrapperCol, offset: 6 }}
 						>
@@ -86,6 +115,7 @@ function Contact(params) {
 								Send
 							</Button>
 						</Form.Item>
+
 					</Form>
 				</div>
 			</section>

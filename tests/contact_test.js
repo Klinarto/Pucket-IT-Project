@@ -5,6 +5,7 @@ const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 describe('contact client test', function () {
+    this.timeout(5000);
 
     it("send email", function (done) {
     

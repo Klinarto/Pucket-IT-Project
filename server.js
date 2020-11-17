@@ -1,6 +1,5 @@
 if (process.env.NODE_ENV !== 'production') {require('dotenv').config()}
 const assert = require("assert");
-const fs = require("fs");
 
 const express = require("express");
 const app = express();
@@ -16,17 +15,6 @@ const MongoClient = require("mongodb").MongoClient;
 // Serve the static files from the React app
 const path = require("path");
 app.use(express.static(path.join(__dirname, "client/build")));
-
-// //read json to get config properties, might change over to heroku environment variables
-// fs.readFile("mongoProperties.json", "utf8", (err, data) => {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-//   dbProperties = JSON.parse(data);
-
-//   //moved out
-// });
 
 //create new MongoClient with options
 const client = new MongoClient(process.env.URI, {
