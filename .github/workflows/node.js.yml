@@ -16,15 +16,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-      env:
+        node-version: [14.x]
+    env:
         URI: ${{ secrets.URI }}
         POOL_SIZE: ${{ secrets.POOL_SIZE }}
         DB_NAME: ${{ secrets.DB_NAME }}
@@ -35,8 +28,13 @@ jobs:
         SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
         EMAIL_TO: ${{ secrets.EMAIL_TO }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
-    - run: sudo mkdir -p /app/uploads
-    - run: npm install
-    - run: npm start
-    - run: npm heroku-postbuild
-    - run: npm test
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        sudo mkdir -p /app/uploads
+        npm install
+        npm test 
