@@ -19,14 +19,14 @@ import "antd/dist/antd.css";
 
 const backToTop = {
 	width: "35px",
-  	height: "35px", 
+	height: "35px",
 	lineHeight: "30px",
 	borderRadius: 4,
 	backgroundColor: "#1088e9",
 	color: "#fff",
 	textAlign: "center",
-	fontSize: "33px"
-}
+	fontSize: "33px",
+};
 
 function App() {
 	const [userData, setUserData] = useState({
@@ -51,11 +51,9 @@ function App() {
 				token = "";
 			}
 
-			const tokenRes = await Axios.post(
-				"http://localhost:5000/user/tokenIsValid",
-				null,
-				{ headers: { "x-auth-token": token } }
-			);
+			const tokenRes = await Axios.post("/user/tokenIsValid", null, {
+				headers: { "x-auth-token": token },
+			});
 
 			if (tokenRes.data) {
 				setUserData({
@@ -81,11 +79,11 @@ function App() {
 				<Route path="/changePassword" component={ChangePassword} />
 				{/* <Route path="/add" component={Add} />
         <Route path="/dashboard" component={Dashboard} /> */}
-        <BackTop>
-			<CaretUpOutlined style={backToTop}/>
-          {/* <div style={style}>( ͡° ͜ʖ ͡°)</div> */}
-        </BackTop>
-      </UserContext.Provider>
+				<BackTop>
+					<CaretUpOutlined style={backToTop} />
+					{/* <div style={style}>( ͡° ͜ʖ ͡°)</div> */}
+				</BackTop>
+			</UserContext.Provider>
 		</main>
 	);
 }
