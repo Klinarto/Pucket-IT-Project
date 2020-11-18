@@ -252,7 +252,7 @@ var deleteEntry = function (req, res) {
 	//find current entry and get photo url to delete
 	collection.findOne({ _id: id }).then((result) => {
 		if (result.image == null) {
-			console.log("none found");
+			console.log("no picture URL found");
 		} else {
 			var oldImage = result.image;
 			var imgurRegex = /(http(s*)):\/\/i.imgur.com\/([a-zA-Z0-9_\s]*)\./;
@@ -260,16 +260,16 @@ var deleteEntry = function (req, res) {
 			var imageHash = match[3];
 
 			imgur.imgurDelete(req.app.db, imageHash);
-
-			//delete MongoDB document here
-			collection.deleteOne({ _id: id }).then((deleteConfirm) => {
-				if (deleteConfirm == null) {
-					res.status(500).send("An error occured");
-				} else {
-					res.status(200).send("Entry deleted!");
-				}
-			});
 		}
+		
+		//delete MongoDB document here
+		collection.deleteOne({ _id: id }).then((deleteConfirm) => {
+			if (deleteConfirm == null) {
+				res.status(500).send("An error occured");
+			} else {
+				res.status(200).send("Entry deleted!");
+			}
+		});
 	});
 };
 
