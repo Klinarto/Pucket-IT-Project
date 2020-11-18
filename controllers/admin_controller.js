@@ -98,7 +98,7 @@ var editEntry = function (req, res) {
 	var description = req.body.description;
 	var startDate = req.body.startDate;
 	var endDate = req.body.endDate;
-	var imageUrl = req.body.image;
+	var imageURL = req.body.image;
 	var alignment = req.body.alignment;
 
 	var id;
@@ -117,7 +117,7 @@ var editEntry = function (req, res) {
 						$set: {
 							title: title,
 							description: description,
-							image: imageUrl,
+							image: imageURL,
 						},
 					}
 				);
@@ -140,7 +140,7 @@ var editEntry = function (req, res) {
 						$set: {
 							title: title,
 							description: description,
-							image: imageUrl,
+							image: imageURL,
 							alignment: alignment,
 						},
 					}
@@ -155,7 +155,7 @@ var editEntry = function (req, res) {
 							startDate: new Date(startDate),
 							endDate: new Date(endDate),
 							description: description,
-							image: imageUrl,
+							image: imageURL,
 							alignment: alignment,
 						},
 					}
@@ -199,7 +199,7 @@ var editEntry = function (req, res) {
 								$set: {
 									title: title,
 									description: description,
-									image: imageUrl,
+									image: imageURL,
 								},
 							}
 						);
@@ -211,7 +211,7 @@ var editEntry = function (req, res) {
 								$set: {
 									title: title,
 									description: description,
-									image: imageUrl,
+									image: imageURL,
 									alignment: alignment,
 								},
 							}
@@ -226,7 +226,7 @@ var editEntry = function (req, res) {
 									startDate: new Date(startDate),
 									endDate: new Date(endDate),
 									description: description,
-									image: imageUrl,
+									image: imageURL,
 									alignment: alignment,
 								},
 							}
