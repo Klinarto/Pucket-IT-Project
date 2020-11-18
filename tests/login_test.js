@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 const app = require('../server.js');
 const request = require('supertest');
 
-before(done => {
+before(function (done) {
     this.timeout(5000);
     app.on("ready", () => {
         done();
