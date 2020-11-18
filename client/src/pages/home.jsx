@@ -4,6 +4,7 @@ import user_context from "../context/user_context";
 import axios from "axios";
 import EditModal from "../components/edit_modal_home.component";
 import "bulma/css/bulma.min.css";
+import "antd/dist/antd.css";
 import "./home.css";
 import "../utilities/helper.css";
 import "./font.css";
@@ -156,20 +157,22 @@ function Home(params) {
 				>
 					<Fade right>
 						{userData.token ? (
-							<Popover
-								placement="right"
-								content={popoverMotto}
-								title="Edit"
-							>
-								<div id="motto" className="container">
-									<h1 className="title is-1 has-text-white has-text-right font">
-										{heroTitle}
-									</h1>
-									<p className="subtitle has-text-white has-text-right font">
-										{heroDesc}
-									</p>
-								</div>
-							</Popover>
+							<div id="motto" className="container">
+								<Popover
+									placement="right"
+									content={popoverMotto}
+									title="Edit"
+								>
+									<div>
+										<h1 className="title is-1 has-text-white has-text-right font">
+											{heroTitle}
+										</h1>
+										<p className="subtitle has-text-white has-text-right font">
+											{heroDesc}
+										</p>
+									</div>
+								</Popover>
+							</div>
 						) : (
 							<div id="motto" className="container">
 								<h1 className="title is-1 has-text-white has-text-right font">
