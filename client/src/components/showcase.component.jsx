@@ -18,6 +18,7 @@ function Showcase(params) {
 	// Used for the edit modal
 	const [visible, setVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [fileList, setFileList] = useState([]);
 
 	const title = params.showcase.title;
 	const description = params.showcase.description;
@@ -111,6 +112,7 @@ function Showcase(params) {
 			.then((res) => {
 				setLoading(false);
 				setVisible(false);
+				setFileList([]);
 				message.success("Showcase edited successfully.", 2);
 				console.log(res);
 			})
@@ -254,6 +256,8 @@ function Showcase(params) {
 						onCancel={() => {
 							setVisible(false);
 						}}
+						setFileList={(files) => setFileList(files)}
+						fileList={fileList}
 						showcase={params.showcase}
 						section={params.section}
 					/>
@@ -349,6 +353,8 @@ function Showcase(params) {
 						onCancel={() => {
 							setVisible(false);
 						}}
+						setFileList={(files) => setFileList(files)}
+						fileList={fileList}
 						showcase={params.showcase}
 						section={params.section}
 					/>
