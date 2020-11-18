@@ -26,6 +26,7 @@ function AboutMe(params) {
 		fetchData();
 	}, []);
 
+	// Fetch data from api
 	function fetchData(params) {
 		axios
 			.get("/api/about-me")

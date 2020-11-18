@@ -29,6 +29,7 @@ function Home(params) {
 		fetchData();
 	}, []);
 
+	// Fetch data from api
 	function fetchData(params) {
 		axios
 			.get("/api/")
