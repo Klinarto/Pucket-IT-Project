@@ -7,6 +7,8 @@ import "./font.css"
 import "bulma/css/bulma.min.css";
 import Fade from 'react-reveal/Fade';
 import { useEffect } from "react";
+import { Button } from 'antd';
+import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 
 function AboutMe(params) {
 	const [title, setTitle] = useState("");
@@ -28,10 +30,44 @@ function AboutMe(params) {
 				console.log(error);
 			});
 	}, []);
+
+	const NextArrow = props => {
+		const { className, style, onClick } = props
+		return (
+		<div
+			className={className}
+			style={{ ...style, padding: "0 5.5%"}}
+			onClick={onClick}
+		>
+			<Button icon={<RightOutlined/>} size="large" style={zIndex}/>
+		</div>
+		)
+	}
+	
+	const PrevArrow = props => {
+		const { className, style, onClick } = props
+		return (
+		<div
+			className={className}
+			style={{ ...style, padding: "0 3%"}}
+			onClick={onClick}
+		>
+			<Button icon={<LeftOutlined/>} size="large" style={zIndex}/>
+		</div>
+		)
+	}
+	
+	const settings = {
+		nextArrow: <NextArrow />,
+		prevArrow: <PrevArrow />
+	}
+
+	const zIndex = {zIndex: "1"};
+	
 	return (
 		<React.Fragment>
 			<section className="section mb-2">
-				<Carousel autoplay>
+				<Carousel autoplay arrows={true} {...settings} >
 					{carouselImages.map((image, index) => {
 						return (
 							<CarouselImage
