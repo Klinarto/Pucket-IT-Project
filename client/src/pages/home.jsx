@@ -28,10 +28,11 @@ function Home(params) {
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [heroTitle, heroDesc, heroBG, title, description]);
 
 	// Fetch data from api
 	function fetchData(params) {
+		console.log("Fetching data");
 		axios
 			.get("/api/")
 			.then((response) => {

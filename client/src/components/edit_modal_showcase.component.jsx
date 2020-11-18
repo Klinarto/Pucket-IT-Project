@@ -45,7 +45,7 @@ function EditModal(params) {
 	function handleUpload({ fileList }) {
 		// console.log("File", fileList);
 		params.setFileList(fileList);
-		// console.log("fileList", fileList);
+		console.log("fileList", fileList);
 	}
 
 	// Handle edit modal's cancel

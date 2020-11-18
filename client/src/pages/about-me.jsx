@@ -24,10 +24,11 @@ function AboutMe(params) {
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [title, description]);
 
 	// Fetch data from api
 	function fetchData(params) {
+		console.log("Fetching data");
 		axios
 			.get("/api/about-me")
 			.then((response) => {

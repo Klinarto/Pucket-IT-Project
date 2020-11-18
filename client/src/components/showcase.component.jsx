@@ -83,11 +83,13 @@ function Showcase(params) {
 	// the values from the edit modal form which will then be sent
 	// to the server to update
 	function onEdit(values) {
+		// console.log("Received values of form: ", values);
 		values._id = params.showcase._id;
-		console.log("Received values of form: ", values);
 
 		values.section = params.section;
 		values.imageUrl = params.showcase.image;
+
+		console.log("Values: ", values);
 
 		if (values.hasOwnProperty("dates")) {
 			// console.log("Values has dates");
