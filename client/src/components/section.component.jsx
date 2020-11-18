@@ -29,7 +29,7 @@ function Section(params) {
 		let mounted = true;
 
 		axios
-			.get(`http://localhost:5000/api${params.match.path}`)
+			.get(`/api${params.match.path}`)
 			.then((res) => {
 				if (mounted) {
 					// console.log(res.data);

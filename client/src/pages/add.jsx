@@ -82,7 +82,7 @@ function Add() {
 		console.log(data);
 
 		axios
-			.post("http://localhost:5000/admin/upload", data, {
+			.post("/admin/upload", data, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 					"x-auth-token": userData.token,

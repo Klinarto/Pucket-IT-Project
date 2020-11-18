@@ -8,7 +8,7 @@ function Header(params) {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/api/title")
+			.get("/api/title")
 			.then((response) => {
 				if (response.data.length > 0) {
 					setTitle(response.data[0].title);

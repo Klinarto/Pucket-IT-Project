@@ -25,7 +25,7 @@ function Home(params) {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/api/")
+			.get("/api/")
 			.then((response) => {
 				if (response.data.length > 1) {
 					setHeroTitle(response.data[0].title);

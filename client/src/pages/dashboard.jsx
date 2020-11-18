@@ -24,7 +24,7 @@ function Dashboard(props) {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/api/academic-experiences")
+			.get("/api/academic-experiences")
 			.then((response) => {
 				console.log(response.data);
 				addToShowcases(response.data, "Academic");
@@ -34,7 +34,7 @@ function Dashboard(props) {
 			});
 
 		axios
-			.get("http://localhost:5000/api/hobbies")
+			.get("/api/hobbies")
 			.then((response) => {
 				console.log(response.data);
 				addToShowcases(response.data, "Hobbies");

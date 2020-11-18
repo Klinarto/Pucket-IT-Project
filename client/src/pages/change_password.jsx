@@ -20,21 +20,22 @@ const validateMessages = {
 	},
 };
 
-const marginBottom = {marginBottom: "2em"};
-const contactBackground = {background: "#fafafa", minHeight: "100vh"};
+const marginBottom = { marginBottom: "2em" };
+const contactBackground = { background: "#fafafa", minHeight: "100vh" };
 
 function ChangePassword(params) {
 	const [form] = Form.useForm();
 	const onFinish = (values) => {
-		axios.post("http://localhost:5000/user/changePassword", values)
-		.then((res) => {
-			window.location = "/";
-			message.success("Change password succesful");
-		})
-		.catch((error) => {
-			console.log(error);
-			message.error("Change password failed");
-		});
+		axios
+			.post("/user/changePassword", values)
+			.then((res) => {
+				window.location = "/";
+				message.success("Change password succesful");
+			})
+			.catch((error) => {
+				console.log(error);
+				message.error("Change password failed");
+			});
 	};
 
 	return (
@@ -42,26 +43,27 @@ function ChangePassword(params) {
 			<section className="section" style={contactBackground}>
 				<div className="container">
 					{" "}
-					<Form onFinish={onFinish}
+					<Form
+						onFinish={onFinish}
 						{...layout}
 						form={form}
 						name="Change Password Message"
 						validateMessages={validateMessages}
 					>
 						<Form.Item
-							style = {marginBottom}
+							style={marginBottom}
 							name="username"
 							label="Username"
 							rules={[
 								{
-                                    required: true,
+									required: true,
 								},
 							]}
 						>
 							<Input />
 						</Form.Item>
 						<Form.Item
-							style = {marginBottom}
+							style={marginBottom}
 							name="password"
 							label="Password"
 							rules={[
@@ -72,8 +74,8 @@ function ChangePassword(params) {
 						>
 							<Input.Password />
 						</Form.Item>
-                        <Form.Item
-							style = {marginBottom}
+						<Form.Item
+							style={marginBottom}
 							name="newPassword"
 							label="New Password"
 							rules={[

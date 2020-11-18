@@ -102,7 +102,7 @@ function Showcase(params) {
 		}
 
 		axios
-			.post("http://localhost:5000/admin/edit", data, {
+			.post("/admin/edit", data, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 					"x-auth-token": userData.token,
@@ -147,7 +147,7 @@ function Showcase(params) {
 		data.append("_id", params.showcase._id);
 
 		axios
-			.post("http://localhost:5000/admin/delete", data, {
+			.post("/admin/delete", data, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 					"x-auth-token": userData.token,

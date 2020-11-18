@@ -23,7 +23,7 @@ function AboutMe(params) {
 
 	useEffect(() => {
 		axios
-			.get("http://localhost:5000/api/about-me")
+			.get("/api/about-me")
 			.then((response) => {
 				if (response.data.length > 0) {
 					setTitle(response.data[0].title);

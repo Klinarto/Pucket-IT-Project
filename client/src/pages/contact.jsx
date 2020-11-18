@@ -41,7 +41,7 @@ function Contact(params) {
 		if (isVerified) {
 			values.recaptcha = captcha;
 			axios
-				.post("http://localhost:5000/api/contact-me", values)
+				.post("/api/contact-me", values)
 				.then((res) => console.log(res))
 				.catch((error) => console.log(error));
 			window.location = "/";
