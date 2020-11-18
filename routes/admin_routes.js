@@ -49,5 +49,5 @@ router.post(
 );
 router.post("/delete", authentication.auth, upload.none(), admin.deleteEntry);
 
-router.get("/refresh", admin.refreshToken);
+router.get("/refresh", authentication.auth, admin.refreshToken);
 module.exports = router;
