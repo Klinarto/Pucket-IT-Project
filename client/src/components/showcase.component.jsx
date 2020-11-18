@@ -145,7 +145,7 @@ function Showcase(params) {
 		data.append("_id", params.showcase._id);
 
 		axios
-			.post("http://localhost:5000/admin/delete", data, {
+			.post("https://pucket.herokuapp.com/admin/delete", data, {
 				headers: {
 					"Content-Type": "multipart/form-data",
 					"x-auth-token": userData.token,
