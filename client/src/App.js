@@ -7,6 +7,7 @@ import { CaretUpOutlined } from "@ant-design/icons";
 // import Add from "./pages/add";
 // import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
+import ChangePassword from "./pages/change_password";
 import UserContext from "./context/user_context";
 import Axios from "axios";
 import Navbar from "./components/navbar.component";
@@ -77,6 +78,7 @@ function App() {
 				<Route path="/hobbies" component={Section} />
 				<Route path="/contact" component={Contact} />
 				<Route path="/login" component={Login} />
+				<Route path="/changePassword" component={ChangePassword} />
 				{/* <Route path="/add" component={Add} />
         <Route path="/dashboard" component={Dashboard} /> */}
         <BackTop>

@@ -54,6 +54,33 @@ var login = function (req, res) {
 	});
 };
 
+var changePassword = function (req, res) {
+	collection = req.app.db.collection("GrizzAccount");
+	collection.findOne({ username: req.body.username }, (err, user) => {
+		if (!user || err) {
+			res.status(400).json({ msg: "username not found in database" });
+		} else {
+			if (bcrypt.compareSync(req.body.password, user.password)) {
+				bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
+					if (err) {
+						res.status(400).json({ msg: "cannot get new password" });
+					}
+					else {
+						collection.updateOne({username: req.body.username}, {$set:{password: hash}}, (err, user) => {
+							if (err) {
+								res.status(400).json({ msg: "cannot update" });
+							}
+							res.send("update successful");
+						});
+					}
+				});
+			} else {
+				res.status(400).json({ msg: "password is incorrect" });
+			}
+		}
+	});
+};
+
 var deleteUser = function (req, res) {
 	collection = req.app.db.collection("GrizzAccount");
 	collection.deleteOne({ username: req.body.username }, (err, user) => {
@@ -96,3 +123,4 @@ module.exports.login = login;
 module.exports.register = register;
 module.exports.tokenIsValid = tokenIsValid;
 module.exports.deleteUser = deleteUser;
+module.exports.changePassword = changePassword;
