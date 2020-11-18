@@ -28,22 +28,28 @@ var addNewEntry = async function (req, res) {
 
   if (!req.file) {
     console.log("No file uploaded");
-    if (section == "hobbies") {
-      collection.insertOne({
-        title: title,
-        description: description,
-        image: "",
-        alignment: alignment,
-      });
-    } else {
-      collection.insertOne({
-        title: title,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
-        description: description,
-        image: "",
-        alignment: alignment,
-      });
+    switch(section) {
+      case "hobbies":
+        collection.insertOne({
+          title: title,
+          description: description,
+          image: "",
+          alignment: alignment,
+        });
+        break;
+      case "academicExperience":
+        collection.insertOne({
+          title: title,
+          startDate: new Date(startDate),
+          endDate: new Date(endDate),
+          description: description,
+          image: "",
+          alignment: alignment,
+        });
+        break;
+      default:
+        res.status(400).send("Bad Request (section)");
+        return;
     }
     res.status(200).send("Uploaded!");
   } else {
@@ -55,22 +61,28 @@ var addNewEntry = async function (req, res) {
         res.status(400).send("Some error occurred! imageURL null");
       } else {
         console.log("Image uploaded!");
-        if (section == "hobbies") {
-          collection.insertOne({
-            title: title,
-            description: description,
-            image: imageURL,
-            alignment: alignment,
-          });
-        } else {
-          collection.insertOne({
-            title: title,
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-            description: description,
-            image: imageURL,
-            alignment: alignment,
-          });
+        switch(section) {
+          case "hobbies":
+            collection.insertOne({
+              title: title,
+              description: description,
+              image: imageURL,
+              alignment: alignment,
+            });
+            break;
+          case "academicExperience":
+            collection.insertOne({
+              title: title,
+              startDate: new Date(startDate),
+              endDate: new Date(endDate),
+              description: description,
+              image: imageURL,
+              alignment: alignment,
+            });
+            break;
+          default:
+            res.status(400).send("Bad Request (section)");
+            return;
         }
         res.status(200).send("Uploaded!");
       }
@@ -94,32 +106,61 @@ var editEntry = function (req, res) {
 
   if (!req.file) {
     console.log("No new photos");
-    if (section == "hobbies") {
-      collection.updateOne(
-        { _id: id },
-        {
-          $set: {
-            title: title,
-            description: description,
-            image: imageUrl,
-            alignment: alignment,
-          },
-        }
-      );
-    } else {
-      collection.updateOne(
-        { _id: id },
-        {
-          $set: {
-            title: title,
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-            description: description,
-            image: imageUrl,
-            alignment: alignment,
-          },
-        }
-      );
+    switch(section) {
+      case "homepage":
+        collection.updateOne(
+          {_id: parseInt(idString)},
+          {
+            $set: {
+              title: title,
+              description: description,
+              image: imageUrl
+            }
+          }
+        );
+        break;
+      case "aboutMe":
+        collection.updateOne(
+          {},
+          {
+            $set: {
+              title: title,
+              description: description
+            }
+          }
+        );
+        break;
+      case "hobbies":
+        collection.updateOne(
+          { _id: id },
+          {
+            $set: {
+              title: title,
+              description: description,
+              image: imageUrl,
+              alignment: alignment,
+            },
+          }
+        );
+        break;
+      case "academicExperience":
+        collection.updateOne(
+          { _id: id },
+          {
+            $set: {
+              title: title,
+              startDate: new Date(startDate),
+              endDate: new Date(endDate),
+              description: description,
+              image: imageUrl,
+              alignment: alignment,
+            },
+          }
+        );
+        break;
+      default:
+        res.status(400).send("Bad Request (section)");
+        return;
     }
 
     res.status(200).send("Edited, no new picture!");
@@ -142,39 +183,56 @@ var editEntry = function (req, res) {
 
     //upload new photo
     var imagePath = req.file.path;
-    imgur.imgurUpload(req.app.db, req.file.path, (imageURL) => {
+    imgur.imgurUpload(req.app.db, imagePath, (imageURL) => {
       if (!imageURL) {
         console.log("Image upload failed.");
         res.status(400).send("Image upload failed. No edits are made");
       } else {
-        if (section == "hobbies") {
-          collection.updateOne(
-            { _id: id },
-            {
-              $set: {
-                title: title,
-                description: description,
-                image: imageURL,
-                alignment: alignment,
-              },
-            }
-          );
-        } else {
-          collection.updateOne(
-            { _id: id },
-            {
-              $set: {
-                title: title,
-                startDate: new Date(startDate),
-                endDate: new Date(endDate),
-                description: description,
-                image: imageURL,
-                alignment: alignment,
-              },
-            }
-          );
+        switch(section) {
+          case "homepage":
+            collection.updateOne(
+              {_id: parseInt(idString)},
+              {
+                $set: {
+                  title: title,
+                  description: description,
+                  image: imageUrl
+                }
+              }
+            );
+            break;
+          case "hobbies":
+            collection.updateOne(
+              { _id: id },
+              {
+                $set: {
+                  title: title,
+                  description: description,
+                  image: imageUrl,
+                  alignment: alignment,
+                },
+              }
+            );
+            break;
+          case "academicExperience":
+            collection.updateOne(
+              { _id: id },
+              {
+                $set: {
+                  title: title,
+                  startDate: new Date(startDate),
+                  endDate: new Date(endDate),
+                  description: description,
+                  image: imageUrl,
+                  alignment: alignment,
+                },
+              }
+            );
+            break;
+          default:
+            res.status(400).send("Bad Request (section)");
+            return;
         }
-
         res.status(200).send("Edited!");
       }
     });

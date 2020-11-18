@@ -10,24 +10,8 @@ const mongodb = require("mongo-mock");
 const admin = require("../controllers/admin_controller");
 
 var auth;
-//var app;
 
-describe('manipulating sections functionality', function () {
-    // before(function() {
-    //     auth = require('../middleware/auth.js');
-    //     sinon.stub(auth, 'auth')
-    //         .callsFake(function(req, res, next) {
-    //             return next();
-    //     });
-      
-    //     app = require('../server.js');
-    // });
-
-    // afterEach(function() {
-    //     // restore original method
-    //     auth.auth.restore();
-    // });
-    
+describe('manipulating sections functionality', function () {    
     it("adding a section", function (done) {
         var MockClient = mongodb.MongoClient;
         MockClient.connect("mongodb://localhost:27017/", {}, function(err, client) {
@@ -35,7 +19,7 @@ describe('manipulating sections functionality', function () {
                 method: "POST",
                 path: "/admin/upload",
                 body: {
-                    section: "academic",
+                    section: "academicExperience",
                     title: "Test Entry",
                     description : "Sample Test Entry",
                     startDate: "2020-08-03",
@@ -61,7 +45,7 @@ describe('manipulating sections functionality', function () {
                 method: "POST",
                 path: "/admin/upload",
                 body: {
-                    section: "academic",
+                    section: "academicExperience",
                     title: "Test Entry",
                     description : "Sample Test Entry",
                     startDate: "2020-08-03",
@@ -87,7 +71,7 @@ describe('manipulating sections functionality', function () {
                 method: "POST",
                 path: "/admin/upload",
                 body: {
-                    section: "academic",
+                    section: "academicExperience",
                     _id: "5f9041aa313e99df10676cfa"
                 }
             })
@@ -95,7 +79,7 @@ describe('manipulating sections functionality', function () {
             app.db = client.db("MockDB");
 
             var id = new mongodb.ObjectID("5f9041aa313e99df10676cfa");
-            app.db.collection("academic").insertOne({
+            app.db.collection("academicExperience").insertOne({
                 _id: id,
                 title: "Test Entry",
                 startDate: "2020-08-03",
