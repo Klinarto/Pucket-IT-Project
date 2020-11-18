@@ -1,16 +1,21 @@
-import React, { Component, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CarouselImage from "../components/carousel_image.component";
-import { Carousel } from "antd";
+import EditModal from "../components/edit_modal_home.component";
+import { Carousel, Button, Popover, Space, message } from "antd";
+import user_context from "../context/user_context";
 import axios from "axios";
 import "antd/dist/antd.css";
-import "./font.css"
+import "./font.css";
 import "bulma/css/bulma.min.css";
-import Fade from 'react-reveal/Fade';
-import { useEffect } from "react";
-import { Button } from 'antd';
+import Fade from "react-reveal/Fade";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 
 function AboutMe(params) {
+	const { userData, setUserData } = useContext(user_context);
+
+	const [visible, setVisible] = useState(false);
+	const [loading, setLoading] = useState(false);
+
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [carouselImages, setCarouselImages] = useState([]);
@@ -31,43 +36,63 @@ function AboutMe(params) {
 			});
 	}, []);
 
-	const NextArrow = props => {
-		const { className, style, onClick } = props
-		return (
-		<div
-			className={className}
-			style={{ ...style, padding: "0 5.5%"}}
-			onClick={onClick}
-		>
-			<Button icon={<RightOutlined/>} size="large" style={zIndex}/>
+	// Popover HTML body
+	const popoverContent = (
+		<div>
+			<Space direction="vertical">
+				<Button
+					onClick={() => {
+						setVisible(true);
+					}}
+				>
+					Edit
+				</Button>
+			</Space>
 		</div>
-		)
-	}
-	
-	const PrevArrow = props => {
-		const { className, style, onClick } = props
+	);
+
+	const NextArrow = (props) => {
+		const { className, style, onClick } = props;
 		return (
-		<div
-			className={className}
-			style={{ ...style, padding: "0 3%"}}
-			onClick={onClick}
-		>
-			<Button icon={<LeftOutlined/>} size="large" style={zIndex}/>
-		</div>
-		)
-	}
-	
-	const settings = {
-		nextArrow: <NextArrow />,
-		prevArrow: <PrevArrow />
+			<div
+				className={className}
+				style={{ ...style, padding: "0 5.5%" }}
+				onClick={onClick}
+			>
+				<Button icon={<RightOutlined />} size="large" style={zIndex} />
+			</div>
+		);
+	};
+
+	const PrevArrow = (props) => {
+		const { className, style, onClick } = props;
+		return (
+			<div
+				className={className}
+				style={{ ...style, padding: "0 3%" }}
+				onClick={onClick}
+			>
+				<Button icon={<LeftOutlined />} size="large" style={zIndex} />
+			</div>
+		);
+	};
+
+	// Edit
+	function onEdit(values) {
+		//
 	}
 
-	const zIndex = {zIndex: "1"};
-	
+	const settings = {
+		nextArrow: <NextArrow />,
+		prevArrow: <PrevArrow />,
+	};
+
+	const zIndex = { zIndex: "1" };
+
 	return (
 		<React.Fragment>
 			<section className="section mb-2">
-				<Carousel autoplay arrows={true} {...settings} >
+				<Carousel autoplay arrows={true} {...settings}>
 					{carouselImages.map((image, index) => {
 						return (
 							<CarouselImage
@@ -81,8 +106,24 @@ function AboutMe(params) {
 					})}
 				</Carousel>
 			</section>
-				<section className="section has-background-light">
-					<Fade big delay={1000}>
+			<section className="section has-background-light">
+				<Fade big delay={1000}>
+					{userData.token ? (
+						<Popover
+							placement="top"
+							content={popoverContent}
+							title="Edit"
+						>
+							<div className="container">
+								<div className="card">
+									<div className="card-content">
+										<h1 className="title font">{title}</h1>
+										<p className="font">{description}</p>
+									</div>
+								</div>
+							</div>
+						</Popover>
+					) : (
 						<div className="container">
 							<div className="card">
 								<div className="card-content">
@@ -91,10 +132,28 @@ function AboutMe(params) {
 								</div>
 							</div>
 						</div>
-					</Fade>
-				</section>
-			</React.Fragment>
-		);
+					)}
+				</Fade>
+				{userData.token ? (
+					<EditModal
+						visible={visible}
+						loading={loading}
+						onCreate={onEdit}
+						changeLoading={(value) => {
+							setLoading(value);
+						}}
+						onCancel={() => {
+							setVisible(false);
+						}}
+						content={{
+							title: title,
+							description: description,
+						}}
+					/>
+				) : null}
+			</section>
+		</React.Fragment>
+	);
 }
 
 export default AboutMe;

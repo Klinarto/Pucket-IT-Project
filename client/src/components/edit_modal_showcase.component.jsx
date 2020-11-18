@@ -16,7 +16,7 @@ function getBase64(file) {
 	});
 }
 
-function AddModal(params) {
+function EditModal(params) {
 	const [form] = Form.useForm();
 	const [fileList, setFileList] = useState([]);
 
@@ -46,14 +46,7 @@ function AddModal(params) {
 	function handleUpload({ fileList }) {
 		// console.log("File", fileList);
 		setFileList(fileList);
-
-		// Used to enforce that an image is required to add a showcase
-		if (form.getFieldValue("image").fileList.length === 0) {
-			// Set the value of the image field to null
-			form.setFieldsValue({ image: null });
-		}
 		// console.log("fileList", fileList);
-		// console.log("Image:", form.getFieldValue("image"));
 	}
 
 	// Handle edit modal's cancel
@@ -73,12 +66,14 @@ function AddModal(params) {
 		);
 	}
 
-	// On ok, send values which contains the values of the new showcase and the new image to the current section component which would handle the request to the server
+	// On ok, send values which contains the values of the currently edited showcase,and either the current image or the new image to the current showcase component which would handle the request to the server
 	function onOk() {
 		form.validateFields()
 			.then((values) => {
+				if (fileList.length > 0) {
+					values.image = fileList[0].originFileObj;
+				}
 				params.changeLoading(true);
-				values.image = fileList[0].originFileObj;
 				params.onCreate(values);
 			})
 			.catch((info) => {
@@ -89,8 +84,8 @@ function AddModal(params) {
 	return (
 		<Modal
 			visible={params.visible}
-			title="Add Showcase"
-			okText="Add"
+			title="Edit"
+			okText="Edit"
 			cancelText="Cancel"
 			onCancel={params.onCancel}
 			destroyOnClose={true}
@@ -100,7 +95,6 @@ function AddModal(params) {
 		>
 			<Form
 				form={form}
-				preserve={false}
 				layout="vertical"
 				name="edit"
 				initialValues={params.showcase}
@@ -136,7 +130,7 @@ function AddModal(params) {
 						})}
 					</Select>
 				</Form.Item>
-				{/* Render the dates if the current section is the academic experience page */}
+
 				{section === "academicExperience" ? (
 					<Form.Item
 						name="dates"
@@ -160,19 +154,10 @@ function AddModal(params) {
 						},
 					]}
 				>
-					<Input.TextArea />
+					<Input.TextArea autoSize={{ minRows: 3, maxRows: 10 }} />
 				</Form.Item>
-				<Form.Item
-					label="Image"
-					rules={[{ required: true, message: "Image is required" }]}
-					required
-				>
-					<Form.Item
-						name="image"
-						rules={[
-							{ required: true, message: "Image is required" },
-						]}
-					>
+				<Form.Item label="Image">
+					<Form.Item name="image" valuePropName="file">
 						<Upload
 							listType="picture-card"
 							fileList={fileList}
@@ -183,6 +168,7 @@ function AddModal(params) {
 							{fileList.length >= 1 ? null : uploadButton}
 						</Upload>
 					</Form.Item>
+					{/* Modal to preview the image */}
 					<Modal
 						visible={previewVisible}
 						title={previewTitle}
@@ -201,4 +187,4 @@ function AddModal(params) {
 	);
 }
 
-export default AddModal;
+export default EditModal;

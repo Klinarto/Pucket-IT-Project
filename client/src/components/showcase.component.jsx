@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Popover, Button, Space, message, Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import user_context from "../context/user_context";
-import EditModal from "./edit_modal.component";
+import EditModal from "./edit_modal_showcase.component";
 import moment from "moment";
 import axios from "axios";
 import "bulma/css/bulma.min.css";
@@ -127,7 +127,6 @@ function Showcase(params) {
 		confirm({
 			title: "Are you sure you want to delete this showcase?",
 			icon: <ExclamationCircleOutlined />,
-			content: "Please don't delete me （（●´∧｀●））",
 			okText: "Yes",
 			okType: "danger",
 			cancelText: "No",

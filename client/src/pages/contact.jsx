@@ -4,6 +4,7 @@ import Navbar from "../components/navbar.component";
 import Header from "../components/header.component";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
+import "../components/showcase.css";
 import axios from "axios";
 import Recaptcha from "react-google-recaptcha";
 
@@ -23,28 +24,29 @@ const validateMessages = {
 	},
 };
 
-const marginBottom = {marginBottom: "2em"};
-const contactBackground = {background: "#fafafa", minHeight: "100vh"};
+const marginBottom = { marginBottom: "2em" };
+const contactBackground = { background: "#fafafa", minHeight: "100vh" };
 
 function Contact(params) {
 	const [isVerified, setIsVerified] = useState(false);
 	const [captcha, setCaptcha] = useState("");
 	const [form] = Form.useForm();
-	
+
 	function onChangeRecaptcha(value) {
 		setCaptcha(value);
 		setIsVerified(true);
 	}
 
 	const onFinish = (values) => {
-		if(isVerified) {
+		if (isVerified) {
 			values.recaptcha = captcha;
-			axios.post("http://localhost:5000/api/contact-me", values)
-			.then((res) => console.log(res))
-			.catch((error) => console.log(error));
+			axios
+				.post("http://localhost:5000/api/contact-me", values)
+				.then((res) => console.log(res))
+				.catch((error) => console.log(error));
 			window.location = "/";
 		} else {
-			message.error('Please verify that you are a human!');
+			message.error("Please verify that you are a human!");
 		}
 	};
 
@@ -53,6 +55,13 @@ function Contact(params) {
 			<section className="section">
 				<div className="container">
 					{" "}
+					<h1
+						className="subtitle font"
+						style={{ textAlign: "center" }}
+					>
+						If you would like to contact me, <br /> please use the
+						form below
+					</h1>
 					<Form
 						onFinish={onFinish}
 						{...layout}
@@ -61,7 +70,7 @@ function Contact(params) {
 						validateMessages={validateMessages}
 					>
 						<Form.Item
-							style = {marginBottom}
+							style={marginBottom}
 							name="name"
 							label="Name"
 							rules={[
@@ -73,7 +82,7 @@ function Contact(params) {
 							<Input />
 						</Form.Item>
 						<Form.Item
-							style = {marginBottom}
+							style={marginBottom}
 							name="email"
 							label="Email"
 							rules={[
@@ -87,7 +96,7 @@ function Contact(params) {
 						</Form.Item>
 
 						<Form.Item
-							style = {marginBottom}
+							style={marginBottom}
 							name="message"
 							label="Message"
 							rules={[
@@ -96,18 +105,20 @@ function Contact(params) {
 								},
 							]}
 						>
-							<Input.TextArea />
+							<Input.TextArea
+								autoSize={{ minRows: 3, maxRows: 10 }}
+							/>
 						</Form.Item>
 
-						<Form.Item 
-							wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
-							
+						<Form.Item
+							wrapperCol={{ ...layout.wrapperCol, offset: 6 }}
+						>
 							<Recaptcha
 								sitekey="6LevhNkZAAAAABvtk2j7bEhd-tJrxpPWH_rphULH"
 								onChange={onChangeRecaptcha}
 							/>
 						</Form.Item>
-						
+
 						<Form.Item
 							wrapperCol={{ ...layout.wrapperCol, offset: 6 }}
 						>
@@ -115,7 +126,6 @@ function Contact(params) {
 								Send
 							</Button>
 						</Form.Item>
-
 					</Form>
 				</div>
 			</section>
