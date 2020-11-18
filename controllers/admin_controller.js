@@ -98,7 +98,7 @@ var editEntry = function (req, res) {
 	var description = req.body.description;
 	var startDate = req.body.startDate;
 	var endDate = req.body.endDate;
-	var imageUrl = req.body.image;
+	var imageURL = req.body.image;
 	var alignment = req.body.alignment;
 
 	var id;
@@ -117,7 +117,7 @@ var editEntry = function (req, res) {
 						$set: {
 							title: title,
 							description: description,
-							image: imageUrl,
+							image: imageURL,
 						},
 					}
 				);
@@ -140,7 +140,7 @@ var editEntry = function (req, res) {
 						$set: {
 							title: title,
 							description: description,
-							image: imageUrl,
+							image: imageURL,
 							alignment: alignment,
 						},
 					}
@@ -155,7 +155,7 @@ var editEntry = function (req, res) {
 							startDate: new Date(startDate),
 							endDate: new Date(endDate),
 							description: description,
-							image: imageUrl,
+							image: imageURL,
 							alignment: alignment,
 						},
 					}
@@ -199,7 +199,7 @@ var editEntry = function (req, res) {
 								$set: {
 									title: title,
 									description: description,
-									image: imageUrl,
+									image: imageURL,
 								},
 							}
 						);
@@ -211,7 +211,7 @@ var editEntry = function (req, res) {
 								$set: {
 									title: title,
 									description: description,
-									image: imageUrl,
+									image: imageURL,
 									alignment: alignment,
 								},
 							}
@@ -226,7 +226,7 @@ var editEntry = function (req, res) {
 									startDate: new Date(startDate),
 									endDate: new Date(endDate),
 									description: description,
-									image: imageUrl,
+									image: imageURL,
 									alignment: alignment,
 								},
 							}
@@ -252,7 +252,7 @@ var deleteEntry = function (req, res) {
 	//find current entry and get photo url to delete
 	collection.findOne({ _id: id }).then((result) => {
 		if (result.image == null) {
-			console.log("none found");
+			console.log("no picture URL found");
 		} else {
 			var oldImage = result.image;
 			var imgurRegex = /(http(s*)):\/\/i.imgur.com\/([a-zA-Z0-9_\s]*)\./;
@@ -260,16 +260,16 @@ var deleteEntry = function (req, res) {
 			var imageHash = match[3];
 
 			imgur.imgurDelete(req.app.db, imageHash);
-
-			//delete MongoDB document here
-			collection.deleteOne({ _id: id }).then((deleteConfirm) => {
-				if (deleteConfirm == null) {
-					res.status(500).send("An error occured");
-				} else {
-					res.status(200).send("Entry deleted!");
-				}
-			});
 		}
+		
+		//delete MongoDB document here
+		collection.deleteOne({ _id: id }).then((deleteConfirm) => {
+			if (deleteConfirm == null) {
+				res.status(500).send("An error occured");
+			} else {
+				res.status(200).send("Entry deleted!");
+			}
+		});
 	});
 };
 
