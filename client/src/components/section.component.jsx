@@ -18,7 +18,7 @@ const sectionButton = {
 // A section is a component that "showcases" all the user's specific content of a specific category such as academic experiences or hobbies
 
 function Section(params) {
-	const { userData, setUserData } = useContext(user_context);
+	const { userData } = useContext(user_context);
 	const [showcases, setShowcases] = useState([]);
 	const [fileList, setFileList] = useState([]);
 

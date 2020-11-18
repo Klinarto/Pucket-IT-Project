@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 import { Form, Input, Button, message } from "antd";
-import Navbar from "../components/navbar.component";
-import Header from "../components/header.component";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
 import axios from "axios";
@@ -28,7 +26,7 @@ const contactBackground = { background: "#fafafa", minHeight: "100vh" };
 
 function Login(params) {
 	const [form] = Form.useForm();
-	const { userData, setUserData } = useContext(user_context);
+	const { setUserData } = useContext(user_context);
 	const onFinish = (values) => {
 		axios
 			.post("/user/login", values)

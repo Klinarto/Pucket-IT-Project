@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Form, Input, Button, message } from "antd";
-import Navbar from "../components/navbar.component";
-import Header from "../components/header.component";
 import "antd/dist/antd.css";
 import "bulma/css/bulma.min.css";
 import "../components/showcase.css";
@@ -25,7 +23,6 @@ const validateMessages = {
 };
 
 const marginBottom = { marginBottom: "2em" };
-const contactBackground = { background: "#fafafa", minHeight: "100vh" };
 
 function Contact(params) {
 	const [isVerified, setIsVerified] = useState(false);

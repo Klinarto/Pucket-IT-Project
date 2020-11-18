@@ -13,7 +13,7 @@ const { confirm } = Modal;
 // A showcase is a component that "showcases" a user's specific desired content of a specific section
 
 function Showcase(params) {
-	const { userData, setUserData } = useContext(user_context);
+	const { userData } = useContext(user_context);
 
 	// Used for the edit modal
 	const [visible, setVisible] = useState(false);

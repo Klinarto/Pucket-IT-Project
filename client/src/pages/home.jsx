@@ -10,7 +10,7 @@ import "./font.css";
 import Fade from "react-reveal/Fade";
 
 function Home(params) {
-	const { userData, setUserData } = useContext(user_context);
+	const { userData } = useContext(user_context);
 
 	// Used for the edit modals
 	const [mottoVisible, setMottoVisible] = useState(false);
@@ -23,7 +23,13 @@ function Home(params) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 
+	const section = "homepage";
+
 	useEffect(() => {
+		fetchData();
+	}, []);
+
+	function fetchData(params) {
 		axios
 			.get("/api/")
 			.then((response) => {
@@ -38,7 +44,7 @@ function Home(params) {
 			.catch((error) => {
 				console.log(error);
 			});
-	}, []);
+	}
 
 	// Popover HTML body
 	const popoverMotto = (
@@ -72,12 +78,71 @@ function Home(params) {
 
 	// Edit Motto
 	function onEditMotto(values) {
-		//
+		values.section = section;
+		values._id = "1";
+		values.image = heroBG;
+		console.log(values);
+
+		let data = new FormData();
+		for (let key in values) {
+			data.append(key, values[key]);
+		}
+
+		axios
+			.post("/admin/edit", data, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"x-auth-token": userData.token,
+				},
+			})
+			.then((res) => {
+				setLoading(false);
+				setMottoVisible(false);
+				message.success("Edit was successful.", 2);
+				console.log(res);
+			})
+			.catch((error) => {
+				setLoading(false);
+				setMottoVisible(false);
+				message.error("Failed to send");
+				console.error(error);
+			});
+
+		fetchData();
 	}
 
 	// Edit Description
 	function onEdit(values) {
-		//
+		values.section = section;
+		values._id = "2";
+		console.log(values);
+
+		let data = new FormData();
+		for (let key in values) {
+			data.append(key, values[key]);
+		}
+
+		axios
+			.post("/admin/edit", data, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"x-auth-token": userData.token,
+				},
+			})
+			.then((res) => {
+				setLoading(false);
+				setVisible(false);
+				message.success("Edit was successful.", 2);
+				console.log(res);
+			})
+			.catch((error) => {
+				setLoading(false);
+				setVisible(false);
+				message.error("Failed to send");
+				console.error(error);
+			});
+
+		fetchData();
 	}
 
 	return (

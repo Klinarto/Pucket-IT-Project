@@ -11,7 +11,7 @@ import Fade from "react-reveal/Fade";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 
 function AboutMe(params) {
-	const { userData, setUserData } = useContext(user_context);
+	const { userData } = useContext(user_context);
 
 	const [visible, setVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -19,9 +19,14 @@ function AboutMe(params) {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [carouselImages, setCarouselImages] = useState([]);
-	const [carousel, setCarousel] = useState(React.createRef());
+
+	const section = "aboutMe";
 
 	useEffect(() => {
+		fetchData();
+	}, []);
+
+	function fetchData(params) {
 		axios
 			.get("/api/about-me")
 			.then((response) => {
@@ -34,7 +39,7 @@ function AboutMe(params) {
 			.catch((error) => {
 				console.log(error);
 			});
-	}, []);
+	}
 
 	// Popover HTML body
 	const popoverContent = (
@@ -79,7 +84,35 @@ function AboutMe(params) {
 
 	// Edit
 	function onEdit(values) {
-		//
+		values.section = section;
+		console.log(values);
+
+		let data = new FormData();
+		for (let key in values) {
+			data.append(key, values[key]);
+		}
+
+		axios
+			.post("/admin/edit", data, {
+				headers: {
+					"Content-Type": "multipart/form-data",
+					"x-auth-token": userData.token,
+				},
+			})
+			.then((res) => {
+				setLoading(false);
+				setVisible(false);
+				message.success("Edit was successful.", 2);
+				console.log(res);
+			})
+			.catch((error) => {
+				setLoading(false);
+				setVisible(false);
+				message.error("Failed to send");
+				console.error(error);
+			});
+
+		fetchData();
 	}
 
 	const settings = {

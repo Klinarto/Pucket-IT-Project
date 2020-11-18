@@ -3,7 +3,6 @@ import Home from "./pages/home";
 import AboutMe from "./pages/about-me";
 import Contact from "./pages/contact";
 import { CaretUpOutlined } from "@ant-design/icons";
-
 // import Add from "./pages/add";
 // import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
@@ -14,7 +13,7 @@ import Navbar from "./components/navbar.component";
 import Header from "./components/header.component";
 import Section from "./components/section.component";
 import { BackTop } from "antd";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, useLocation } from "react-router-dom";
 import "antd/dist/antd.css";
 
 const backToTop = {

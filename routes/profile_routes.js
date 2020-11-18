@@ -25,7 +25,7 @@ router.get("/about-me", (req, res) => {
 
 router.get("/academic-experiences", (req, res) => {
 	collection = req.app.db.collection("academicExperience");
-	collection.find({}, { sort: { dateStart: 1 } }).toArray((err, docs) => {
+	collection.find({}, { sort: { startDate: -1 } }).toArray((err, docs) => {
 		if (err) {
 			throw err;
 		}

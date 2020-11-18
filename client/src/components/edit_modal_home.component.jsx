@@ -1,13 +1,9 @@
-import React, { useState } from "react";
-import { Modal, Form, Select, Input } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import React from "react";
+import { Modal, Form, Input } from "antd";
 import "antd/dist/antd.css";
-
-const { Option } = Select;
 
 function EditModal(params) {
 	const [form] = Form.useForm();
-	const [fileList, setFileList] = useState([]);
 
 	// Used for the validation messages of the form
 	const validateMessages = {
@@ -18,9 +14,6 @@ function EditModal(params) {
 	function onOk() {
 		form.validateFields()
 			.then((values) => {
-				if (fileList.length > 0) {
-					values.image = fileList[0].originFileObj;
-				}
 				params.changeLoading(true);
 				params.onCreate(values);
 			})
